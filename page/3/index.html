@@ -141,24 +141,25 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/04/08/算法/RS纠删算法原理与项目源码/">RS纠删算法原理</a>
+        <a href="/2018/04/08/Java并发/Java并发编程基础/">Java并发编程基础</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
       
         
-  <a href="/tags#算法">
-    <span class="tag-code">算法</span>
+  <a href="/tags#Java并发">
+    <span class="tag-code">Java并发</span>
   </a>
 
       
       <div class="article-summary">
         
-          ##RS纠删算法原理
+          因为最近的项目遇到大量并发编程的问题，抽出时间把并发编程的基础整理一下，毕竟万丈高楼平地起。更深层次的并发编程会在以后的博客中介绍。
+#一、为什么要并发编程？
 
-A.1  纠删码是存储领域常用的数据冗余技术， 相比多副本复制而言， 纠删码能够以更小的数据冗余度获得更高数据可靠性。 Reed Solomon Coding是存储领域常用的一种纠删码，它的基本原理如下：  给定n个数据块d1, d2,…, dn，n和一个正整数m，  ...
+并发编程可以使程序的执行速度更快。多处理器的情况并发编程可以更好的发挥多个处理器的能力，从而提高程序的执行速度，但是，并发编程通常 ...
         
       </div>
-      <a class="more" href="/2018/04/08/算法/RS纠删算法原理与项目源码/">Read more</a>
+      <a class="more" href="/2018/04/08/Java并发/Java并发编程基础/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -182,29 +183,6 @@ A.1  纠删码是存储领域常用的数据冗余技术， 相比多副本复�
         
       </div>
       <a class="more" href="/2018/04/08/算法/RS（255,223）纠错算法原理与项目源码/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/04/08/Linux/Linux学习笔记（Shell）/">Linux学习笔记（Shell）</a>
-      </h2>
-      <p class="article-date">April 8, 2018</p>
-      
-        
-  <a href="/tags#Linux">
-    <span class="tag-code">Linux</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          一、Bash Shell基础1.Bash Shell简单介绍
-管理整个硬件的其实是核心（kernel），通常用户（user）都是以shell来与核心沟通。
-什么是Shell？我们通过shell与核心沟通，shell相当于用户和核心之间的桥梁。        
-系统当前有多少Shells？可以 ...
-        
-      </div>
-      <a class="more" href="/2018/04/08/Linux/Linux学习笔记（Shell）/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -245,49 +223,6 @@ Zookeeper
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/04/08/网络通信/TCP_IP详解/">TCP_IP详解</a>
-      </h2>
-      <p class="article-date">April 8, 2018</p>
-      
-        
-  <a href="/tags#网络编程">
-    <span class="tag-code">网络编程</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          注意：图片中的文字看起来有些小，不是很清楚，可以单击右键，选择点击“查看图像”，然后放大图像即可查看清晰的文字。
-
-TCP-IP详解卷1TCP-IP详解卷1第1章：概述&nbsp;1.TCP/IP分层：&nbsp;&nbsp;&nbsp;&nbsp;A.应用层（Telent：远程登录、FTP ...
-        
-      </div>
-      <a class="more" href="/2018/04/08/网络通信/TCP_IP详解/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/04/08/Java/Java Web基础/">Java Web基础</a>
-      </h2>
-      <p class="article-date">April 8, 2018</p>
-      
-        
-  <a href="/tags#Java">
-    <span class="tag-code">Java</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          自己以前的学习笔记，希望可以帮助到一些学习Java web的人。还有一部分内容没写完，以后抽时间补上。注意：图片可以右击点击查看图片，放大（使用火狐浏览器）
-Java  Web基础Java  Web基础一、Servlet&nbsp;1.创建Servlet&nbsp;&nbsp;1.实现Ser ...
-        
-      </div>
-      <a class="more" href="/2018/04/08/Java/Java Web基础/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
         <a href="/2018/04/08/网络通信/Socket网络编程/">Socket网络编程</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
@@ -306,6 +241,50 @@ Java  Web基础Java  Web基础一、Servlet&nbsp;1.创建Servlet&nbsp;&nbsp;1.�
         
       </div>
       <a class="more" href="/2018/04/08/网络通信/Socket网络编程/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/JVM/2018-04-08-1_Java虚拟机内存分配和溢出/">Java虚拟机内存分配和溢出</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言由于虚拟机自动内存管理机制的帮助下，不需要为每一个new出来的对象，去写delete/free代码。不容易出现内存泄漏和内存溢出的问题，
+但是如果一旦出现问题，那将是非常可怕的 ，如果不了解虚拟机是怎么使用内存的，那么排查错误将会成为一项非常艰难的工资。## 误区经常有人讲java内存 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/JVM/2018-04-08-1_Java虚拟机内存分配和溢出/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/网络通信/TCP_IP详解/">TCP_IP详解</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#网络编程">
+    <span class="tag-code">网络编程</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          注意：图片中的文字看起来有些小，不是很清楚，可以单击右键，选择点击“查看图像”，然后放大图像即可查看清晰的文字。
+
+TCP-IP详解卷1TCP-IP详解卷1第1章：概述&nbsp;1.TCP/IP分层：&nbsp;&nbsp;&nbsp;&nbsp;A.应用层（Telent：远程登录、FTP ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/网络通信/TCP_IP详解/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -369,6 +348,36 @@ Java  Web基础Java  Web基础一、Servlet&nbsp;1.创建Servlet&nbsp;&nbsp;1.�
         
       </div>
       <a class="more" href="/2018/04/08/Java并发/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Maven/Maven基本使用（图文教程）/">Maven基本使用</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Maven">
+    <span class="tag-code">Maven</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          Maven基本使用一、安装
+先去官网下载maven（http://maven.apache.org/download.cgi）
+下载下来解压后如下所示
+配置环境变量
+查看配置成功与否
+maven配置文件
+maven项目目录结构
+使用myeclipse构建maven项目
+
+pom.xml文件
+ ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Maven/Maven基本使用（图文教程）/">Read more</a>
     </article>
   
 
