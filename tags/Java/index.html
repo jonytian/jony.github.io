@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/tags/JAVA/">
+    <link rel="canonical" href="http://yoursite.com/tags/Java/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -144,35 +144,22 @@
 
 
 <div class="post-preview " style="background-image: url('')">
-    <a href="/2018/08/20/2018-10-08-10_JAVA版本更新历史简单介绍/">
+    <a href="/2018/10/12/2018-10-11-12_Java9_模块化/">
         <h2 class="post-title">
-            JAVA版本更新历史简单介绍
+            Java9_模块化
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-08-20
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-12
         </p>
         
         <div class="post-content-preview">
             <p>
                 
-前言学了java这么久，坦白说，我是从java6开始学习java的。现在java已经更新到java11了，中间经历了很多，出现了很多新的知识点，我不能说全部都有接触，但是有一些还是有使用到的。知识一直在前进，期待更好的自己
-
-
-
-版本
-年代
-新特性
-
-
-
-
-1.0
-1996
-
-
-
-1.1
-19..
+前言
+1、必须是java文件夹下面才可以创建module-info.java，添加两个maven。module项目。分别为one和two
+123module one &#123;&#125;
+123module two &#123;&#125;
+2、设置模块的依赖和权限2.1、设置module..
             </p>
         </div>
     </a>
@@ -183,163 +170,130 @@
 
 
 
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/10/11/2018-10-10-11_JAVA10_var的用法/">
+        <h2 class="post-title">
+            Java10_var的用法
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-11
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+前言1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768package com.hlj.ja..
+            </p>
         </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+    </a>
 
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <h5><a href="/about/">tianyaojiang</a></h5>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-
-                        
-
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-
-            
-
-        </div>
-    </div>
 </div>
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
+<hr>
 
+
+
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/09/15/2018-09-15-8_java8_9接口新特性/">
+        <h2 class="post-title">
+            java8_9接口新特性
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-15
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
                 
-
-                
-
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 会飞的鱼 2018
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
+前言jdk8和9都对接口进行了新的更新，还是不错的
+Java8开始，1、接口中，允许定义default默认方法（可以有多个）  public default  （public可以省略，default不可以省略）
+2、接口中允许定义静态风阀 ，静态方法的修饰符public static （pub..
+            </p>
         </div>
-    </div>
-</footer>
+    </a>
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+</div>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
+<hr>
 
 
 
-<!-- Google Analytics -->
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/09/15/2018-09-15-7_2_Java8之Stram/">
+        <h2 class="post-title">
+            Java8之Stram
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-15
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+前言对我而言，为什么要引入stream，傻子都知道，不好用，还引入干什么for 循环遍历不太好，for循环是形式,\for循环不是进行过滤的必要手段，这里使用stream进行过滤更高效
+### 1、stream是一次使用的，阅后即焚### 2、stream方法会返回方法本身 Stram当中的方..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
 
 
 
-<!-- Baidu Tongji -->
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/09/14/2018-09-14-6_lambda表达式初探/">
+        <h2 class="post-title">
+            lambda表达式初探
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-14
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+前言1、lambda写法1.1、lambda表达式1231、前面一个小括号，不需要任何参数可以直接执行        一些参数 2、箭头指向后面要做的事情                         一个箭头3、箭头后面方法体大括号，代表具体要做的事情          一些代码
+1.2、..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('install','','2.0.0');
-</script>
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/09/11/2018-09-11-7_2_Collectors 的简单使用APImd/">
+        <h2 class="post-title">
+            Collectors 的简单使用API
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-11
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+前言4、forEach1234567891011121314151617181920212223242526272829303132333435363738/** * 3、Java8为集合类引入了另一个重要概念：流（stream）。一个流通常以一个集合类实例为其数据源， * 然后在其上定义各种..
+            </p>
+        </div>
+    </a>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
-</body>
+<hr>
 
-</html>
->
+
+
+<div class="post-preview " style="background-image: url('')">
+    <a href="/2018/09/07/2018-09-07-6_Optional简单实用/">
+        <h2 class="post-title">
+            Optional简单使用
+        </h2>
         <p class="post-meta">
             <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-07
         </p>
