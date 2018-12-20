@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="会飞的鱼" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Java9_模块化｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2018/10/12/2018-10-11-12_Java9_模块化/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    会飞的鱼
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Java9_模块化</h1>
+                    
+                    <span class="meta">
+                         作者 tianyaojiang
+                        <span>
+                          日期 2018-10-12
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Java9_模块化
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <!-- image url 
+https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
+　　首行缩进
+<font color="red">  </font>
+-->
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20181009-175940@2x.png" alt="WX20181009-175940@2x"></p>
+<h2 id="1、必须是java文件夹下面才可以创建module-info-java，添加两个maven。module项目。分别为one和two"><a href="#1、必须是java文件夹下面才可以创建module-info-java，添加两个maven。module项目。分别为one和two" class="headerlink" title="1、必须是java文件夹下面才可以创建module-info.java，添加两个maven。module项目。分别为one和two"></a>1、必须是java文件夹下面才可以创建<code>module-info.java</code>，添加两个maven。module项目。分别为one和two</h2><p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20181009-181918.png" alt="WX20181009-181918"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">module</span> one &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">module</span> two &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、设置模块的依赖和权限"><a href="#2、设置模块的依赖和权限" class="headerlink" title="2、设置模块的依赖和权限"></a>2、设置模块的依赖和权限</h2><h3 id="2-1、设置modulej级别为9（我的idea初始为5）"><a href="#2-1、设置modulej级别为9（我的idea初始为5）" class="headerlink" title="2.1、设置modulej级别为9（我的idea初始为5）"></a>2.1、设置modulej级别为9（我的idea初始为5）</h3><p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20181009-191640.png" alt="WX20181009-191640"></p>
+<h3 id="2-2、one中创建两个包和方法"><a href="#2-2、one中创建两个包和方法" class="headerlink" title="2.2、one中创建两个包和方法"></a>2.2、one中创建两个包和方法</h3><p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20181009-191823.png" alt="WX20181009-191823"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.can;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UtilCan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">can</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"can"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.cannot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UtilCanNot</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">canNot</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"canNot"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3、one中module-info-java"><a href="#2-3、one中module-info-java" class="headerlink" title="2.3、one中module-info.java"></a>2.3、one中<code>module-info.java</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">module</span> one &#123;</span><br><span class="line"><span class="comment">//导出可用包</span></span><br><span class="line">     <span class="keyword">exports</span>  com.hlj.java9.can;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-4、two中进行引入，如果发现为红报错，则，alt-enter进行one包的引入"><a href="#2-4、two中进行引入，如果发现为红报错，则，alt-enter进行one包的引入" class="headerlink" title="2.4、two中进行引入，如果发现为红报错，则，alt+enter进行one包的引入"></a>2.4、two中进行引入，如果发现为红报错，则，alt+enter进行one包的引入</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> two &#123;</span><br><span class="line">     <span class="keyword">requires</span> one;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-5、two中开始使用"><a href="#2-5、two中开始使用" class="headerlink" title="2.5、two中开始使用"></a>2.5、two中开始使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.use;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.can.UtilCan;</span><br><span class="line"><span class="comment">//import com.hlj.java9.cannot.UtilCanNot; //导入了，但是报错</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Use</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        UtilCan.can();</span><br><span class="line"><span class="comment">//        UtilCanNot.canNot(); 可以导入，但是编译不成功</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3、模块化中的服务（Service接口）"><a href="#3、模块化中的服务（Service接口）" class="headerlink" title="3、模块化中的服务（Service接口）"></a>3、模块化中的服务（Service接口）</h2><p><br></p>
+<h3 id="3-1、创建接口和实现类"><a href="#3-1、创建接口和实现类" class="headerlink" title="3.1、创建接口和实现类"></a>3.1、创建接口和实现类</h3><h4 id="3-1-1、接口"><a href="#3-1-1、接口" class="headerlink" title="3.1.1、接口"></a>3.1.1、接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.api;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyServiceInter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-2、实现类"><a href="#3-1-2、实现类" class="headerlink" title="3.1.2、实现类"></a>3.1.2、实现类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.api.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.MyServiceInter;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServiceInterImpl</span>  <span class="keyword">implements</span> <span class="title">MyServiceInter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"接口实现类"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">staticImpl</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"接口实现类中自己定义的静态方法"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-3、第二个实现类"><a href="#3-1-3、第二个实现类" class="headerlink" title="3.1.3、第二个实现类"></a>3.1.3、第二个实现类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hlj.java9.api.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.MyServiceInter;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServiceInterImplTwo</span> <span class="keyword">implements</span> <span class="title">MyServiceInter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"第二个接口实现类"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2、one-module-info-java-服务开始提供"><a href="#3-2、one-module-info-java-服务开始提供" class="headerlink" title="3.2、one module-info.java 服务开始提供"></a>3.2、one module-info.java 服务开始提供</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.MyServiceInter;</span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.impl.MyServiceInterImpl;</span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.impl.MyServiceInterImplTwo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> one &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//导出可用包</span></span><br><span class="line">     <span class="keyword">exports</span>  com.hlj.java9.can;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//对外提供的接口服务 ,下面指定的接口以及提供服务的impl，如果有多个实现类，用用逗号隔开    </span></span><br><span class="line">     <span class="keyword">exports</span>  com.hlj.java9.api;</span><br><span class="line">     provides MyServiceInter  with MyServiceInterImpl, MyServiceInterImplTwo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-3、two模块开始调用"><a href="#3-3、two模块开始调用" class="headerlink" title="3.3、two模块开始调用"></a>3.3、two模块开始调用</h3><h4 id="3-3-1、two-module-info-java"><a href="#3-3-1、two-module-info-java" class="headerlink" title="3.3.1、two module-info.java"></a>3.3.1、two module-info.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.hlj.java9.api.MyServiceInter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> two &#123;</span><br><span class="line">     <span class="keyword">requires</span> one;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//使用接口的名称 ，上面已经导入了one模块了</span></span><br><span class="line">     uses MyServiceInter  ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-2、开始测试使用-下面中的注释掉的解答下export必须是第一层才能够导出"><a href="#3-3-2、开始测试使用-下面中的注释掉的解答下export必须是第一层才能够导出" class="headerlink" title="3.3.2、开始测试使用 下面中的注释掉的解答下export必须是第一层才能够导出 "></a>3.3.2、开始测试使用<font color="red"> 下面中的注释掉的解答下export必须是第一层才能够导出 </font></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.hlj.java9.Consumer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hlj.java9.api.MyServiceInter;</span><br><span class="line"><span class="comment">//import com.hlj.java9.api.impl.MyServiceInterImpl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ServiceLoader;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Desc</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> HealerJean</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2018/10/10  上午10:23.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerUse</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//专门用来提供服务的类</span></span><br><span class="line">        ServiceLoader&lt;MyServiceInter&gt; loader = ServiceLoader.load(MyServiceInter.class);</span><br><span class="line">        <span class="comment">//所有的实现类</span></span><br><span class="line">        <span class="keyword">for</span>(MyServiceInter service:loader)&#123;</span><br><span class="line">            service.method();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        MyServiceInterImpl.staticImpl(); ont中export必须是第一层包，不可以套多层</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/HealerJean/java9-module" target="_blank" rel="noopener">代码下载</a></p>
+<p><font color="red"> 感兴趣的，欢迎添加博主微信， </font>哈，博主很乐意和各路好友交流，如果满意，请打赏博主任意金额，感兴趣的在微信转账的时候，备备注您的微信或者其他联系方式。添加博主微信哦。<br>请下方留言吧。可与博主自由讨论哦</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">支付包</th>
+<th style="text-align:center">微信</th>
+<th style="text-align:center">微信公众号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/tctip/alpay.jpg" alt="支付宝"></td>
+<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/tctip/weixin.jpg" alt="微信"></td>
+<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/my/qrcode_for_gh_a23c07a2da9e_258.jpg" alt="微信公众号"></td>
+</tr>
+</tbody>
+</table>
+<!-- Gitalk 评论 start  -->
+<p><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"></p>
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script> 
+<div id="gitalk-container"></div>    
+ <script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: `1d164cd85549874d0e3a`,
+        clientSecret: `527c3d223d1e6608953e835b547061037d140355`,
+        repo: `HealerJean.github.io`,
+        owner: 'HealerJean',
+        admin: ['HealerJean'],
+        id: 'K0fyiXv6NHgUFJqP',
+    });
+    gitalk.render('gitalk-container');
+</script> 
+
+<!-- Gitalk end -->
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/12/19/2018-05-26-Spring-Boot Web 应用加速/" data-toggle="tooltip" data-placement="top" title="Spring Boot Web 应用加速">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/10/11/2018-10-10-11_JAVA10_var的用法/" data-toggle="tooltip" data-placement="top" title="Java10_var的用法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1、必须是java文件夹下面才可以创建module-info-java，添加两个maven。module项目。分别为one和two"><span class="toc-text">1、必须是java文件夹下面才可以创建module-info.java，添加两个maven。module项目。分别为one和two</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、设置模块的依赖和权限"><span class="toc-text">2、设置模块的依赖和权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1、设置modulej级别为9（我的idea初始为5）"><span class="toc-text">2.1、设置modulej级别为9（我的idea初始为5）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2、one中创建两个包和方法"><span class="toc-text">2.2、one中创建两个包和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3、one中module-info-java"><span class="toc-text">2.3、one中module-info.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4、two中进行引入，如果发现为红报错，则，alt-enter进行one包的引入"><span class="toc-text">2.4、two中进行引入，如果发现为红报错，则，alt+enter进行one包的引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5、two中开始使用"><span class="toc-text">2.5、two中开始使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、模块化中的服务（Service接口）"><span class="toc-text">3、模块化中的服务（Service接口）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1、创建接口和实现类"><span class="toc-text">3.1、创建接口和实现类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1、接口"><span class="toc-text">3.1.1、接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2、实现类"><span class="toc-text">3.1.2、实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3、第二个实现类"><span class="toc-text">3.1.3、第二个实现类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2、one-module-info-java-服务开始提供"><span class="toc-text">3.2、one module-info.java 服务开始提供</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3、two模块开始调用"><span class="toc-text">3.3、two模块开始调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1、two-module-info-java"><span class="toc-text">3.3.1、two module-info.java</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2、开始测试使用-下面中的注释掉的解答下export必须是第一层才能够导出"><span class="toc-text">3.3.2、开始测试使用 下面中的注释掉的解答下export必须是第一层才能够导出 </span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 会飞的鱼 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="">
+</body>
+
+</html>
