@@ -1,11 +1,11 @@
 ﻿---
-title: linux学习笔记（Shell）
+title: Linux学习笔记（Shell）
 date: 2018-04-08 15:33:00
 tags: 
 - Linux
 category: 
 - Linux
-description: linux学习笔记（Shell）
+description: Linux学习笔记（Shell）
 ---
 
 # 一、Bash Shell基础
