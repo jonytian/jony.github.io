@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2></h2>
+  <p class="post-date">2018-12-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="Linux进程查看命令"><a href="#Linux进程查看命令" class="headerlink" title="Linux进程查看命令"></a>Linux进程查看命令</h2><h3 id="PS命令"><a href="#PS命令" class="headerlink" title="PS命令"></a>PS命令</h3><ul>
+<li><p>1.不带参数的ps使用</p>
+<p>  <img src="https://img-blog.csdn.net/20180326193105204?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>2.显示所有的当前进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps –ax  -a 代表 all。同时加上x参数会显示没有控制终端的进程。</span><br><span class="line">ps -ax | less 可以结合less命令和管道来使用以方便查看。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.通过cpu和内存使用来过滤进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ps -aux | less</span><br><span class="line">默认的结果集是未排好序的。可以通过 –sort命令来排序。</span><br><span class="line">根据 CPU 使用来升序排序</span><br><span class="line">ps -aux --sort -pcpu | less</span><br><span class="line">根据 内存使用 来升序排序</span><br><span class="line">ps -aux --sort -pmem | less</span><br><span class="line">我们也可以将它们合并到一个命令，并通过管道显示前10个结果：</span><br><span class="line">ps -aux --sort -pcpu,+pmem | head -n 10</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.通过进程名和PID过滤</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -f -C [进程名]</span><br><span class="line">ps -f -C mysqld</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>![这里写图片描述](https://img-blog.csdn.net/20180326193641782?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+</code></pre><ul>
+<li><p>5.树形显示进程</p>
+<p>  <img src="https://img-blog.csdn.net/20180326193834102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>6.查看所有关于java的进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a>top命令</h3><ul>
+<li>1.top命令经常用来监控Linux的系统状况，比如cpu、内存的使用。</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180326194526863?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<ul>
+<li><p>2.第一行：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一块：当前系统时间</span><br><span class="line">第二块：系统已经运行了3天23小时26分</span><br><span class="line">第三块：当前有1个用户登录系统</span><br><span class="line">第四块：load average后面的三个数分别是1分钟、5分钟、15分钟的负载情况。load average数据是每隔5秒钟检查一次活跃的进程数，然后按特定算法计算		出的数值。如果这个数除以逻辑CPU的数量，结果高于5的时候就表明系统在超负荷运转了。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>3.第二行：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一块：系统现在有431个进程</span><br><span class="line">第二块：有一个进程处于运行状态</span><br><span class="line">第三块：428个进程处于休眠状态</span><br><span class="line">第四块：0个进程处于stopped状态</span><br><span class="line">第五块：2个进程处于zombie状态</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>4.第三行：cpu状态</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0.4 us — 用户空间占用CPU的百分比。</span><br><span class="line">0.5 sy — 内核空间占用CPU的百分比。</span><br><span class="line">0.0 ni — 改变过优先级的进程占用CPU的百分比</span><br><span class="line">99.0 id — 空闲CPU百分比</span><br><span class="line">0.0 wa — IO等待占用CPU的百分比</span><br><span class="line">0.0 hi — 硬中断（Hardware IRQ）占用CPU的百分比</span><br><span class="line">0.0 si — 软中断（Software Interrupts）占用CPU的百分比</span><br><span class="line">用户空间就是用户进程所在的内存区域，相对的，系统空间就是操作系统占据的内存区域。用户进程和系统进程的所有数据都在内存中。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>5.第四行：内存状态（单位k）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">16237008 total — 物理内存总量（16.2GB）</span><br><span class="line">10904524 used — 使用中的内存总量（10.9GB）</span><br><span class="line">1984320  free — 空闲内存总量（2.0G）</span><br><span class="line">3348164  buffers — 缓存的内存量 （3.3G）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>6.第五行：swap交换分区</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5119996 total — 交换区总量（5GB）</span><br><span class="line">0       used — 使用的交换区总量（0）</span><br><span class="line">5119996 free — 空闲交换区总量（5GB）</span><br><span class="line">4800960 cached — 缓冲的交换区总量（4.8GB）</span><br></pre></td></tr></table></figure>
+<p>  可用内存数的近似的计算公式：第四行的free + 第四行的buffers + 第五行的cached。<br>我们最关心的内存监控是第五行swap（类似于虚拟内存）交换分区的used，如果这个数值在不断的变化，说明内核在不断进行内存和swap的数据交换，这是可以判定服务器的内存不够用了。</p>
+</li>
+<li><p>7.第六行：各进程（任务）的状态监控</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PID — 进程id</span><br><span class="line">USER — 进程所有者</span><br><span class="line">PR — 进程优先级</span><br><span class="line">NI — nice值。负值表示高优先级，正值表示低优先级</span><br><span class="line">VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES</span><br><span class="line">RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</span><br><span class="line">SHR — 共享内存大小，单位kb</span><br><span class="line">S — 进程状态。D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程</span><br><span class="line">%CPU — 上次更新到现在的CPU时间占用百分比</span><br><span class="line">%MEM — 进程使用的物理内存百分比</span><br><span class="line">TIME+ — 进程使用的CPU时间总计，单位1/100秒</span><br><span class="line">COMMAND — 进程名称（命令名/命令行）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="线程查看命令"><a href="#线程查看命令" class="headerlink" title="线程查看命令"></a>线程查看命令</h2><h3 id="top-–H（列出所有的线程）"><a href="#top-–H（列出所有的线程）" class="headerlink" title="top –H（列出所有的线程）"></a>top –H（列出所有的线程）</h3><p><img src="https://img-blog.csdn.net/20180326195231168?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="让top输出某个特定进程-pid-并检查该进程内运行的线程状况"><a href="#让top输出某个特定进程-pid-并检查该进程内运行的线程状况" class="headerlink" title="让top输出某个特定进程[pid]并检查该进程内运行的线程状况"></a>让top输出某个特定进程[pid]并检查该进程内运行的线程状况</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">让top输出某个特定进程[pid]并检查该进程内运行的线程状况：</span><br><span class="line">top -H -p [pid]</span><br></pre></td></tr></table></figure>
+</code></pre><p><img src="https://img-blog.csdn.net/20180326195321929?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="查看由进程号为-pid-的进程创建的所有线程"><a href="#查看由进程号为-pid-的进程创建的所有线程" class="headerlink" title="查看由进程号为[pid]的进程创建的所有线程"></a>查看由进程号为[pid]的进程创建的所有线程</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -T -p [pid]</span><br></pre></td></tr></table></figure>
+</code></pre><p><img src="https://img-blog.csdn.net/20180326194406332?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h2 id="Java线程监控分析（一般流程）"><a href="#Java线程监控分析（一般流程）" class="headerlink" title="Java线程监控分析（一般流程）"></a>Java线程监控分析（一般流程）</h2><h3 id="1-先用top命令找出占用资源比较多的java进程id"><a href="#1-先用top命令找出占用资源比较多的java进程id" class="headerlink" title="1.先用top命令找出占用资源比较多的java进程id"></a>1.先用top命令找出占用资源比较多的java进程id</h3><p><img src="https://img-blog.csdn.net/20180326212712948?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>我们以第一个进程为例，对该进程的所有线程进行监控</p>
+<h3 id="2-查看相关进程的所有线程"><a href="#2-查看相关进程的所有线程" class="headerlink" title="2.查看相关进程的所有线程"></a>2.查看相关进程的所有线程</h3><p><img src="https://img-blog.csdn.net/20180326213435746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>接下来我们以第一个线程为例，对其进行监控分析</p>
+<h3 id="3-然后借助JVM的-jconsole-exe-工具对相应线程进行具体分析"><a href="#3-然后借助JVM的-jconsole-exe-工具对相应线程进行具体分析" class="headerlink" title="3.然后借助JVM的 jconsole.exe  工具对相应线程进行具体分析"></a>3.然后借助JVM的 jconsole.exe  工具对相应线程进行具体分析</h3><p><img src="https://img-blog.csdn.net/20180326214337895?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>jconsole具体使用细节可以参考 <a href="https://blog.csdn.net/ithomer/article/details/9923311" target="_blank" rel="noopener">https://blog.csdn.net/ithomer/article/details/9923311</a> ，这里就不做过多的介绍了。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/12/20/Linux/linux学习笔记（基础）/">
+        <span class="nav-arrow">← </span>
+        
+          (untitled)
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/12/20/Maven/Maven基本使用（图文教程）/">
+        
+          (untitled)
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Linux进程查看命令"><span class="toc-nav-text">Linux进程查看命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#PS命令"><span class="toc-nav-text">PS命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#top命令"><span class="toc-nav-text">top命令</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程查看命令"><span class="toc-nav-text">线程查看命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#top-–H（列出所有的线程）"><span class="toc-nav-text">top –H（列出所有的线程）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#让top输出某个特定进程-pid-并检查该进程内运行的线程状况"><span class="toc-nav-text">让top输出某个特定进程[pid]并检查该进程内运行的线程状况</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#查看由进程号为-pid-的进程创建的所有线程"><span class="toc-nav-text">查看由进程号为[pid]的进程创建的所有线程</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Java线程监控分析（一般流程）"><span class="toc-nav-text">Java线程监控分析（一般流程）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-先用top命令找出占用资源比较多的java进程id"><span class="toc-nav-text">1.先用top命令找出占用资源比较多的java进程id</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-查看相关进程的所有线程"><span class="toc-nav-text">2.查看相关进程的所有线程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-然后借助JVM的-jconsole-exe-工具对相应线程进行具体分析"><span class="toc-nav-text">3.然后借助JVM的 jconsole.exe  工具对相应线程进行具体分析</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/12/20/Linux/Linux进程线程查看命令与java线程的监控分析/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "yanm1ng";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "",
+        owner: "yanm1ng",
+        repo: "yanm1ng.github.io",
+        oauth: {
+          client_id: "0f87e490e00ee3fd87ef",
+          client_secret: "4a9d2b148e7971c2201ad12131ce8bf8159ccd2e"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/12/20/Linux/Linux进程线程查看命令与java线程的监控分析/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
