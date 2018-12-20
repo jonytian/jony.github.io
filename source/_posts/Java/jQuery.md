@@ -1,11 +1,11 @@
 ﻿---
-title: jQuery
+title: JQuery
 date: 2018-04-08 15:33:00
 tags: 
 - Java
 category: 
 - Java
-description: jQuery
+description: JQuery
 ---
 
 # jQuery
