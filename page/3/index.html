@@ -141,128 +141,141 @@
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/12/20/Java并发/多线程中 interrupt、interrupted 、isInterrupted 区别/"></a>
+        <a href="/2018/04/08/算法/RS纠删算法原理与项目源码/">RS纠删算法原理</a>
       </h2>
-      <p class="article-date">December 20, 2018</p>
+      <p class="article-date">April 8, 2018</p>
       
-      <div class="article-summary">
         
-           1、interruptinterrupt方法用于中断线程。调用该方法的线程的状态为将被置为”中断”状态。注意：线程中断仅仅是置线程的中断状态位，不会停止线程。需要用户自己去监视线程的状态为并做处理。支持线程中断的方法（也就是线程中断后会抛出interruptedException的方法）就 ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/Java并发/多线程中 interrupt、interrupted 、isInterrupted 区别/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/Java并发/什么时候使用CountDownLatch/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编  ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/Java并发/什么时候使用CountDownLatch/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/Java并发/Java并发编程基础/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          因为最近的项目遇到大量并发编程的问题，抽出时间把并发编程的基础整理一下，毕竟万丈高楼平地起。更深层次的并发编程会在以后的博客中介绍。
-#一、为什么要并发编程？
+  <a href="/tags#算法">
+    <span class="tag-code">算法</span>
+  </a>
 
-并发编程可以使程序的执行速度更快。多处理器的情况并发编程可以更好的发挥多个处理器的能力，从而提高程序的执行速度，但是，并发编程通常 ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/Java并发/Java并发编程基础/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/tomcat服务器的介绍、安装与配置/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
       
       <div class="article-summary">
         
-          基本介绍
-Tomcat服务器架构
-Tomcat目录
-bin：存放tomcat启动关闭所用的批处理文件
-conf : tomcat的配置文件， 最重要的是server.xml，其中可以修改端口号
-lib : tomcat运行所需的jar包
-logs : tomcat运行时产生的日志文件
-tem ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/JavaEE/tomcat服务器的介绍、安装与配置/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/NPM工具的使用/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          NPM工具的使用NPM基本介绍
-NPM是什么？NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题。NPM的中文文档https://www.npmjs.com.cn/getting-started/what-is-npm/上介绍说：  它是世界上最大的软件注册 ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/JavaEE/NPM工具的使用/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/myeclipse闪退的解决办法/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          今天突然遇到myeclipse闪退，搜了一下解决办法，靠谱的有下面两种（亲测有效）两种解决办法：
- 1.删除问题所在工作空间下的.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi（推荐） 2.删除问题所在工作空间下的.metad ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/JavaEE/myeclipse闪退的解决办法/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/jQuery/"></a>
-      </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          jQuery最近的项目用到jQuery,但之前我对前端的东西不是很熟，故参照W3CSchool的教程进行总结和笔记记录，加深印象。
+          ##RS纠删算法原理
 
-##1. jQuery是一个轻量级的javaScript函数库
-
-jQuery包含以下特性
-
-HTML元素的选取
-HTML元素的操作
-CSS操作
-HTML事件 ...
+A.1  纠删码是存储领域常用的数据冗余技术， 相比多副本复制而言， 纠删码能够以更小的数据冗余度获得更高数据可靠性。 Reed Solomon Coding是存储领域常用的一种纠删码，它的基本原理如下：  给定n个数据块d1, d2,…, dn，n和一个正整数m，  ...
         
       </div>
-      <a class="more" href="/2018/12/20/JavaEE/jQuery/">Read more</a>
+      <a class="more" href="/2018/04/08/算法/RS纠删算法原理与项目源码/">Read more</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/Java Web基础/"></a>
+        <a href="/2018/04/08/算法/RS（255,223）纠错算法原理与项目源码/">RS（255,223）纠错算法原理</a>
       </h2>
-      <p class="article-date">December 20, 2018</p>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#算法">
+    <span class="tag-code">算法</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          RS（255,223）纠错算法原理与项目源码##1.背景
+
+数据在网络传输、存储过程中由于信道噪声条件，硬件设备等问题数据产生了差错，这时候应该如何处理呢？特别是现在企业对海量大数据的传输，存储的重视，要求我们使用一定的技术处理这些数据差错。##2.纠错编解码原理简单介绍
+为什么纠错码具有发 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/算法/RS（255,223）纠错算法原理与项目源码/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Linux/linux学习笔记（Shell）/">linux学习笔记（Shell）</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Linux">
+    <span class="tag-code">Linux</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          一、Bash Shell基础1.Bash Shell简单介绍
+管理整个硬件的其实是核心（kernel），通常用户（user）都是以shell来与核心沟通。
+什么是Shell？我们通过shell与核心沟通，shell相当于用户和核心之间的桥梁。        
+系统当前有多少Shells？可以 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Linux/linux学习笔记（Shell）/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Java/2018-06-28-Dubbo Cloud Native 实践与思考/">Dubbo Cloud Native 实践与思考</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          Dubbo Cloud Native 实践与思考
+
+Dubbo Cloud Native 实践与思考
+分享简介
+自我介绍
+主要议程
+Cloud Native 基础设施
+服务发现（Service Discovery ）
+如何选择
+Eureka
+Consul
+Zookeeper
+
+
+
+
+负载均衡 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Java/2018-06-28-Dubbo Cloud Native 实践与思考/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/网络通信/Socket网络编程/">Socket网络编程</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#网络编程">
+    <span class="tag-code">网络编程</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme.Socket基础类
+服务端
+12345678910111213141516171819202122232425262728 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/网络通信/Socket网络编程/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Java/Java Web基础/">Java Web基础</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
       
       <div class="article-summary">
         
@@ -270,45 +283,92 @@ HTML事件 ...
 Java  Web基础Java  Web基础一、Servlet&nbsp;1.创建Servlet&nbsp;&nbsp;1.实现Ser ...
         
       </div>
-      <a class="more" href="/2018/12/20/JavaEE/Java Web基础/">Read more</a>
+      <a class="more" href="/2018/04/08/Java/Java Web基础/">Read more</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/12/20/JavaEE/IntelliJ IDEA配置与使用（图文教程）/"></a>
+        <a href="/2018/04/08/网络通信/TCP_IP详解/">TCP_IP详解</a>
       </h2>
-      <p class="article-date">December 20, 2018</p>
-      
-      <div class="article-summary">
-        
-          前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA.一、IntelliJ配置1.代码提示与补充main,syso等快捷补全代码设置
-2.设置自动导包
-3.设置字体
-4.设置快捷键注意先选择Eclipse，当修改对应Code相关快捷键后，自动出现Eclipse copy ...
-        
-      </div>
-      <a class="more" href="/2018/12/20/JavaEE/IntelliJ IDEA配置与使用（图文教程）/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
-      </h2>
-      <p class="article-date">July 19, 2018</p>
+      <p class="article-date">April 8, 2018</p>
       
         
-  <a href="/tags#JVM">
-    <span class="tag-code">JVM</span>
+  <a href="/tags#网络编程">
+    <span class="tag-code">网络编程</span>
   </a>
 
       
       <div class="article-summary">
         
-          
-前言1、堆大小设置JVM 中最大堆大小有三方面限制：相关操作系统的数据模型（32-bt还是64-bit）限制；系统的可用虚拟内存限制；系统的可用物理内存限制。32位系统下，一般限制在1.5G~2G；64为操作系统对内存无限制。我在Windows Server 2003 系统，3.5G物理内 ...
+          注意：图片中的文字看起来有些小，不是很清楚，可以单击右键，选择点击“查看图像”，然后放大图像即可查看清晰的文字。
+
+TCP-IP详解卷1TCP-IP详解卷1第1章：概述&nbsp;1.TCP/IP分层：&nbsp;&nbsp;&nbsp;&nbsp;A.应用层（Telent：远程登录、FTP ...
         
       </div>
-      <a class="more" href="/2018/07/19/JVM/2018-09-10-JVM调优/">Read more</a>
+      <a class="more" href="/2018/04/08/网络通信/TCP_IP详解/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Spring Boot Web 应用加速</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          Spring Boot Web 应用加速默认情况下，Spring Boot Web 应用会装配一些功能组件 Bean。
+在大多数 Web 应用场景下，可以选择性地关闭一下自动装配的Spring 组件 Bean，以达到提升性能的目的。
+配置项优化Spring Boot Web 应用加速 完整配 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">什么时候使用CountDownLatch</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java并发">
+    <span class="tag-code">Java并发</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编  ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/08/Java并发/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/">如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java并发">
+    <span class="tag-code">Java并发</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          wait, notify 和 notifyAll，这些在多线程中被经常用到的保留关键字，在实际开发的时候很多时候却并没有被大家重视。本文对这些关键字的使用进行了描述。
+在 Java 中可以用 wait、notify 和 notifyAll 来实现线程间的通信。。举个例子，如果你的Java程序 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Java并发/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/">Read more</a>
     </article>
   
 
