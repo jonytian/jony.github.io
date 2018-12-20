@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Spring Boot Web 应用加速 | 会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Spring Boot Web 应用加速</h2>
+  <p class="post-date">2018-04-08</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="Spring-Boot-Web-应用加速"><a href="#Spring-Boot-Web-应用加速" class="headerlink" title="Spring Boot Web 应用加速"></a>Spring Boot Web 应用加速</h1><p>默认情况下，Spring Boot Web 应用会装配一些功能组件 Bean。</p>
+<p>在大多数 Web 应用场景下，可以选择性地关闭一下自动装配的Spring 组件 Bean，以达到提升性能的目的。</p>
+<h2 id="配置项优化"><a href="#配置项优化" class="headerlink" title="配置项优化"></a>配置项优化</h2><h3 id="Spring-Boot-Web-应用加速-完整配置项"><a href="#Spring-Boot-Web-应用加速-完整配置项" class="headerlink" title="Spring Boot Web 应用加速 完整配置项"></a>Spring Boot Web 应用加速 完整配置项</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">management.add-application-context-header = false</span><br><span class="line">spring.mvc.formcontent.putfilter.enabled = false</span><br><span class="line"></span><br><span class="line">spring.autoconfigure.exclude = org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.websocket.WebSocketMessagingAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration,\</span><br><span class="line">org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration,\</span><br><span class="line">org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration,\</span><br><span class="line">org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h3 id="配置项汇总"><a href="#配置项汇总" class="headerlink" title="配置项汇总"></a>配置项汇总</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring.autoconfigure.exclude = org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration,\</span><br><span class="line">org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration,\</span><br><span class="line">org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h3 id="关闭-Web-请求跟踪-自动装配"><a href="#关闭-Web-请求跟踪-自动装配" class="headerlink" title="关闭 Web 请求跟踪 自动装配"></a>关闭 Web 请求跟踪 自动装配</h3><h4 id="org-springframework-boot-actuate-autoconfigure-TraceWebFilterAutoConfiguration"><a href="#org-springframework-boot-actuate-autoconfigure-TraceWebFilterAutoConfiguration" class="headerlink" title="org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration"></a><code>org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration</code></h4><p>顾名思义，该自动装配用跟踪 Web 请求，通过Servlet Filter <code>org.springframework.boot.actuate.trace.WebRequestTraceFilter</code> 记录请求的信息（如：请求方法、请求头以及请求路径等），其计算的过程存在一定的开销，使用场景罕见，故可选择关闭。</p>
+<ul>
+<li>配置项</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.autoconfigure.exclude = org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h4 id="org-springframework-boot-actuate-autoconfigure-TraceRepositoryAutoConfiguration"><a href="#org-springframework-boot-actuate-autoconfigure-TraceRepositoryAutoConfiguration" class="headerlink" title="org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration"></a><code>org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration</code></h4><p>当<code>org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration</code>关闭后，其请求信息存储介质<code>org.springframework.boot.actuate.trace.TraceRepository</code>没有存在的必要，故可选择关闭。</p>
+<ul>
+<li>配置项</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.autoconfigure.exclude = org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h3 id="关闭-Web-请求结果指标-自动装配"><a href="#关闭-Web-请求结果指标-自动装配" class="headerlink" title="关闭 Web 请求结果指标 自动装配"></a>关闭 Web 请求结果指标 自动装配</h3><h4 id="org-springframework-boot-actuate-autoconfigure-MetricFilterAutoConfiguration"><a href="#org-springframework-boot-actuate-autoconfigure-MetricFilterAutoConfiguration" class="headerlink" title="org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration"></a><code>org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration</code></h4><p>该组件将自动装配<code>org.springframework.boot.actuate.autoconfigure.MetricsFilter</code>，该 Filter</p>
+<p>主要记录Web 请求结果指标（如：相应状态码、请求方法执行时间等），该信息一定程度上与反向代理服务器（nginx）功能重叠，故可选择关闭。</p>
+<ul>
+<li>配置项</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.autoconfigure.exclude = org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration</span><br></pre></td></tr></table></figure>
+<h3 id="可关闭-Servlet-Web-组件"><a href="#可关闭-Servlet-Web-组件" class="headerlink" title="可关闭 Servlet Web 组件"></a>可关闭 Servlet Web 组件</h3><h4 id="org-springframework-web-filter-HttpPutFormContentFilter"><a href="#org-springframework-web-filter-HttpPutFormContentFilter" class="headerlink" title="org.springframework.web.filter.HttpPutFormContentFilter"></a><code>org.springframework.web.filter.HttpPutFormContentFilter</code></h4><ul>
+<li>引入版本</li>
+</ul>
+<p><code>org.springframework.web.filter.HttpPutFormContentFilter</code> 由 Spring<br>Framework 3.1 版本引入，分发在 <code>org.springframework:spring-web</code> 中。</p>
+<ul>
+<li>使用场景</li>
+</ul>
+<p>通常 Web 场景中，浏览器通过 HTTP <code>GET</code> 或者 <code>POST</code> 请求 提交 Form 数据，而非浏览<br>器客户端（如应用程序）可能通过 HTTP <code>PUT</code> 请求来实现。</p>
+<p>当 HTTP 请求头<code>Content-Type</code> 为 <code>application/x-www-form-urlencoded</code> 时<br>，Form 数据被 encoded。而 Servlet 规范中， <code>ServletRequest.getParameter*()</code><br>方法仅对 HTTP <code>POST</code> 方法支持请求参数的获取，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> intetfacce ServletRequest &#123;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getParameter</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Enumeration&lt;String&gt; <span class="title">getParameterNames</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String[] getParameterValues(String name);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, String[]&gt; getParameterMap();</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>故 以上方法无法支持 HTTP <code>PUT</code> 或 HTTP <code>PATCH</code> 请求方法（请求头<code>Content-Type</code><br>为<code>application/x-www-form-urlencoded</code>）。</p>
+<p><code>org.springframework.web.filter.HttpPutFormContentFilter</code> 正是这种场景的解<br>决方案。</p>
+<p>Spring Boot 默认场景下，将<br><code>org.springframework.web.filter.HttpPutFormContentFilter</code> 被<br><code>org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration</code> 自动<br>装配，以下为 Spring Boot 1.4.1.RELEASE 以及更好版本定义（可能存在一定的差异）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(&#123; Servlet.class, DispatcherServlet.class,</span><br><span class="line">		WebMvcConfigurerAdapter.class &#125;)</span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span>(WebMvcConfigurationSupport.class)</span><br><span class="line"><span class="meta">@AutoConfigureOrder</span>(Ordered.HIGHEST_PRECEDENCE + <span class="number">10</span>)</span><br><span class="line"><span class="meta">@AutoConfigureAfter</span>(&#123; DispatcherServletAutoConfiguration.class,</span><br><span class="line">		ValidationAutoConfiguration.class &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcAutoConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(HttpPutFormContentFilter.class)</span><br><span class="line">    <span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"spring.mvc.formcontent.putfilter"</span>, name = <span class="string">"enabled"</span>, matchIfMissing = <span class="keyword">true</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> OrderedHttpPutFormContentFilter <span class="title">httpPutFormContentFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> OrderedHttpPutFormContentFilter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>综上所述，<code>org.springframework.web.filter.HttpPutFormContentFilter</code> 在绝大<br>多数 Web 使用场景下为非必须组件。</p>
+<ul>
+<li>配置项</li>
+</ul>
+<p>如果应用依赖 Spring Boot 版本 为 1.4.1.RELEASE 以及更高的版本，可通过如下配置，<br>进行将 <code>org.springframework.web.filter.HttpPutFormContentFilter</code> 关闭：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.mvc.formcontent.putfilter.enabled = false</span><br></pre></td></tr></table></figure>
+<h4 id="org-springframework-web-filter-HiddenHttpMethodFilter"><a href="#org-springframework-web-filter-HiddenHttpMethodFilter" class="headerlink" title="org.springframework.web.filter.HiddenHttpMethodFilter"></a><code>org.springframework.web.filter.HiddenHttpMethodFilter</code></h4><ul>
+<li>引入版本</li>
+</ul>
+<p><code>org.springframework.web.filter.HiddenHttpMethodFilter</code> 由 Spring<br>Framework 3.0 版本引入，分发在 <code>org.springframework:spring-web</code> 中。</p>
+<ul>
+<li>使用场景</li>
+</ul>
+<p>当 Web 服务端同一资源（URL）提供了多请求方法的实现，例如 URI ：/update 提供了<br>HTTP <code>POST</code> 以及 HTTP <code>PUT</code> 实现），通常 Web 场景中，浏览器仅支持 HTTP <code>GET</code><br>或者 <code>POST</code> 请求方法，这样的话，浏览器无法发起 HTTP <code>PUT</code> 请求。</p>
+<p>为了浏览器可以消费 HTTP <code>PUT</code> 资源， 需要在服务端将 HTTP <code>POST</code> 转化成<br>HTTP <code>PUT</code> 请求，为了解决这类问题，Spring 引入<br><code>org.springframework.web.filter.HiddenHttpMethodFilter</code> Web 组件。</p>
+<p>当浏览器 发起 HTTP <code>POST</code> 请求时，可通过增加请求参数（默认参数名称：”_method”）<br>的方式，进行HTTP 请求方法切换，<br><code>org.springframework.web.filter.HiddenHttpMethodFilter</code> 获取参数”_method”<br>值后，将参数值作为 <code>HttpServletRequest#getMethod()</code>的返回值，给后续 <code>Servlet</code><br>实现使用。</p>
+<p>出于通用性的考虑，<code>org.springframework.web.filter.HiddenHttpMethodFilter</code><br>通过调用 <code>#setMethodParam(String)</code> 方法，来修改转换请求方法的参数名称。</p>
+<p>Spring Boot 默认场景下，将<br><code>org.springframework.web.filter.HttpPutFormContentFilter</code> 被<br><code>org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration</code> 自动<br>装配，以下为 Spring Boot 1.4.1.RELEASE 以及更好版本定义（可能存在一定的差异）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(&#123; Servlet.class, DispatcherServlet.class,</span><br><span class="line">		WebMvcConfigurerAdapter.class &#125;)</span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span>(WebMvcConfigurationSupport.class)</span><br><span class="line"><span class="meta">@AutoConfigureOrder</span>(Ordered.HIGHEST_PRECEDENCE + <span class="number">10</span>)</span><br><span class="line"><span class="meta">@AutoConfigureAfter</span>(&#123; DispatcherServletAutoConfiguration.class,</span><br><span class="line">		ValidationAutoConfiguration.class &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcAutoConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(HiddenHttpMethodFilter.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> OrderedHiddenHttpMethodFilter <span class="title">hiddenHttpMethodFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> OrderedHiddenHttpMethodFilter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>综上所述，<code>org.springframework.web.filter.HiddenHttpMethodFilter</code> 也是特殊<br>场景下所需，故可以关闭之。</p>
+<ul>
+<li>配置项</li>
+</ul>
+<p>按目前最新的 Spring Boot 1.5.2.RELEASE 版本中实现，也没有提供类似<br><code>spring.mvc.formcontent.putfilter.enabled</code> 这样的配置项关闭，无法关闭。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">
+        <span class="nav-arrow">← </span>
+        
+          什么时候使用CountDownLatch
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/04/08/JVM/2018-04-08-1_Java虚拟机内存分配和溢出/">
+        
+          Java虚拟机内存分配和溢出
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring-Boot-Web-应用加速"><span class="toc-nav-text">Spring Boot Web 应用加速</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置项优化"><span class="toc-nav-text">配置项优化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Spring-Boot-Web-应用加速-完整配置项"><span class="toc-nav-text">Spring Boot Web 应用加速 完整配置项</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#配置项汇总"><span class="toc-nav-text">配置项汇总</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭-Web-请求跟踪-自动装配"><span class="toc-nav-text">关闭 Web 请求跟踪 自动装配</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#org-springframework-boot-actuate-autoconfigure-TraceWebFilterAutoConfiguration"><span class="toc-nav-text">org.springframework.boot.actuate.autoconfigure.TraceWebFilterAutoConfiguration</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#org-springframework-boot-actuate-autoconfigure-TraceRepositoryAutoConfiguration"><span class="toc-nav-text">org.springframework.boot.actuate.autoconfigure.TraceRepositoryAutoConfiguration</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#关闭-Web-请求结果指标-自动装配"><span class="toc-nav-text">关闭 Web 请求结果指标 自动装配</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#org-springframework-boot-actuate-autoconfigure-MetricFilterAutoConfiguration"><span class="toc-nav-text">org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可关闭-Servlet-Web-组件"><span class="toc-nav-text">可关闭 Servlet Web 组件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#org-springframework-web-filter-HttpPutFormContentFilter"><span class="toc-nav-text">org.springframework.web.filter.HttpPutFormContentFilter</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#org-springframework-web-filter-HiddenHttpMethodFilter"><span class="toc-nav-text">org.springframework.web.filter.HiddenHttpMethodFilter</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "yanm1ng";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Spring Boot Web 应用加速",
+        owner: "yanm1ng",
+        repo: "yanm1ng.github.io",
+        oauth: {
+          client_id: "0f87e490e00ee3fd87ef",
+          client_secret: "4a9d2b148e7971c2201ad12131ce8bf8159ccd2e"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
