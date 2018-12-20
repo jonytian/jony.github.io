@@ -1,5 +1,11 @@
 ---
 title: SpringBoot_jar方式启动并配置日志文件
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: SpringBoot_jar方式启动并配置日志文件
 ---
 
 <!-- image url 

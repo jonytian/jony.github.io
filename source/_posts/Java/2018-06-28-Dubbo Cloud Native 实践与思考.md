@@ -1,6 +1,13 @@
 ---
 title: Dubbo Cloud Native 实践与思考
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: Dubbo Cloud Native 实践与思考
 ---
+
 # Dubbo Cloud Native 实践与思考
 
 <!-- TOC -->

@@ -1,3 +1,13 @@
+---
+title: linux学习笔记（基础）
+date: 2018-04-08 15:33:00
+tags: 
+- Linux
+category: 
+- Linux
+description: linux学习笔记（基础）
+---
+
 ## 说明：本文主要参考《鸟哥的Linux私房菜》，主要目的是为了编写自动化部署、管理的Shell脚本，有些章节没有写，想进一步了解Linux知识的请参考《鸟哥的Linux私房菜》
 # 一、启动、关机等基础操作
 - date  显示日期命令

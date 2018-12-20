@@ -1,4 +1,14 @@
-﻿# Maven基本使用
+﻿---
+title: Maven基本使用
+date: 2018-04-08 15:33:00
+tags: 
+- Maven
+category: 
+- Maven
+description: Maven基本使用
+---
+
+# Maven基本使用
 
 ## 一、安装
 - 先去官网下载maven（http://maven.apache.org/download.cgi）

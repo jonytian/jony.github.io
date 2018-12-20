@@ -1,5 +1,11 @@
 ---
 title: SpringBoot启动加载数据CommandLineRunner
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: SpringBoot启动加载数据CommandLineRunner
 ---
 
 <!-- image url 

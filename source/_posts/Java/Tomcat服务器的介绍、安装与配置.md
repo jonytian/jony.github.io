@@ -1,4 +1,14 @@
-﻿## 基本介绍
+﻿---
+title: Tomcat服务器的介绍、安装与配置
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: Tomcat服务器的介绍、安装与配置
+---
+
+## 基本介绍
 - Tomcat服务器架构
 ![这里写图片描述](http://img.blog.csdn.net/20180301105223710?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 - Tomcat目录

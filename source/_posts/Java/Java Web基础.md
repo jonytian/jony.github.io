@@ -1,4 +1,14 @@
-﻿# 自己以前的学习笔记，希望可以帮助到一些学习Java web的人。还有一部分内容没写完，以后抽时间补上。
+﻿---
+title: Java Web基础
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: Java Web基础
+---
+
+# 自己以前的学习笔记，希望可以帮助到一些学习Java web的人。还有一部分内容没写完，以后抽时间补上。
 注意：图片可以右击点击查看图片，放大（使用火狐浏览器）
 ![这里写图片描述](http://img.blog.csdn.net/20180106163022914?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 

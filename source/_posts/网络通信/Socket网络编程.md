@@ -1,4 +1,14 @@
-﻿## 更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme.
+﻿---
+title: Socket网络编程
+date: 2018-04-08 15:33:00
+tags: 
+- 网络编程
+category: 
+- 网络编程
+description: Socket网络编程
+---
+
+## 更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme.
 
 ### Socket基础类
 - 服务端

@@ -1,4 +1,14 @@
-﻿## Linux进程查看命令
+﻿---
+title: Linux进程线程查看命令与java线程的监控分析
+date: 2018-04-08 15:33:00
+tags: 
+- Linux
+category: 
+- Linux
+description: Linux进程线程查看命令与java线程的监控分析
+---
+
+## Linux进程查看命令
 ### PS命令
 - 1.不带参数的ps使用
 

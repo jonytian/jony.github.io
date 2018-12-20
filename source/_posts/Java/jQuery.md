@@ -1,4 +1,14 @@
-﻿# jQuery
+﻿---
+title: jQuery
+date: 2018-04-08 15:33:00
+tags: 
+- Java
+category: 
+- Java
+description: jQuery
+---
+
+# jQuery
 最近的项目用到jQuery,但之前我对前端的东西不是很熟，故参照W3CSchool的教程进行总结和笔记记录，加深印象。
 
 -------------------
