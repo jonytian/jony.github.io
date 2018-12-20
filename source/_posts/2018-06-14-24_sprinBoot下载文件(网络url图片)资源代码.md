@@ -1,12 +1,7 @@
 ---
 title: SpringBoot下载文件资源代码
-date: 2018-06-14 03:33:00
-tags: 
-- SpringBoot
-category: 
-- SpringBoot
-description: SpringBoot下载文件资源代码
 ---
+
 <!-- image url 
 https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
 　　首行缩进

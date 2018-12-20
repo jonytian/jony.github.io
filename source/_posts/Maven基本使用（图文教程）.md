@@ -1,4 +1,8 @@
-﻿# Maven基本使用
+﻿---
+title: Maven基本使用
+---
+
+# Maven基本使用
 
 ## 一、安装
 - 先去官网下载maven（http://maven.apache.org/download.cgi）

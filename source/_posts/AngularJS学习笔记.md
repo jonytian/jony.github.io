@@ -1,4 +1,8 @@
-﻿最近开发一个项目用到AngularJS，作为一个java后端程序员，有点赶鸭子上架的赶脚，万幸AngularJS这个前端框架上手比较快，我参照 http://www.runoob.com/angularjs/angularjs-tutorial.html 网站上的教程进行学习，并对其进行笔记总结，加深记忆。
+﻿---
+title: AngularJS 学习笔记
+---
+
+最近开发一个项目用到AngularJS，作为一个java后端程序员，有点赶鸭子上架的赶脚，万幸AngularJS这个前端框架上手比较快，我参照 http://www.runoob.com/angularjs/angularjs-tutorial.html 网站上的教程进行学习，并对其进行笔记总结，加深记忆。
 ### 1.AngularJS基本介绍
 #### AngularJS是什么？
 

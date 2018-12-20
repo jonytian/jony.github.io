@@ -1,4 +1,7 @@
-﻿## 前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA.
+﻿---
+title: IntelliJ IDEA配置与使用（图文教程）
+---
+## 前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA.
 ## 一、IntelliJ配置
 ###  1.代码提示与补充
 ![这里写图片描述](https://img-blog.csdn.net/2018051810535189?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)

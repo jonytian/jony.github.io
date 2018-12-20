@@ -1,4 +1,9 @@
-﻿# 一、Bash Shell基础
+﻿---
+title: Bash Shell
+---
+
+
+# 一、Bash Shell基础
 ### 1.Bash Shell简单介绍
 - 管理整个硬件的其实是核心（kernel），通常用户（user）都是以shell来与核心沟通。
 - 什么是Shell？

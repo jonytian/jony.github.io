@@ -1,4 +1,9 @@
-﻿## 更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme.
+﻿---
+title:  Socket基础
+---
+
+
+## 更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme.
 
 ### Socket基础类
 - 服务端

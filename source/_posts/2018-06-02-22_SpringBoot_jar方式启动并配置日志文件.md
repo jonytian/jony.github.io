@@ -1,12 +1,7 @@
 ---
-title: 1、SpringBoot_jar方式启动并配置日志文件
-date: 2018-06-02 03:33:00
-tags: 
-- SpringBoot
-category: 
-- SpringBoot
-description: SpringBoot_jar方式启动并配置日志文件
+title: SpringBoot_jar方式启动并配置日志文件
 ---
+
 <!-- image url 
 https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
 　　首行缩进

@@ -1,12 +1,7 @@
 ---
 title: Collectors 的简单使用API
-date: 2018-09-11 03:33:00
-tags: 
-- Java
-category: 
-- Java
-description: Collectors 的简单使用API
 ---
+
 <!-- image url 
 https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
 　　首行缩进

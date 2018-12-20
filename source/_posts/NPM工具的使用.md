@@ -1,4 +1,8 @@
-﻿# NPM工具的使用
+﻿---
+title: NPM工具的使用
+---
+
+# NPM工具的使用
 ### NPM基本介绍
 - NPM是什么？NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题。NPM的中文文档https://www.npmjs.com.cn/getting-started/what-is-npm/上介绍说：
 	它是世界上最大的软件注册表，每星期大约有 30 亿次的下载量，包含超过 600000 个 包（package） （即，代码模块）。来自各大洲的开源软件开发者使用 npm 互相分享和借鉴。包的结构使您能够轻松跟踪依赖项和版本。

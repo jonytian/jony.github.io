@@ -1,5 +1,6 @@
-原文链接： javarevisited 翻译： ImportNew.com - 伯乐在线翻译组
-译文链接： http://www.importnew.com/16453.html
+---
+title: 如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例
+---
 
 wait, notify 和 notifyAll，这些在多线程中被经常用到的保留关键字，在实际开发的时候很多时候却并没有被大家重视。本文对这些关键字的使用进行了描述。
 

@@ -1,4 +1,8 @@
-﻿注意：图片中的文字看起来有些小，不是很清楚，可以单击右键，选择点击“查看图像”，然后放大图像即可查看清晰的文字。
+﻿---
+title: TCP_IP详解
+---
+
+注意：图片中的文字看起来有些小，不是很清楚，可以单击右键，选择点击“查看图像”，然后放大图像即可查看清晰的文字。
 
 ![这里写图片描述](http://img.blog.csdn.net/20171205200108454?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 <html>
