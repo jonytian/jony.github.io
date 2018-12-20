@@ -1,560 +1,482 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
-<head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="会飞的鱼" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        
-        
-    </title>
-
-    <link rel="canonical" href="http://yoursite.com/archives/2018/page/3/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
-</head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="false" data-istags="false
-" data-ishome="false">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    会飞的鱼
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
         }
-    }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Archives</h2>
+  <p class="post-date">文章归档</p>
+</div>
+<main class="app-body" id="archives">
+  
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2018
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-10-10-11_JAVA10_var的用法/" class="archive-title">Java10_var的用法</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-10-08-10_JAVA版本更新历史简单介绍/" class="archive-title">JAVA版本更新历史简单介绍</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-15-8_java8_9接口新特性/" class="archive-title">java8_9接口新特性</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-15-7_2_Java8之Stram/" class="archive-title">Java8之Stram</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-14-6_lambda表达式初探/" class="archive-title">lambda表达式初探</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-11-7_2_Collectors 的简单使用APImd/" class="archive-title">Collectors 的简单使用API</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-07-6_Optional简单实用/" class="archive-title">Optional简单使用</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-08-28-5_后端代码部署到Linux服务器jar启动/" class="archive-title">SpringBoot后端代码部署到Linux服务器jar启动</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-08-05-4-前端部署到Linux服务器和OSS服务器/" class="archive-title">前端部署到Linux服务器和OSS服务器</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-07-06-16_springBoot上传限制/" class="archive-title">springBoot上传限制</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-06-14-24_sprinBoot下载文件(网络url图片)资源代码/" class="archive-title">SpringBoot下载文件资源代码</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-06-02-22_SpringBoot_jar方式启动并配置日志文件/" class="archive-title">SpringBoot_jar方式启动并配置日志文件</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-05-19-21-静态内部类使用注入的方法属性/" class="archive-title">静态内部类使用注入的方法属性</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-03-29-1_SpringBoot启动加载数据CommandLineRunner/" class="archive-title">SpringBoot启动加载数据CommandLineRunner</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-10-11-12_Java9_模块化/" class="archive-title">Java9_模块化</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-07-02-项目中遇到的java堆溢出解决/" class="archive-title">项目中遇到的java堆溢出解决</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-11-8_虚拟机类加载机制/" class="archive-title">8、虚拟机类加载机制</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-11-7_Class文件结构/" class="archive-title">Class文件结构</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-11-6_JVM参数/" class="archive-title">JVM参数</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-11_6_1Java的client模式和server模式_/" class="archive-title">Java的client模式和server模式</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-10-5_2_虚拟机性能监控可视化/" class="archive-title">虚拟机性能监控可视化工具</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-09-4_内存分配和回收策略以及虚拟机参数配置/" class="archive-title">内存分配和回收策略以及虚拟机参数配置</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-10-5_1_虚拟机性能监控JDK命令行/" class="archive-title">虚拟机性能监控与故障处理工具</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-09-3_引用/" class="archive-title">引用</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-09-2_垃圾收集器/" class="archive-title">2、垃圾收集器</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-04-08-1_Java虚拟机内存分配和溢出/" class="archive-title">1、Java虚拟机内存分配和溢出</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/2018-09-10-JVM调优/" class="archive-title">JVM调优</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/计算机网络基础学习笔记/" class="archive-title">网络基础</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/TCP_IP详解/" class="archive-title">TCP_IP详解</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/Socket网络编程/" class="archive-title">Socket基础</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/基于BP神经元网络算法的模式识别/" class="archive-title">基于BP神经元网络算法的模式识别</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/RS纠删算法原理与项目源码/" class="archive-title">RS纠删算法原理</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/RS（255,223）纠错算法原理与项目源码/" class="archive-title">RS（255,223）纠错算法原理与项目源码</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/AngularJS学习笔记/" class="archive-title">AngularJS 学习笔记</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/Maven基本使用（图文教程）/" class="archive-title">Maven基本使用</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/linux学习笔记（Shell）/" class="archive-title">Bash Shell</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/Linux进程线程查看命令与java线程的监控分析/" class="archive-title">Linux进程查看命令</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/linux学习笔记（基础）/" class="archive-title">Bash Shell基础</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/NPM工具的使用/" class="archive-title">NPM工具的使用</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/tomcat服务器的介绍、安装与配置/" class="archive-title">Tomcat服务器架构</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/jQuery/" class="archive-title">jQuery</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/Java Web基础/" class="archive-title">Java Web基础</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/IntelliJ IDEA配置与使用（图文教程）/" class="archive-title">IntelliJ IDEA配置与使用（图文教程）</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/什么时候使用CountDownLatch/" class="archive-title">什么时候使用CountDownLatch</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/" class="archive-title">如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/负载均衡基础知识/" class="archive-title">负载均衡基础知识</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/多线程中 interrupt、interrupted 、isInterrupted 区别/" class="archive-title">多线程中 interrupt、interrupted 、isInterrupted 区别</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/20/Java并发编程基础/" class="archive-title">Java并发编程</a>
+        <p class="archive-date">12-20</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/19/2018-06-28-Dubbo Cloud Native 实践与思考/" class="archive-title">Dubbo Cloud Native 实践与思考</a>
+        <p class="archive-date">12-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/19/2018-01-18-Dubbo 外部化配置/" class="archive-title">Dubbo 外部化配置（Externalized Configuration）</a>
+        <p class="archive-date">12-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/19/2018-05-26-Spring-Boot Web 应用加速/" class="archive-title">Spring Boot Web 应用加速</a>
+        <p class="archive-date">12-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/19/2018-07-25-Reactive Programming 一种技术 各自表述/" class="archive-title">Reactive Programming 一种技术，各自表述</a>
+        <p class="archive-date">12-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/2018/12/19/2018-01-01-Dubbo 注解驱动/" class="archive-title">Dubbo 注解驱动（Annotation-Driven）</a>
+        <p class="archive-date">12-19</p>
+      </div>
+    
+  </div>
+</section>
+  
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/archives/2018/page/3/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
 </script>
-
-<!-- Main Content -->
-
-
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="">
-                        <h5><a href="/about/">tianyaojiang</a></h5>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </div>
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
 </div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/20/多线程中 interrupt、interrupted 、isInterrupted 区别/">
-        <h2 class="post-title">
-            未命名
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                 1、interruptinterrupt方法用于中断线程。调用该方法的线程的状态为将被置为”中断”状态。注意：线程中断仅仅是置线程的中断状态位，不会停止线程。需要用户自己去监视线程的状态为并做处理。支持线程中断的方法（也就是线程中断后会抛出interruptedException的方法）就是在..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/20/Java并发编程基础/">
-        <h2 class="post-title">
-            未命名
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                因为最近的项目遇到大量并发编程的问题，抽出时间把并发编程的基础整理一下，毕竟万丈高楼平地起。更深层次的并发编程会在以后的博客中介绍。
-#一、为什么要并发编程？
-
-并发编程可以使程序的执行速度更快。多处理器的情况并发编程可以更好的发挥多个处理器的能力，从而提高程序的执行速度，但是，并发编程通常是提..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/19/2018-06-28-Dubbo Cloud Native 实践与思考/">
-        <h2 class="post-title">
-            Dubbo Cloud Native 实践与思考
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Dubbo Cloud Native 实践与思考
-
-Dubbo Cloud Native 实践与思考
-分享简介
-自我介绍
-主要议程
-Cloud Native 基础设施
-服务发现（Service Discovery ）
-如何选择
-Eureka
-Consul
-Zookeeper
-
-
-
-
-负载均衡
-服..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/19/2018-07-25-Reactive Programming 一种技术 各自表述/">
-        <h2 class="post-title">
-            Reactive Programming 一种技术，各自表述
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Reactive Programming 一种技术，各自表述- Reactive Programming 一种技术，各自表述    - 前言    - 初识 Reactive    - 理解 Reactive        - 关于 Reactive 的一些讲法        - 传统编程模型中..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/19/2018-01-18-Dubbo 外部化配置/">
-        <h2 class="post-title">
-            Dubbo 外部化配置（Externalized Configuration）
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Dubbo 外部化配置（Externalized Configuration）主目录外部化配置（External Configuration）在Dubbo 注解驱动例子中，无论是服务提供方，还是服务消费方，均需要转配相关配置Bean：
-123456@Beanpublic ApplicationC..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/19/2018-01-01-Dubbo 注解驱动/">
-        <h2 class="post-title">
-            Dubbo 注解驱动（Annotation-Driven）
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Dubbo 注解驱动（Annotation-Driven）主目录注解驱动（Annotation-Driven）@DubboComponentScan起始版本： 2.5.7&lt;dubbo:annotation&gt;历史遗留问题1. 注解支持不充分在 Dubbo  2.5.7之前的版本 ，Du..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/12/19/2018-05-26-Spring-Boot Web 应用加速/">
-        <h2 class="post-title">
-            Spring Boot Web 应用加速
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Spring Boot Web 应用加速默认情况下，Spring Boot Web 应用会装配一些功能组件 Bean。
-在大多数 Web 应用场景下，可以选择性地关闭一下自动装配的Spring 组件 Bean，以达到提升性能的目的。
-配置项优化Spring Boot Web 应用加速 完整配置项..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/10/12/2018-10-11-12_Java9_模块化/">
-        <h2 class="post-title">
-            Java9_模块化
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-前言
-1、必须是java文件夹下面才可以创建module-info.java，添加两个maven。module项目。分别为one和two
-123module one &#123;&#125;
-123module two &#123;&#125;
-2、设置模块的依赖和权限2.1、设置module..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/10/11/2018-10-10-11_JAVA10_var的用法/">
-        <h2 class="post-title">
-            Java10_var的用法
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-11
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-前言1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768package com.hlj.ja..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/09/15/2018-09-15-7_2_Java8之Stram/">
-        <h2 class="post-title">
-            Java8之Stram
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-前言对我而言，为什么要引入stream，傻子都知道，不好用，还引入干什么for 循环遍历不太好，for循环是形式,\for循环不是进行过滤的必要手段，这里使用stream进行过滤更高效
-### 1、stream是一次使用的，阅后即焚### 2、stream方法会返回方法本身 Stram当中的方..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/archives/2018/page/2/">&larr; Newer Posts</a>
-    </li>
-    
-    
-    <li class="next">
-        <a href="/archives/2018/page/4/">Older Posts &rarr;</a>
-    </li>
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <h5><a href="/about/">tianyaojiang</a></h5>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-
-                        
-
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-
-            
-
-        </div>
-    </div>
-</div>
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 会飞的鱼 2018
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
-    </div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
 </footer>
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
 <script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
 </script>
 
-<!-- jquery.tagcloud.js -->
 <script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
 </script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-
-<!-- Google Analytics -->
-
-
-
 <!-- Baidu Tongji -->
 
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
-</script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
-</body>
-
+<script src="/js/script.js"></script>
+  </body>
 </html>
