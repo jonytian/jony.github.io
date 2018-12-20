@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      JQuery | 会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>JQuery</h2>
+  <p class="post-date">2018-04-08</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h1><p>最近的项目用到jQuery,但之前我对前端的东西不是很熟，故参照W3CSchool的教程进行总结和笔记记录，加深印象。</p>
+<hr>
+<p>##1. jQuery是一个轻量级的javaScript函数库</p>
+<ul>
+<li><p>jQuery包含以下特性</p>
+<ul>
+<li>HTML元素的选取</li>
+<li>HTML元素的操作</li>
+<li>CSS操作</li>
+<li>HTML事件函数</li>
+<li>JavaScript特效和动画</li>
+<li>HTML DOM遍历和修改</li>
+<li>AJAX</li>
+<li>Utilities</li>
+</ul>
+</li>
+<li><p>jQuery库位于单个JavaScript文件中，其中包含所有jQuery函数。引入jQuery库：</p>
+<pre><code>/*&lt;head&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;*/
+</code></pre><p>实际开发中可以这样引入</p>
+<pre><code>&lt;%
+    String path = request.getContextPath();
+ %&gt;
+ &lt;script type=&quot;text/javascript&quot; src=&quot;&lt;%=path%&gt;/edview/js/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+ //&lt;%=path%&gt;后面是jQuery.js实际的存放位置
+</code></pre><p>如果不愿意在自己的计算机上存放 jQuery 库，那么可以从 Google or Microsoft 加载 CDN jQuery 核心文件。请参考问W3CSchool教程。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-文档就绪函数"><a href="#2-文档就绪函数" class="headerlink" title="2.文档就绪函数"></a>2.文档就绪函数</h2><pre><code>$(document).ready(function(){
+
+    --- jQuery functions go here ----
+
+});
+</code></pre><hr>
+<p>实例中所有的jQuery函数都应该在文档就绪函数中，这是为了防止文档在完全加载（就绪）之前运行 jQuery 代码。</p>
+<hr>
+<h2 id="3-jQuery选择器"><a href="#3-jQuery选择器" class="headerlink" title="3.jQuery选择器"></a>3.jQuery选择器</h2><ul>
+<li><p>元素选择器（使用css选择器来选取HTML元素）</p>
+<ul>
+<li><p>$(“p”) 选取 </p><p> 元素。</p>
+</li>
+<li><p>$(“p.intro”) 选取所有 class=”intro” 的 </p><p> 元素。</p>
+</li>
+<li><p>$(“p#demo”) 选取 id=”demo” 的第一个 </p><p> 元素</p>
+</li>
+</ul>
+</li>
+<li><p>jQuery 属性选择器（使用 XPath 表达式来选择带有给定属性的元素）</p>
+<ul>
+<li><p>$(“[href]”) 选取所有带有 href 属性的元素。</p>
+</li>
+<li><p>$(“[href=’#’]”) 选取所有带有 href 值等于 “#” 的元素。</p>
+</li>
+<li><p>$(“[href!=’#’]”) 选取所有带有 href 值不等于 “#” 的元素。</p>
+</li>
+<li><p>$(“[href$=’.jpg’]”) 选取所有 href 值以 “.jpg” 结尾的元素。</p>
+</li>
+</ul>
+</li>
+<li><p>jQuery CSS 选择器</p>
+<ul>
+<li>$(“p”).css(“background-color”,”red”);</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-jQuery事件"><a href="#4-jQuery事件" class="headerlink" title="4.jQuery事件"></a>4.jQuery事件</h2><ul>
+<li>事件处理函数是当 HTML 中发生事件时自动被调用的函数。由“事件”（event）“触发”（triggered）是经常被用到的术语。</li>
+<li><p>jQuery的书写原则</p>
+<ul>
+<li>把所有 jQuery 代码置于事件处理函数中 </li>
+<li>把所有事件处理函数置于文档就绪事件处理器中 </li>
+<li>把 jQuery 代码置于单独的 .js 文件中 </li>
+<li>如果存在名称冲突，则重命名 jQuery 库 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-jQuery效果函数"><a href="#5-jQuery效果函数" class="headerlink" title="5. jQuery效果函数"></a>5. jQuery效果函数</h2><pre><code>隐藏、显示、切换、以及动画效果。常见的：
+</code></pre><ul>
+<li>show();</li>
+<li>hide();</li>
+<li>toggle();</li>
+</ul>
+<hr>
+<h2 id="6-jQuery-Callback回调函数"><a href="#6-jQuery-Callback回调函数" class="headerlink" title="6. jQuery Callback回调函数"></a>6. jQuery Callback回调函数</h2><ul>
+<li><p>A callback is a function that is passed as an argument to another function and is executed after its parent function has completed.回调函数就是一个函数被当做参数传入另一个函数中，当另一个函数执行完成后，该函数被执行。例：</p>
+<pre><code>$(&quot;p&quot;).hide(1000,function(){
+    alert(&quot;The paragraph is now hidden&quot;);
+});
+</code></pre></li>
+<li><p>回调函数的理解</p>
+<pre><code>var fn = new Function(&quot;arg1&quot;, &quot;arg2&quot;, &quot;return arg1 * arg2;&quot;);
+fn(3, 4);   //12
+上面这段代码中函数的参数是字符串，最后一段字符串实际上是一段js代码，因此上一段代码中，参数function()实际上相当于一段可执行的字符串，最后会被执行。
+</code></pre></li>
+<li><p>应用。在涉及到动画等函数处理时，回调函数很有用。例：</p>
+<pre><code>/*&lt;p&gt;The paragraph&lt;/p&gt;*/
+
+    $(document).ready(function(){
+          $(&quot;button&quot;).click(function(){
+              $(&quot;p&quot;).hide(4000);
+             alert(&quot;The paragraph is now hidden&quot;);
+          });
+    });
+</code></pre><p>点击button后，弹出标签被隐藏的信息，但实际上p标签在4秒后隐藏，可能还未隐藏，这是就发生了逻辑上的错误，因此需要把alert(“The paragraph is now hidden”)写到callback函数中，如下</p>
+<pre><code>$(document).ready(function(){
+      $(&quot;button&quot;).click(function(){
+          $(&quot;p&quot;).hide(1000,function(){
+                alert(&quot;The paragraph is now hidden&quot;);
+            });
+      });
+});
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="7-jQuery操作HTML"><a href="#7-jQuery操作HTML" class="headerlink" title="7.jQuery操作HTML"></a>7.jQuery操作HTML</h2><ul>
+<li><p>改变HTML内容</p>
+<pre><code>$(selector).html(content);  //html()函数改变所匹配的HTML元素的内容（innerHTML）
+</code></pre></li>
+<li><p>添加HTML内容</p>
+<pre><code>$(selector).append(content); //append()函数向所匹配的HTML元素内部追加内容
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="8-jQuery-CSS函数"><a href="#8-jQuery-CSS函数" class="headerlink" title="8.jQuery CSS函数"></a>8.jQuery CSS函数</h2><ul>
+<li>$(selector).css(name,value)   //为所有匹配元素的给定CSS属性设置值</li>
+<li>$(selector).css({properties})   //为所有匹配元素的一系列CSS属性设置值</li>
+<li><p>$(selector).css(name)  //返回指定CSS属性的值</p>
+<pre><code>$(&quot;p&quot;).css(&quot;background-color&quot;,&quot;yellow&quot;);
+$(&quot;p&quot;).css({&quot;background-color&quot;:&quot;yellow&quot;,&quot;font-size&quot;:&quot;200%&quot;});
+$(this).css(&quot;background-color&quot;);
+</code></pre></li>
+<li><p>jQuery 拥有两种供尺寸操作的重要函数：</p>
+<pre><code>$(selector).height(value) 
+$(selector).width(value) 
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="9-jQuery-AJAX函数"><a href="#9-jQuery-AJAX函数" class="headerlink" title="9.jQuery AJAX函数"></a>9.jQuery AJAX函数</h2><ul>
+<li>jQuery提供了供AJAX开发的丰富函数库</li>
+<li><p>jQuery 的 load 函数是一种简单的（但很强大的）AJAX 函数</p>
+<pre><code>$(selector).load(url,data,callback)
+</code></pre></li>
+<li><p>$.ajax(options) 是低层级 AJAX 函数的语法，提供了比高层级函数更多的功能，但是同时也更难使用。</p>
+<pre><code>option 参数设置的是 name|value 对，定义 url 数据、密码、数据类型、过滤器、字符集、超时以及错误函数
+
+        var params = {//三个参数为
+                &apos;task_Name&apos;: task_Name,
+                &apos;business_Type&apos;:business_Type,
+                &apos;send_Schedule&apos;:send_Schedule,
+                };
+
+        $.ajax({
+            url:  path + &apos;/task/queryAllTaskList&apos;,
+            type : &apos;post&apos;, /*请求方式*/
+            dataType : &apos;json&apos;, /*被返回的数据的类型 (html,xml,json,jasonp,script,text)*/
+            data : params,/*键值对的参数*/
+            success : function(data) {//data是请求后
+
+                showTerminalTalble(data.taskList);
+                if(null == data.errMsg || data.errMsg == &quot;&quot;) {
+                    if(updatePageNum){
+                        paginationUtil.showPageCountSelect(data.totalNum);
+                    }
+                    if(clickbtn){
+                        paginationUtil.setPageNum(1);
+                    }    
+                 } else {
+                    $(&quot;#taskTable&quot;).html(&quot;&quot;);
+                    $.jBoxUtil.noticeError({content: data.errMsg});
+                }
+
+            },
+            error : function(data) {
+                //var b=1;
+            }
+        });     
+    }
+</code></pre></li>
+</ul>
+<hr>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/04/08/Java/NPM工具的使用/">
+        <span class="nav-arrow">← </span>
+        
+          NPM工具的使用
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/04/08/Java/2018-06-14-24_SprinBoot下载文件(网络url图片)资源代码/">
+        
+          SpringBoot下载文件资源代码
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#jQuery"><span class="toc-nav-text">jQuery</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-文档就绪函数"><span class="toc-nav-text">2.文档就绪函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-jQuery选择器"><span class="toc-nav-text">3.jQuery选择器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-jQuery事件"><span class="toc-nav-text">4.jQuery事件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-jQuery效果函数"><span class="toc-nav-text">5. jQuery效果函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-jQuery-Callback回调函数"><span class="toc-nav-text">6. jQuery Callback回调函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#7-jQuery操作HTML"><span class="toc-nav-text">7.jQuery操作HTML</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#8-jQuery-CSS函数"><span class="toc-nav-text">8.jQuery CSS函数</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#9-jQuery-AJAX函数"><span class="toc-nav-text">9.jQuery AJAX函数</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/04/08/Java/JQuery/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "yanm1ng";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "JQuery",
+        owner: "yanm1ng",
+        repo: "yanm1ng.github.io",
+        oauth: {
+          client_id: "0f87e490e00ee3fd87ef",
+          client_secret: "4a9d2b148e7971c2201ad12131ce8bf8159ccd2e"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/04/08/Java/JQuery/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
