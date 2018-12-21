@@ -268,40 +268,6 @@ JDK1.6中才开始提供；
 <p>2、无法处理浮动垃圾,可能出现”Concurrent Mode Failure”失败<br>（1）、浮动垃圾（Floating Garbage）<br>      在并发清除时，用户线程新产生的垃圾，称为浮动垃圾；<br>      这使得并发清除时需要预留一定的内存空间，不能像其他收集器在老年代几乎填满再进行收集；<br>      也要可以认为CMS所需要的空间比其他垃圾收集器大；</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> &quot;-XX:CMSInitiatingOccupancyFraction&quot;：设置CMS预留内存空间；</span><br><span class="line">      JDK1.5默认值为68%；</span><br><span class="line">      JDK1.6变为大约92%；</span><br></pre></td></tr></table></figure>
 <p>（2）、”Concurrent Mode Failure”失败<br>      如果CMS预留内存空间无法满足程序需要，就会出现一次”Concurrent Mode Failure”失败；<br>      这时JVM启用后备预案：临时启用Serail Old收集器，而导致另一次Full GC的产生；<br>      这样的代价是很大的，所以CMSInitiatingOccupancyFraction不能设置得太大。<br>（C）、产生大量内存碎片<br>      由于CMS基于”标记-清除”算法，清除后不进行压缩操作；<br>      前面《Java虚拟机垃圾回收(二) 垃圾回收算法》”标记-清除”算法介绍时曾说过：<br>      产生大量不连续的内存碎片会导致分配大内存对象时，无法找到足够的连续内存，从而需要提前触发另一次Full GC动作。<br>      解决方法：<br>（1）、”-XX:+UseCMSCompactAtFullCollection”<br>      使得CMS出现上面这种情况时不进行Full GC，而开启内存碎片的合并整理过程；<br>      但合并整理过程无法并发，停顿时间会变长；<br>      默认开启（但不会进行，结合下面的CMSFullGCsBeforeCompaction）；<br>（2）、”-XX:+CMSFullGCsBeforeCompaction”<br>      设置执行多少次不压缩的Full GC后，来一次压缩整理；<br>      为减少合并整理过程的停顿时间；<br>      默认为0，也就是说每次都执行Full GC，不会进行压缩整理；<br>      由于空间不再连续，CMS需要使用可用”空闲列表”内存分配方式，这比简单实用”碰撞指针”分配内存消耗大；</p>
-<p><br><br><br><br>如果满意，请打赏博主任意金额，感兴趣的请下方留言吧。可与博主自由讨论哦</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">支付包</th>
-<th style="text-align:center">微信</th>
-<th style="text-align:center">微信公众号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/tctip/alpay.jpg" alt="支付宝"></td>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/tctip/weixin.jpg" alt="微信"></td>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/assets/img/my/qrcode_for_gh_a23c07a2da9e_258.jpg" alt="微信公众号"></td>
-</tr>
-</tbody>
-</table>
-<!-- Gitalk 评论 start  -->
-<p><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"></p>
-<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script> 
-<div id="gitalk-container"></div>    
- <script type="text/javascript">
-    var gitalk = new Gitalk({
-        clientID: `1d164cd85549874d0e3a`,
-        clientSecret: `527c3d223d1e6608953e835b547061037d140355`,
-        repo: `HealerJean.github.io`,
-        owner: 'HealerJean',
-        admin: ['HealerJean'],
-        id: 'GIGpj1NIXBs21OGz',
-    });
-    gitalk.render('gitalk-container');
-</script> 
-
-<!-- Gitalk end -->
 </section>
     <!-- Tags START -->
     
@@ -320,10 +286,10 @@ JDK1.6中才开始提供；
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2018/04/08/Java/IntelliJ IDEA配置与使用（图文教程）/">
+      <a class="nav-left" href="/2018/04/08/算法/基于BP神经元网络算法的模式识别/">
         <span class="nav-arrow">← </span>
         
-          IntelliJ IDEA配置与使用（图文教程）
+          BP神经元网络算法
         
       </a>
     
