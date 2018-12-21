@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="tianyaojiang&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </h2>
+      <p class="article-date">July 19, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言1、堆大小设置JVM 中最大堆大小有三方面限制：相关操作系统的数据模型（32-bt还是64-bit）限制；系统的可用虚拟内存限制；系统的可用物理内存限制。32位系统下，一般限制在1.5G~2G；64为操作系统对内存无限制。我在Windows Server 2003 系统，3.5G物理内 ...
+        
+      </div>
+      <a class="more" href="/2018/07/19/JVM/2018-09-10-JVM调优/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </h2>
+      <p class="article-date">July 2, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言报错提示
+1Handler dispatch failed; nested exception is java.lang.OutOfMemoryError: Java heap space
+1、以上报错很明显是java堆溢出分析一下，上面的报错是测试环境中，测试环境的大小是2cpu 4 ...
+        
+      </div>
+      <a class="more" href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </h2>
+      <p class="article-date">April 11, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言 1．classLoader的介绍及加载过程
+　　与普通程序不同的是，Java程序（class文件）并不是本地的可执行程序。当运行Java程序时，首先运行JVM（Java虚拟机），然后再把Java class加载到JVM里头运行，负责加载Java class的这部分就叫做Class L ...
+        
+      </div>
+      <a class="more" href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </h2>
+      <p class="article-date">April 11, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言
+1、魔数每个class文件开头的4个字节成为魔数，它的唯一作用就是识别它是一个什么文件，在git或者是jpeg等文件开头都有魔数的存在 ，因为仅仅通过扩展名来判断是不能保证正确性的， class文件的魔数值为 0XCAFEBABE (咖啡宝贝,很好记吧哈，16进制)
+
+2、版本接着就 ...
+        
+      </div>
+      <a class="more" href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </h2>
+      <p class="article-date">April 11, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言Java堆大小为20M  不可扩展（Xms表示初始Java堆大小 Xmx为Java堆最大 这里设置相等，就表明不可以扩展） 
+Xmn 表示分给新生代 （下面表示分给新生到10M，那么剩余的就分配给了老年代）
+12345-verbose:gc -Xms20M -Xmx20M -Xmn10 ...
+        
+      </div>
+      <a class="more" href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/10/JVM/2018-04-10-5_2_虚拟机性能监控可视化/">虚拟机性能监控可视化工具</a>
+      </h2>
+      <p class="article-date">April 10, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言JDK除了提供大量的命令行之外，还提供两个强大的可视化工具Jconsole(JDK1.5提出来的)和VisualVM（JDK1.6提出来的，并且已经从JDK分离出来成为可以独立发展的开源项目）
+1、jconsole1、启动jconsole，启动之前我已经启动一个SpringBoot的w ...
+        
+      </div>
+      <a class="more" href="/2018/04/10/JVM/2018-04-10-5_2_虚拟机性能监控可视化/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/10/JVM/2018-04-10-5_1_虚拟机性能监控JDK命令行/">虚拟机性能监控与故障处理工具</a>
+      </h2>
+      <p class="article-date">April 10, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言这个章节相当关键，因为前面4篇文章主要介绍了关于虚拟机内存分配和回收技术各方面的内容工具是运用知识处理数据的手段
+JDK的命令行工具对于一般的程序员来说，其实我们知道的有两个命令工具java.exe 和javac.exe，但是其他的bing目录下面的命令行程序却未必知道。这里我说下其中 ...
+        
+      </div>
+      <a class="more" href="/2018/04/10/JVM/2018-04-10-5_1_虚拟机性能监控JDK命令行/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/09/JVM/2018-04-09-4_内存分配和回收策略以及虚拟机参数配置/">内存分配和回收策略以及虚拟机参数配置</a>
+      </h2>
+      <p class="article-date">April 9, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言1、对象优先在Eden分配（如果小于Survivor，先进入Survivor）复制算法还记得吧，就是说的商业虚拟机关于新生代的垃圾收集就是采用的复制算法 将内存分为3分分别为8：1；1 那么Eden 就代表着8份
+123456789Java堆大小为20M  不可扩展（Xms表示初始Ja ...
+        
+      </div>
+      <a class="more" href="/2018/04/09/JVM/2018-04-09-4_内存分配和回收策略以及虚拟机参数配置/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/09/JVM/2018-04-09-3_引用/">Java引用</a>
+      </h2>
+      <p class="article-date">April 9, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言垃圾回收的机制主要是看对象是否有引用指向该对象。java对象的引用包括   强引用，软引用，弱引用，虚引用
+1、强引用 强引用有引用变量指向时永远不会被垃圾回收，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。
+当运行至Object[] objArr = new Objec ...
+        
+      </div>
+      <a class="more" href="/2018/04/09/JVM/2018-04-09-3_引用/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2018/04/09/JVM/2018-04-09-2_垃圾收集器/">垃圾收集器</a>
+      </h2>
+      <p class="article-date">April 9, 2018</p>
+      
+        
+  <a href="/tags#JVM">
+    <span class="tag-code">JVM</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+前言垃圾收集器GC ，同通常需要考虑3个事情
+
+1、那些内存需要回收
+2、什么时候回收
+3、如何回收
+
+1、不需要回收的  程序计时器，虚拟机栈，本地方法栈这3个区域都是线程所私有的，随着线程而生，而死。 关于栈的话，基本上就是在运行方法的时候开启一个栈帧。他们的内存大小和声明周期是已知的 ...
+        
+      </div>
+      <a class="more" href="/2018/04/09/JVM/2018-04-09-2_垃圾收集器/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a class="unvisible" href="/"><span class="page-arrow">←</span> Prev</a>
+  
+  
+    <a href="/page/2/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

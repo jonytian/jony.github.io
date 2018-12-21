@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="tianyaojiang&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Dubbo 外部化配置（Externalized Configuration） | 会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Dubbo 外部化配置（Externalized Configuration）</h2>
+  <p class="post-date">2018-04-08</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="Dubbo-外部化配置（Externalized-Configuration）"><a href="#Dubbo-外部化配置（Externalized-Configuration）" class="headerlink" title="Dubbo 外部化配置（Externalized Configuration）"></a>Dubbo 外部化配置（Externalized Configuration）</h1><h2 id="主目录"><a href="#主目录" class="headerlink" title="主目录"></a><a href="Dubbo-New-Programming-Model.md">主目录</a></h2><h2 id="外部化配置（External-Configuration）"><a href="#外部化配置（External-Configuration）" class="headerlink" title="外部化配置（External Configuration）"></a>外部化配置（External Configuration）</h2><p>在<a href="Dubbo-Annotation-Driven.md">Dubbo 注解驱动</a>例子中，无论是服务提供方，还是服务消费方，均需要转配相关配置Bean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ApplicationConfig <span class="title">applicationConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationConfig applicationConfig = <span class="keyword">new</span> ApplicationConfig();</span><br><span class="line">    applicationConfig.setName(<span class="string">"dubbo-annotation-consumer"</span>);</span><br><span class="line">    <span class="keyword">return</span> applicationConfig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然实现类似于<code>ProviderConfiguration</code> 和 <code>ConsumerConfiguration</code> 这样的 Spring  <code>@Configuration</code> Bean 成本并不高，不过通过 Java Code 的方式定义配置 Bean，或多或少是一种 Hard Code（硬编码）的行为，缺少弹性。</p>
+<p>尽管在 Spring 应用中，可以通过 <code>@Value</code> 或者 <code>Environment</code> 的方式获取外部配置，其代码简洁性以及类型转换灵活性存在明显的不足。因此，Spring Boot  提出了外部化配置（External Configuration）的感念，即通过程序以外的配置源，动态地绑定指定类型。</p>
+<p>随着 Spring Boot / Spring Cloud 应用的流行，开发人员逐渐地接受并且使用 Spring Boot 外部化配置（External Configuration），即通过 <code>application.properties</code> 或者 <code>bootstrap.properties</code> 装配配置 Bean。</p>
+<p>下列表格记录了 Dubbo 内置配置类：</p>
+<table>
+<thead>
+<tr>
+<th>配置类</th>
+<th>标签</th>
+<th>用途</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProtocolConfig</code></td>
+<td><code>&lt;dubbo:protocol/&gt;</code></td>
+<td>协议配置</td>
+<td>用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受</td>
+</tr>
+<tr>
+<td><code>ApplicationConfig</code></td>
+<td><code>&lt;dubbo:application/&gt;</code></td>
+<td>应用配置</td>
+<td>用于配置当前应用信息，不管该应用是提供者还是消费者</td>
+</tr>
+<tr>
+<td><code>ModuleConfig</code></td>
+<td><code>&lt;dubbo:module/&gt;</code></td>
+<td>模块配置</td>
+<td>用于配置当前模块信息，可选</td>
+</tr>
+<tr>
+<td><code>RegistryConfig</code></td>
+<td><code>&lt;dubbo:registry/&gt;</code></td>
+<td>注册中心配置</td>
+<td>用于配置连接注册中心相关信息</td>
+</tr>
+<tr>
+<td><code>MonitorConfig</code></td>
+<td><code>&lt;dubbo:monitor/&gt;</code></td>
+<td>监控中心配置</td>
+<td>用于配置连接监控中心相关信息，可选</td>
+</tr>
+<tr>
+<td><code>ProviderConfig</code></td>
+<td><code>&lt;dubbo:provider/&gt;</code></td>
+<td>提供方配置</td>
+<td>当 ProtocolConfig 和 ServiceConfig 某属性没有配置时，采用此缺省值，可选</td>
+</tr>
+<tr>
+<td><code>ConsumerConfig</code></td>
+<td><code>&lt;dubbo:consumer/&gt;</code></td>
+<td>消费方配置</td>
+<td>当 ReferenceConfig 某属性没有配置时，采用此缺省值，可选</td>
+</tr>
+<tr>
+<td><code>MethodConfig</code></td>
+<td><code>&lt;dubbo:method/&gt;</code></td>
+<td>方法配置</td>
+<td>用于 ServiceConfig 和 ReferenceConfig 指定方法级的配置信息</td>
+</tr>
+<tr>
+<td><code>ArgumentConfig</code></td>
+<td><code>&lt;dubbo:argument/&gt;</code></td>
+<td>参数配置</td>
+<td>用于指定方法参数配置</td>
+</tr>
+</tbody>
+</table>
+<p>通过申明对应的 Spring 扩展标签，在 Spring 应用上下文中将自动生成相应的配置 Bean。</p>
+<p>在 Dubbo 官方用户手册的<a href="http://dubbo.io/books/dubbo-user-book/configuration/properties.html" target="_blank" rel="noopener">“属性配置”</a>章节中，<code>dubbo.properties</code> 配置属性能够映射到  <code>ApplicationConfig</code> 、<code>ProtocolConfig</code> 以及 <code>RegistryConfig</code> 的字段。从某种意义上来说，<code>dubbo.properties</code>  也是 Dubbo 的外部化配置。</p>
+<p>其中，引用“映射规则”的内容：</p>
+<blockquote>
+<h2 id="映射规则"><a href="#映射规则" class="headerlink" title="映射规则"></a>映射规则</h2><p>将 XML 配置的标签名，加属性名，用点分隔，多个属性拆成多行</p>
+<ul>
+<li>比如：<code>dubbo.application.name=foo</code>等价于<code>&lt;dubbo:application name=&quot;foo&quot; /&gt;</code></li>
+<li>比如：<code>dubbo.registry.address=10.20.153.10:9090</code>等价于<code>&lt;dubbo:registryaddress=&quot;10.20.153.10:9090&quot; /&gt;</code></li>
+</ul>
+<p>如果 XML 有多行同名标签配置，可用 id 号区分，如果没有 id 号将对所有同名标签生效</p>
+<ul>
+<li>比如：<code>dubbo.protocol.rmi.port=1234</code>等价于<code>&lt;dubbo:protocol id=&quot;rmi&quot; name=&quot;rmi&quot; port=&quot;1099&quot; /&gt;</code><a href="http://dubbo.io/books/dubbo-user-book/configuration/properties.html#fn_2" target="_blank" rel="noopener">2</a></li>
+<li>比如：<code>dubbo.registry.china.address=10.20.153.10:9090</code>等价于<code>&lt;dubbo:registry id=&quot;china&quot;address=&quot;10.20.153.10:9090&quot; /&gt;</code></li>
+</ul>
+<p>下面是 dubbo.properties 的一个典型配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;dubbo.application.name=foo</span><br><span class="line">&gt;dubbo.application.owner=bar</span><br><span class="line">&gt;dubbo.registry.address=10.20.153.10:9090</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>根据“映射规则”，Dubbo 即支持单配置 Bean 映射，也支持多 Bean 映射。综合以上需求，既要兼容 Dubbo 已有的一个或多个 Bean 字段映射绑定，也支持外部化配置。</p>
+<blockquote>
+<p>特别提醒：外部化配置（External Configuration）并非 Spring Boot 特有，即使在 Spring Framework 场景下亦能支持。也就是说 Dubbo 外部化配置即可在 Spring Framework 中工作，也能在 Spring Boot 中运行。</p>
+</blockquote>
+<p>Dubbo 外部化配置（External Configuration） 支持起始版本为：<code>2.5.8</code></p>
+<h3 id="EnableDubboConfig"><a href="#EnableDubboConfig" class="headerlink" title="@EnableDubboConfig"></a><code>@EnableDubboConfig</code></h3><h4 id="起始版本：2-5-8"><a href="#起始版本：2-5-8" class="headerlink" title="起始版本：2.5.8"></a>起始版本：<code>2.5.8</code></h4><h4 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h4><h5 id="EnableDubboConfig-定义"><a href="#EnableDubboConfig-定义" class="headerlink" title="@EnableDubboConfig 定义"></a><code>@EnableDubboConfig</code> 定义</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableDubboConfig &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * It indicates whether binding to multiple Spring Beans.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the default value is &lt;code&gt;false&lt;/code&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@revised</span> 2.5.9</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">multiple</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>multiple</code> : 表示是否支持多Dubbo 配置 Bean 绑定。默认值为 <code>false</code> ，即单 Dubbo 配置 Bean 绑定</li>
+</ul>
+<h5 id="单-Dubbo-配置-Bean-绑定"><a href="#单-Dubbo-配置-Bean-绑定" class="headerlink" title="单 Dubbo 配置 Bean 绑定"></a>单 Dubbo 配置 Bean 绑定</h5><p>为了更好地向下兼容，<code>@EnableDubboConfig</code> 提供外部化配置属性与 Dubbo 配置类之间的绑定，其中映射关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>配置类</th>
+<th>外部化配置属性前缀</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProtocolConfig</code></td>
+<td><code>dubbo.protocol</code></td>
+<td>协议配置</td>
+</tr>
+<tr>
+<td><code>ApplicationConfig</code></td>
+<td><code>dubbo.application</code></td>
+<td>应用配置</td>
+</tr>
+<tr>
+<td><code>ModuleConfig</code></td>
+<td><code>dubbo.module</code></td>
+<td>模块配置</td>
+</tr>
+<tr>
+<td><code>RegistryConfig</code></td>
+<td><code>dubbo.registry</code></td>
+<td>注册中心配置</td>
+</tr>
+<tr>
+<td><code>MonitorConfig</code></td>
+<td><code>dubbo.monitor</code></td>
+<td>监控中心配置</td>
+</tr>
+<tr>
+<td><code>ProviderConfig</code></td>
+<td><code>dubbo.provider</code></td>
+<td>提供方配置</td>
+</tr>
+<tr>
+<td><code>ConsumerConfig</code></td>
+<td><code>dubbo.consumer</code></td>
+<td>消费方配置</td>
+</tr>
+</tbody>
+</table>
+<p>当标注 <code>@EnableDubboConfig</code> 的类被扫描注册后，同时  Spring（Spring Boot）应用配置（<code>PropertySources</code>）中存在<code>dubbo.application.*</code> 时，<code>ApplicationConfig</code>  Bean 将被注册到在 Spring 上下文。否则，不会被注册。如果出现<code>dubbo.registry.*</code>的配置，那么，<code>RegistryConfig</code> Bean 将会创建，以此类推。即按需装配 Dubbo 配置 Bean。</p>
+<p>如果需要指定配置 Bean的 id，可通过<code>**.id</code> 属性设置，以<code>dubbo.application</code> 为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## application</span><br><span class="line">dubbo.application.id = applicationBean</span><br><span class="line">dubbo.application.name = dubbo-demo-application</span><br></pre></td></tr></table></figure>
+<p>以上配置等同于以下 Java Config Bean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span>(<span class="string">"applicationBean"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> ApplicationConfig <span class="title">applicationBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ApplicationConfig applicationConfig = <span class="keyword">new</span> ApplicationConfig();</span><br><span class="line">    applicationConfig.setName(<span class="string">"dubbo-demo-application"</span>);</span><br><span class="line">    <span class="keyword">return</span> applicationConfig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致上配置属性与配置类绑定模式 - <code>dubbo.application.*</code> 映射到 <code>ApplicationConfig</code> 中的字段。</p>
+<blockquote>
+<p>注：当配置属性名称无法在配置类中找到字段时，将会忽略绑定</p>
+</blockquote>
+<h5 id="多-Dubbo-配置-Bean-绑定"><a href="#多-Dubbo-配置-Bean-绑定" class="headerlink" title="多 Dubbo 配置 Bean 绑定"></a>多 Dubbo 配置 Bean 绑定</h5><p>Dubbo <code>@Service</code> 和 <code>@Reference</code> 允许 Dubbo 应用关联<code>ApplicationConfig</code> Bean 或者指定多个<code>RegistryConfig</code> Bean 等能力。换句话说，Dubbo 应用上下文中可能存在多个<code>ApplicationConfig</code> 等 Bean定义。</p>
+<p>为了适应以上需要，因此从Dubbo <code>2.5.9</code> 开始，<code>@EnableDubboConfig</code> 支持多 Dubbo 配置 Bean 绑定，同时按照业界规约标准，与单 Dubbo 配置 Bean 绑定约定不同，配置属性前缀均为英文复数形式：</p>
+<blockquote>
+<p>详情请参考 ：<a href="https://github.com/alibaba/dubbo/issues/1141" target="_blank" rel="noopener">https://github.com/alibaba/dubbo/issues/1141</a></p>
+</blockquote>
+<ul>
+<li><code>dubbo.applications</code></li>
+<li><code>dubbo.modules</code></li>
+<li><code>dubbo.registries</code></li>
+<li><code>dubbo.protocols</code></li>
+<li><code>dubbo.monitors</code></li>
+<li><code>dubbo.providers</code></li>
+<li><code>dubbo.consumers</code></li>
+</ul>
+<p>以<code>dubbo.applications</code> 为例，基本的模式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dubbo.applications.$&#123;bean-name&#125;.property-name = $&#123;property-value&#125;</span><br></pre></td></tr></table></figure>
+<p>请读者注意，在单 Dubbo 配置 Bean 绑定时，可以通过指定<code>id</code> 属性的方式，定义<code>ApplicationConfig</code> Bean 的ID，即<code>dubbo.application.id</code>。</p>
+<p>而在多 Dubbo 配置 Bean 绑定时，Bean ID 则由<code>dubbo.applications.</code>与属性字段名称（<code>.property-name</code>)之间的字符来表达。</p>
+<p>如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># multiple Bean definition</span><br><span class="line">dubbo.applications.applicationBean.name = dubbo-demo-application</span><br><span class="line">dubbo.applications.applicationBean2.name = dubbo-demo-application2</span><br><span class="line">dubbo.applications.applicationBean3.name = dubbo-demo-application3</span><br></pre></td></tr></table></figure>
+<p>该配置内容中，绑定了三个<code>ApplicationConfig</code> Bean，分别是<code>applicationBean</code>、<code>applicationBean2</code>以及<code>applicationBean3</code></p>
+<h4 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h4><p><code>@EnableDubboConfig</code> 的使用方法很简答， 再次强调一点，当规约的外部配置存在时，相应的 Dubbo 配置类 才会提升为 Spring Bean。简言之，按需装配。</p>
+<h5 id="单-Dubbo-配置-Bean-绑定-1"><a href="#单-Dubbo-配置-Bean-绑定-1" class="headerlink" title="单 Dubbo 配置 Bean 绑定"></a>单 Dubbo 配置 Bean 绑定</h5><h6 id="外部化配置文件"><a href="#外部化配置文件" class="headerlink" title="外部化配置文件"></a>外部化配置文件</h6><p>将以下内容的外部化配置文件物理路径为：<code>classpath:/META-INF/config.properties</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 单 Dubbo 配置 Bean 绑定</span><br><span class="line">## application</span><br><span class="line">dubbo.application.id = applicationBean</span><br><span class="line">dubbo.application.name = dubbo-demo-application</span><br><span class="line"></span><br><span class="line">## module</span><br><span class="line">dubbo.module.id = moduleBean</span><br><span class="line">dubbo.module.name = dubbo-demo-module</span><br><span class="line"></span><br><span class="line">## registry</span><br><span class="line">dubbo.registry.address = zookeeper://192.168.99.100:32770</span><br><span class="line"></span><br><span class="line">## protocol</span><br><span class="line">dubbo.protocol.name = dubbo</span><br><span class="line">dubbo.protocol.port = 20880</span><br><span class="line"></span><br><span class="line">## monitor</span><br><span class="line">dubbo.monitor.address = zookeeper://127.0.0.1:32770</span><br><span class="line"></span><br><span class="line">## provider</span><br><span class="line">dubbo.provider.host = 127.0.0.1</span><br><span class="line"></span><br><span class="line">## consumer</span><br><span class="line">dubbo.consumer.client = netty</span><br></pre></td></tr></table></figure>
+<h6 id="EnableDubboConfig-配置-Bean"><a href="#EnableDubboConfig-配置-Bean" class="headerlink" title="@EnableDubboConfig 配置 Bean"></a><code>@EnableDubboConfig</code> 配置 Bean</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dubbo 配置 Bean</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> &lt;a href="mailto:mercyblitz@gmail.com"&gt;Mercy&lt;/a&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@EnableDubboConfig</span></span><br><span class="line"><span class="meta">@PropertySource</span>(<span class="string">"META-INF/config.properties"</span>)</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="实现引导类"><a href="#实现引导类" class="headerlink" title="实现引导类"></a>实现引导类</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dubbo 配置引导类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> &lt;a href="mailto:mercyblitz@gmail.com"&gt;Mercy&lt;/a&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboConfigurationBootstrap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建配置上下文</span></span><br><span class="line">        AnnotationConfigApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line">        <span class="comment">// 注册当前配置 Bean</span></span><br><span class="line">        context.register(DubboConfiguration.class);</span><br><span class="line">        context.refresh();</span><br><span class="line"> 	    <span class="comment">// application</span></span><br><span class="line">        ApplicationConfig applicationConfig = context.getBean(<span class="string">"applicationBean"</span>, ApplicationConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"applicationBean.name = %s \n"</span>, applicationConfig.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// module</span></span><br><span class="line">        ModuleConfig moduleConfig = context.getBean(<span class="string">"moduleBean"</span>, ModuleConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"moduleBean.name = %s \n"</span>, moduleConfig.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// registry</span></span><br><span class="line">        RegistryConfig registryConfig = context.getBean(RegistryConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"registryConfig.name = %s \n"</span>, registryConfig.getAddress());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// protocol</span></span><br><span class="line">        ProtocolConfig protocolConfig = context.getBean(ProtocolConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"protocolConfig.name = %s \n"</span>, protocolConfig.getName());</span><br><span class="line">        System.out.printf(<span class="string">"protocolConfig.port = %s \n"</span>, protocolConfig.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// monitor</span></span><br><span class="line">        MonitorConfig monitorConfig = context.getBean(MonitorConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"monitorConfig.name = %s \n"</span>, monitorConfig.getAddress());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// provider</span></span><br><span class="line">        ProviderConfig providerConfig = context.getBean(ProviderConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"providerConfig.name = %s \n"</span>, providerConfig.getHost());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// consumer</span></span><br><span class="line">        ConsumerConfig consumerConfig = context.getBean(ConsumerConfig.class);</span><br><span class="line">        System.out.printf(<span class="string">"consumerConfig.name = %s \n"</span>, consumerConfig.getClient());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">applicationBean.name = dubbo-demo-application </span><br><span class="line">moduleBean.name = dubbo-demo-module </span><br><span class="line">registryConfig.name = zookeeper://192.168.99.100:32770 </span><br><span class="line">protocolConfig.name = dubbo </span><br><span class="line">protocolConfig.port = 20880 </span><br><span class="line">monitorConfig.name = zookeeper://127.0.0.1:32770 </span><br><span class="line">providerConfig.name = 127.0.0.1 </span><br><span class="line">consumerConfig.name = netty</span><br></pre></td></tr></table></figure>
+<p>不难发现，<code>@EnableDubboConfig</code> 配置 Bean 配合外部化文件 <code>classpath:/META-INF/config.properties</code>，与执行输出内容相同。</p>
+<h5 id="多-Dubbo-配置-Bean-绑定-1"><a href="#多-Dubbo-配置-Bean-绑定-1" class="headerlink" title="多 Dubbo 配置 Bean 绑定"></a>多 Dubbo 配置 Bean 绑定</h5><h6 id="外部化配置文件-1"><a href="#外部化配置文件-1" class="headerlink" title="外部化配置文件"></a>外部化配置文件</h6><p>将以下内容的外部化配置文件物理路径为：<code>classpath:/META-INF/multiple-config.properties</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 多 Dubbo 配置 Bean 绑定</span><br><span class="line">## dubbo.applications</span><br><span class="line">dubbo.applications.applicationBean.name = dubbo-demo-application</span><br><span class="line">dubbo.applications.applicationBean2.name = dubbo-demo-application2</span><br><span class="line">dubbo.applications.applicationBean3.name = dubbo-demo-application3</span><br></pre></td></tr></table></figure>
+<h6 id="EnableDubboConfig-配置-Bean（多）"><a href="#EnableDubboConfig-配置-Bean（多）" class="headerlink" title="@EnableDubboConfig  配置 Bean（多）"></a><code>@EnableDubboConfig</code>  配置 Bean（多）</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableDubboConfig</span>(multiple = <span class="keyword">true</span>)</span><br><span class="line"><span class="meta">@PropertySource</span>(<span class="string">"META-INF/multiple-config.properties"</span>)</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboMultipleConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="实现引导类-1"><a href="#实现引导类-1" class="headerlink" title="实现引导类"></a>实现引导类</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dubbo 配置引导类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> &lt;a href="mailto:mercyblitz@gmail.com"&gt;Mercy&lt;/a&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboConfigurationBootstrap</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建配置上下文</span></span><br><span class="line">        AnnotationConfigApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line">        <span class="comment">// 注册当前配置 Bean</span></span><br><span class="line">        context.register(DubboMultipleConfiguration.class);</span><br><span class="line">        context.refresh();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取 ApplicationConfig Bean："applicationBean"、"applicationBean2" 和 "applicationBean3"</span></span><br><span class="line">        ApplicationConfig applicationBean = context.getBean(<span class="string">"applicationBean"</span>, ApplicationConfig.class);</span><br><span class="line">        ApplicationConfig applicationBean2 = context.getBean(<span class="string">"applicationBean2"</span>, ApplicationConfig.class);</span><br><span class="line">        ApplicationConfig applicationBean3 = context.getBean(<span class="string">"applicationBean3"</span>, ApplicationConfig.class);</span><br><span class="line"></span><br><span class="line">        System.out.printf(<span class="string">"applicationBean.name = %s \n"</span>, applicationBean.getName());</span><br><span class="line">        System.out.printf(<span class="string">"applicationBean2.name = %s \n"</span>, applicationBean2.getName());</span><br><span class="line">        System.out.printf(<span class="string">"applicationBean3.name = %s \n"</span>, applicationBean3.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">applicationBean.name = dubbo-demo-application </span><br><span class="line">applicationBean2.name = dubbo-demo-application2 </span><br><span class="line">applicationBean3.name = dubbo-demo-application3</span><br></pre></td></tr></table></figure>
+<p><code>@EnableDubboConfig(multiple = true)</code> 执行后，运行结果说明<code>ApplicationConfig</code> Bean 以及 ID 的定义方式。 </p>
+<h3 id="EnableDubboConfigBinding-amp-EnableDubboConfigBindings"><a href="#EnableDubboConfigBinding-amp-EnableDubboConfigBindings" class="headerlink" title="@EnableDubboConfigBinding &amp; @EnableDubboConfigBindings"></a><code>@EnableDubboConfigBinding</code> &amp; <code>@EnableDubboConfigBindings</code></h3><p><code>@EnableDubboConfig</code>适合绝大多数外部化配置场景，然而无论是单 Bean 绑定，还是多 Bean 绑定，其<strong>外部化配置属性前缀</strong>是固化的，如<code>dubbo.application</code> 以及 <code>dubbo.applications</code> 。</p>
+<p>当应用需要自定义<strong>外部化配置属性前缀</strong>，<code>@EnableDubboConfigBinding</code>能提供更大的弹性，支持单个外部化配置属性前缀（<code>prefix</code>) 与 Dubbo 配置 Bean 类型（<code>AbstractConfig</code> 子类）绑定，如果需要多次绑定时，可使用<code>@EnableDubboConfigBindings</code>。</p>
+<blockquote>
+<p>尽管 Dubbo 推荐使用 Java 8 ，然而实际的情况，运行时的 JDK 的版本可能从 6到8 均有。因此，<code>@EnableDubboConfigBinding</code> 没有实现<code>java.lang.annotation.Repeatable</code>，即允许实现类不支持重复标注<code>@EnableDubboConfigBinding</code>。</p>
+</blockquote>
+<p><code>@EnableDubboConfigBinding</code>  在支持外部化配置属性与 Dubbo 配置类绑定时，与 Dubbo 过去的映射行为不同，被绑定的 Dubbo 配置类将会提升为 Spring Bean，无需提前装配 Dubbo 配置类。同时，支持多 Dubbo 配置Bean 装配。其 Bean 的绑定规则与<code>@EnableDubboConfig</code>一致。</p>
+<h4 id="起始版本：-2-5-8"><a href="#起始版本：-2-5-8" class="headerlink" title="起始版本： 2.5.8"></a>起始版本： <code>2.5.8</code></h4><h4 id="使用说明-1"><a href="#使用说明-1" class="headerlink" title="使用说明"></a>使用说明</h4><h5 id="EnableDubboConfigBinding-定义"><a href="#EnableDubboConfigBinding-定义" class="headerlink" title="@EnableDubboConfigBinding 定义"></a><code>@EnableDubboConfigBinding</code> 定义</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableDubboConfigBinding &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The name prefix of the properties that are valid to bind to &#123;<span class="doctag">@link</span> AbstractConfig Dubbo Config&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the name prefix of the properties to bind</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">prefix</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> The binding type of &#123;<span class="doctag">@link</span> AbstractConfig Dubbo Config&#125;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> AbstractConfig</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> ApplicationConfig</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> ModuleConfig</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> RegistryConfig</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Class&lt;? extends AbstractConfig&gt; type();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * It indicates whether &#123;<span class="doctag">@link</span> #prefix()&#125; binding to multiple Spring Beans.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the default value is &lt;code&gt;false&lt;/code&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">multiple</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>prefix()</code> : 指定待绑定 Dubbo 配置类的外部化配置属性的前缀，比如<code>dubbo.application</code>  为 <code>ApplicationConfig</code> 的外部化配置属性的前缀。<code>prefix()</code> 支持占位符（Placeholder）, 并且其关联前缀值是否以”.” 作为结尾字符是可选的，即<code>prefix() = &quot;dubbo.application&quot;</code> 与 <code>prefix() = &quot;dubbo.application.&quot;</code> 效果相同 </li>
+<li><code>type()</code> : 指定 Dubbo 配置类，所有 <code>AbstractConfig</code> 的实现子类即可，如<code>ApplicationConfig</code> 、<code>RegistryConfig</code> 以及 <code>ProtocolConfig</code> 等</li>
+<li><code>multiple()</code> : 表明是否需要将<code>prefix()</code>   作为多个 <code>type()</code>   类型的 Spring Bean 外部化配置属性。默认值为<code>false</code>，即默认支持单个类型的 Spring 配置 Bean</li>
+</ul>
+<p>假设标注 <code>@EnableDubboConfigBinding</code> 的实现类被 Spring 应用上下文扫描并且注册后，其中<code>prefix()</code> =  <code>dubbo.app</code> 、 <code>type()</code> = <code>ApplicationConfig.class</code> ，且外部配置内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dubbo.app.id = applicationBean</span><br><span class="line">dubbo.app.name = dubbo-demo-application</span><br></pre></td></tr></table></figure>
+<p>Spring 应用上下文启动后，一个 ID 为 “applicationBean”   的 <code>ApplicationConfig</code>  Bean 被初始化，其 <code>name</code> 字段被设置为 “dubbo-demo-application”。</p>
+<h5 id="EnableDubboConfigBindings-定义"><a href="#EnableDubboConfigBindings-定义" class="headerlink" title="EnableDubboConfigBindings 定义"></a><code>EnableDubboConfigBindings</code> 定义</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableDubboConfigBindings &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The value of &#123;<span class="doctag">@link</span> EnableDubboConfigBindings&#125;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> non-null</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    EnableDubboConfigBinding[] value();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>value</code> : 指定多个<code>EnableDubboConfigBinding</code>，用于实现外部化配置属性前缀（<code>prefix</code>) 与 Dubbo 配置 Bean 类型（<code>AbstractConfig</code> 子类）绑定。</li>
+</ul>
+<h4 id="示例说明-1"><a href="#示例说明-1" class="headerlink" title="示例说明"></a>示例说明</h4><h5 id="外部化配置文件-2"><a href="#外部化配置文件-2" class="headerlink" title="外部化配置文件"></a>外部化配置文件</h5><p>将以下内容的外部化配置文件物理路径为：<code>classpath:/META-INF/bindings.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># classpath:/META-INF/bindings.properties</span><br><span class="line">## 占位符值 : ApplicationConfig 外部配置属性前缀</span><br><span class="line">applications.prefix = dubbo.apps.</span><br><span class="line"></span><br><span class="line">## 多 ApplicationConfig Bean 绑定</span><br><span class="line">dubbo.apps.applicationBean.name = dubbo-demo-application</span><br><span class="line">dubbo.apps.applicationBean2.name = dubbo-demo-application2</span><br><span class="line">dubbo.apps.applicationBean3.name = dubbo-demo-application3</span><br><span class="line"></span><br><span class="line">## 单 ModuleConfig Bean 绑定</span><br><span class="line">dubbo.module.id = moduleBean</span><br><span class="line">dubbo.module.name = dubbo-demo-module</span><br><span class="line"></span><br><span class="line">## 单 RegistryConfig Bean 绑定</span><br><span class="line">dubbo.registry.address = zookeeper://192.168.99.100:32770</span><br></pre></td></tr></table></figure>
+<h5 id="EnableDubboConfigBindings-配置-Bean"><a href="#EnableDubboConfigBindings-配置-Bean" class="headerlink" title="EnableDubboConfigBindings 配置 Bean"></a><code>EnableDubboConfigBindings</code> 配置 Bean</h5><p><code>DubboConfiguration</code> 作为 Dubbo 配置 Bean，除通过 <code>@EnableDubboConfigBinding</code> 绑定之外，还需要 <code>@PropertySource</code> 指定外部化配置文件（<code>classpath:/META-INF/bindings.properties</code>）:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dubbo 配置 Bean</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> &lt;a href="mailto:mercyblitz@gmail.com"&gt;Mercy&lt;/a&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@EnableDubboConfigBindings</span>(&#123;</span><br><span class="line">        <span class="meta">@EnableDubboConfigBinding</span>(prefix = <span class="string">"$&#123;applications.prefix&#125;"</span>,</span><br><span class="line">                type = ApplicationConfig.class, multiple = <span class="keyword">true</span>), <span class="comment">// 多 ApplicationConfig Bean 绑定</span></span><br><span class="line">        <span class="meta">@EnableDubboConfigBinding</span>(prefix = <span class="string">"dubbo.module"</span>, <span class="comment">// 不带 "." 后缀</span></span><br><span class="line">                type = ModuleConfig.class), <span class="comment">// 单 ModuleConfig Bean 绑定</span></span><br><span class="line">        <span class="meta">@EnableDubboConfigBinding</span>(prefix = <span class="string">"dubbo.registry."</span>, <span class="comment">// 带 "." 后缀</span></span><br><span class="line">                type = RegistryConfig.class) <span class="comment">// 单 RegistryConfig Bean 绑定</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@PropertySource</span>(<span class="string">"META-INF/bindings.properties"</span>)</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboConfiguration</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="实现引导类-2"><a href="#实现引导类-2" class="headerlink" title="实现引导类"></a>实现引导类</h5><p>通过之前的使用说明，当 <code>EnableDubboConfigBinding</code> 将外部配置化文件<code>classpath:/META-INF/dubbo.properties</code> 绑定到 <code>ApplicationConfig</code>后，其中 Spring Bean “applicationBean” 的 name 字段被设置成 “dubbo-demo-application”。同时， <code>EnableDubboConfigBinding</code>  所标注的 <code>DubboConfiguration</code> 需要被 Sring 应用上下文注册：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dubbo 配置引导类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> &lt;a href="mailto:mercyblitz@gmail.com"&gt;Mercy&lt;/a&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboConfigurationBootstrap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建配置上下文</span></span><br><span class="line">        AnnotationConfigApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line">        <span class="comment">// 注册当前配置 Bean</span></span><br><span class="line">        context.register(DubboConfiguration.class);</span><br><span class="line">        context.refresh();</span><br><span class="line"> 		<span class="comment">// 获取 ApplicationConfig Bean："applicationBean"、"applicationBean2" 和 "applicationBean3"</span></span><br><span class="line">        ApplicationConfig applicationBean = context.getBean(<span class="string">"applicationBean"</span>, ApplicationConfig.class);</span><br><span class="line">        ApplicationConfig applicationBean2 = context.getBean(<span class="string">"applicationBean2"</span>, ApplicationConfig.class);</span><br><span class="line">        ApplicationConfig applicationBean3 = context.getBean(<span class="string">"applicationBean3"</span>, ApplicationConfig.class);</span><br><span class="line"></span><br><span class="line">        System.out.printf(<span class="string">"applicationBean.name = %s \n"</span>, applicationBean.getName());</span><br><span class="line">        System.out.printf(<span class="string">"applicationBean2.name = %s \n"</span>, applicationBean2.getName());</span><br><span class="line">        System.out.printf(<span class="string">"applicationBean3.name = %s \n"</span>, applicationBean3.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取 ModuleConfig Bean："moduleBean"</span></span><br><span class="line">        ModuleConfig moduleBean = context.getBean(<span class="string">"moduleBean"</span>, ModuleConfig.class);</span><br><span class="line"></span><br><span class="line">        System.out.printf(<span class="string">"moduleBean.name = %s \n"</span>, moduleBean.getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取 RegistryConfig Bean</span></span><br><span class="line">        RegistryConfig registry = context.getBean(RegistryConfig.class);</span><br><span class="line"></span><br><span class="line">        System.out.printf(<span class="string">"registry.address = %s \n"</span>, registry.getAddress());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h5><p><code>DubboConfigurationBootstrap</code> 运行后控制台输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">applicationBean.name = dubbo-demo-application </span><br><span class="line">applicationBean2.name = dubbo-demo-application2 </span><br><span class="line">applicationBean3.name = dubbo-demo-application3 </span><br><span class="line">moduleBean.name = dubbo-demo-module </span><br><span class="line">registry.address = zookeeper://192.168.99.100:32770</span><br></pre></td></tr></table></figure>
+<p>输出的内容与<code>classpath:/META-INF/bindings.properties</code> 绑定的内容一致，符合期望。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/04/08/Java并发/负载均衡基础知识/">
+        <span class="nav-arrow">← </span>
+        
+          负载均衡
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/04/08/Java/2018-01-01-Dubbo 注解驱动/">
+        
+          Dubbo 注解驱动（Annotation-Driven）
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Dubbo-外部化配置（Externalized-Configuration）"><span class="toc-nav-text">Dubbo 外部化配置（Externalized Configuration）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#主目录"><span class="toc-nav-text">主目录</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#外部化配置（External-Configuration）"><span class="toc-nav-text">外部化配置（External Configuration）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#映射规则"><span class="toc-nav-text">映射规则</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#EnableDubboConfig"><span class="toc-nav-text">@EnableDubboConfig</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#起始版本：2-5-8"><span class="toc-nav-text">起始版本：2.5.8</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用说明"><span class="toc-nav-text">使用说明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#EnableDubboConfig-定义"><span class="toc-nav-text">@EnableDubboConfig 定义</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#单-Dubbo-配置-Bean-绑定"><span class="toc-nav-text">单 Dubbo 配置 Bean 绑定</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#多-Dubbo-配置-Bean-绑定"><span class="toc-nav-text">多 Dubbo 配置 Bean 绑定</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#示例说明"><span class="toc-nav-text">示例说明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#单-Dubbo-配置-Bean-绑定-1"><span class="toc-nav-text">单 Dubbo 配置 Bean 绑定</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#外部化配置文件"><span class="toc-nav-text">外部化配置文件</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#EnableDubboConfig-配置-Bean"><span class="toc-nav-text">@EnableDubboConfig 配置 Bean</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#实现引导类"><span class="toc-nav-text">实现引导类</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#执行结果"><span class="toc-nav-text">执行结果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#多-Dubbo-配置-Bean-绑定-1"><span class="toc-nav-text">多 Dubbo 配置 Bean 绑定</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#外部化配置文件-1"><span class="toc-nav-text">外部化配置文件</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#EnableDubboConfig-配置-Bean（多）"><span class="toc-nav-text">@EnableDubboConfig  配置 Bean（多）</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#实现引导类-1"><span class="toc-nav-text">实现引导类</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#执行结果-1"><span class="toc-nav-text">执行结果</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#EnableDubboConfigBinding-amp-EnableDubboConfigBindings"><span class="toc-nav-text">@EnableDubboConfigBinding &amp; @EnableDubboConfigBindings</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#起始版本：-2-5-8"><span class="toc-nav-text">起始版本： 2.5.8</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用说明-1"><span class="toc-nav-text">使用说明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#EnableDubboConfigBinding-定义"><span class="toc-nav-text">@EnableDubboConfigBinding 定义</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#EnableDubboConfigBindings-定义"><span class="toc-nav-text">EnableDubboConfigBindings 定义</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#示例说明-1"><span class="toc-nav-text">示例说明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#外部化配置文件-2"><span class="toc-nav-text">外部化配置文件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#EnableDubboConfigBindings-配置-Bean"><span class="toc-nav-text">EnableDubboConfigBindings 配置 Bean</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#实现引导类-2"><span class="toc-nav-text">实现引导类</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#运行结果"><span class="toc-nav-text">运行结果</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/04/08/Java/2018-01-18-Dubbo 外部化配置/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "tianyaojiang";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Dubbo 外部化配置（Externalized Configuration）",
+        owner: "tianyaojiang",
+        repo: "tianyaojiang.github.io",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/04/08/Java/2018-01-18-Dubbo 外部化配置/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="tianyaojiang&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      IntelliJ IDEA配置与使用（图文教程） | 会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>IntelliJ IDEA配置与使用（图文教程）</h2>
+  <p class="post-date">2018-04-08</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="前言：之前一直使用的MyEclipse，现在转战IntelliJ-IDEA"><a href="#前言：之前一直使用的MyEclipse，现在转战IntelliJ-IDEA" class="headerlink" title="前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA."></a>前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA.</h2><h2 id="一、IntelliJ配置"><a href="#一、IntelliJ配置" class="headerlink" title="一、IntelliJ配置"></a>一、IntelliJ配置</h2><h3 id="1-代码提示与补充"><a href="#1-代码提示与补充" class="headerlink" title="1.代码提示与补充"></a>1.代码提示与补充</h3><p><img src="https://img-blog.csdn.net/2018051810535189?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>main,syso等快捷补全代码设置<br><img src="https://img-blog.csdn.net/20180518111652797?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180519220051956?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="2-设置自动导包"><a href="#2-设置自动导包" class="headerlink" title="2.设置自动导包"></a>2.设置自动导包</h3><p><img src="https://img-blog.csdn.net/20180518111231729?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="3-设置字体"><a href="#3-设置字体" class="headerlink" title="3.设置字体"></a>3.设置字体</h3><p><img src="https://img-blog.csdn.net/20180518111240546?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="4-设置快捷键"><a href="#4-设置快捷键" class="headerlink" title="4.设置快捷键"></a>4.设置快捷键</h3><p>注意先选择Eclipse，当修改对应Code相关快捷键后，自动出现Eclipse copy<br><img src="https://img-blog.csdn.net/2018051811125451?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="5-设置字符码表"><a href="#5-设置字符码表" class="headerlink" title="5.设置字符码表"></a>5.设置字符码表</h3><p><img src="https://img-blog.csdn.net/20180518105433437?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="6-Tomcat服务器设置"><a href="#6-Tomcat服务器设置" class="headerlink" title="6.Tomcat服务器设置"></a>6.Tomcat服务器设置</h3><p><img src="https://img-blog.csdn.net/20180518111417262?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180518111424648?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180518173639583?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="7-maven设置"><a href="#7-maven设置" class="headerlink" title="7.maven设置"></a>7.maven设置</h3><p><img src="https://img-blog.csdn.net/20180518111548409?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="8-web目录的设置"><a href="#8-web目录的设置" class="headerlink" title="8.web目录的设置"></a>8.web目录的设置</h3><p><img src="https://img-blog.csdn.net/20180518115336481?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>创建完之后注意修改目录的属性。选中目录后—》右击—》Mark Directory as —》选择相应的属性。</p>
+<h2 id="二、IntelliJ-IDEA部署项目"><a href="#二、IntelliJ-IDEA部署项目" class="headerlink" title="二、IntelliJ IDEA部署项目"></a>二、IntelliJ IDEA部署项目</h2><h3 id="1-设置编译文件的输出目录"><a href="#1-设置编译文件的输出目录" class="headerlink" title="1.设置编译文件的输出目录"></a>1.设置编译文件的输出目录</h3><p>默认情况下<br><img src="https://img-blog.csdn.net/20180519221735268?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180518173135895?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>当然，你可以选择不修改编译文件的输出位置<br><img src="https://img-blog.csdn.net/20180519221745532?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="2-设置项目的依赖jar包"><a href="#2-设置项目的依赖jar包" class="headerlink" title="2.设置项目的依赖jar包"></a>2.设置项目的依赖jar包</h3><p><img src="https://img-blog.csdn.net/20180518173332898?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180518173340854?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/2018051817335063?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>Intellij IDEA 添加jar包的三种方式比较<a href="https://blog.csdn.net/zwj1030711290/article/details/56678353/" target="_blank" rel="noopener">https://blog.csdn.net/zwj1030711290/article/details/56678353/</a></p>
+<h3 id="3-部署项目到tomcat"><a href="#3-部署项目到tomcat" class="headerlink" title="3.部署项目到tomcat"></a>3.部署项目到tomcat</h3><p>配置热部署（方便测试）<br><img src="https://img-blog.csdn.net/2018051919272489?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/2018051817360154?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="4-IntelliJ-IDEA在运行web项目时部署的位置-tomcat-（重要）"><a href="#4-IntelliJ-IDEA在运行web项目时部署的位置-tomcat-（重要）" class="headerlink" title="4.IntelliJ IDEA在运行web项目时部署的位置(tomcat)（重要）"></a>4.IntelliJ IDEA在运行web项目时部署的位置(tomcat)（重要）</h3><p>请参考<a href="https://blog.csdn.net/Victor_Cindy1/article/details/72680553?fps=1&amp;locationNum=3" target="_blank" rel="noopener">https://blog.csdn.net/Victor_Cindy1/article/details/72680553?fps=1&amp;locationNum=3</a></p>
+<h3 id="5-IntelliJ-IDEA断点调试"><a href="#5-IntelliJ-IDEA断点调试" class="headerlink" title="5.IntelliJ IDEA断点调试"></a>5.IntelliJ IDEA断点调试</h3><p>请参考<a href="https://blog.csdn.net/qq_27093465/article/details/64124330" target="_blank" rel="noopener">https://blog.csdn.net/qq_27093465/article/details/64124330</a></p>
+<h3 id="4-IntelliJ-IDEA打包项目"><a href="#4-IntelliJ-IDEA打包项目" class="headerlink" title="4.IntelliJ IDEA打包项目"></a>4.IntelliJ IDEA打包项目</h3><p>请参考 <a href="https://blog.csdn.net/Abysscarry/article/details/78621225?locationNum=9&amp;fps=1" target="_blank" rel="noopener">https://blog.csdn.net/Abysscarry/article/details/78621225?locationNum=9&amp;fps=1</a></p>
+<p>其他的参考资料：<a href="https://www.cnblogs.com/deng-cc/p/6416332.html" target="_blank" rel="noopener">https://www.cnblogs.com/deng-cc/p/6416332.html</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Java">
+    <span class="tag-code">Java</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/04/08/Java/JQuery/">
+        <span class="nav-arrow">← </span>
+        
+          JQuery
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/04/08/Java/2018-06-14-24_SprinBoot下载文件(网络url图片)资源代码/">
+        
+          SpringBoot下载文件资源代码
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前言：之前一直使用的MyEclipse，现在转战IntelliJ-IDEA"><span class="toc-nav-text">前言：之前一直使用的MyEclipse，现在转战IntelliJ IDEA.</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一、IntelliJ配置"><span class="toc-nav-text">一、IntelliJ配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-代码提示与补充"><span class="toc-nav-text">1.代码提示与补充</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-设置自动导包"><span class="toc-nav-text">2.设置自动导包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-设置字体"><span class="toc-nav-text">3.设置字体</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-设置快捷键"><span class="toc-nav-text">4.设置快捷键</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-设置字符码表"><span class="toc-nav-text">5.设置字符码表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-Tomcat服务器设置"><span class="toc-nav-text">6.Tomcat服务器设置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-maven设置"><span class="toc-nav-text">7.maven设置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-web目录的设置"><span class="toc-nav-text">8.web目录的设置</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二、IntelliJ-IDEA部署项目"><span class="toc-nav-text">二、IntelliJ IDEA部署项目</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-设置编译文件的输出目录"><span class="toc-nav-text">1.设置编译文件的输出目录</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-设置项目的依赖jar包"><span class="toc-nav-text">2.设置项目的依赖jar包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-部署项目到tomcat"><span class="toc-nav-text">3.部署项目到tomcat</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-IntelliJ-IDEA在运行web项目时部署的位置-tomcat-（重要）"><span class="toc-nav-text">4.IntelliJ IDEA在运行web项目时部署的位置(tomcat)（重要）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-IntelliJ-IDEA断点调试"><span class="toc-nav-text">5.IntelliJ IDEA断点调试</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-IntelliJ-IDEA打包项目"><span class="toc-nav-text">4.IntelliJ IDEA打包项目</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/04/08/Java/IntelliJ IDEA配置与使用（图文教程）/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "tianyaojiang";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "IntelliJ IDEA配置与使用（图文教程）",
+        owner: "tianyaojiang",
+        repo: "tianyaojiang.github.io",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/04/08/Java/IntelliJ IDEA配置与使用（图文教程）/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

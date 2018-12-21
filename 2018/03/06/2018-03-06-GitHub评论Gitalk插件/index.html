@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="tianyaojiang&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      GitHub评论Gitalk插件 | 会飞的鱼
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>会飞的鱼</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>GitHub评论Gitalk插件</h2>
+  <p class="post-date">2018-03-06</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><!-- image url 
+https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
+-->
+<p>GitHub评论Gitalk插件</p>
+<p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20180306-155426@2x.png" alt="WX20180306-155426@2x"></p>
+<h2 id="1、Gitalk-需要一个-Github-Application，"><a href="#1、Gitalk-需要一个-Github-Application，" class="headerlink" title="1、Gitalk 需要一个 Github Application，"></a>1、Gitalk 需要一个 Github Application，</h2><hr>
+<h2 id="点击这里申请。"><a href="#点击这里申请。" class="headerlink" title="点击这里申请。"></a><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">点击这里申请</a>。</h2><p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20180306-153911@2x.png" alt="WX20180306-153911@2x"></p>
+<h2 id="2、将下面的代码复制到每个页面"><a href="#2、将下面的代码复制到每个页面" class="headerlink" title="2、将下面的代码复制到每个页面"></a>2、将下面的代码复制到每个页面</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Gitalk 评论 start  --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Link Gitalk 的支持文件  --&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;https://unpkg.com/gitalk@latest/dist/gitalk.min.js&quot;&gt;&lt;/script&gt; </span><br><span class="line">&lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt;     &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    var gitalk = new Gitalk(&#123;</span><br><span class="line"></span><br><span class="line">    // gitalk的主要参数</span><br><span class="line">		clientID: `Github Application clientID`,</span><br><span class="line">		clientSecret: `Github Application clientSecret`,</span><br><span class="line">		repo: `Github 仓库名`,</span><br><span class="line">		owner: &apos;Github 用户名&apos;,</span><br><span class="line">		admin: [&apos;Github 用户名&apos;],</span><br><span class="line">		id: &apos;indow.location.pathname&apos;, 注意id一定不要重复，这里是举个例子，可以写中文，如果重复了，就会把其他地方的评论显示过来</span><br><span class="line">    </span><br><span class="line">    &#125;);</span><br><span class="line">    gitalk.render(&apos;gitalk-container&apos;);</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;!-- Gitalk end --&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="3、打开上面我们注册的网址，复制-clientID-和-秘clientSecret-到上面"><a href="#3、打开上面我们注册的网址，复制-clientID-和-秘clientSecret-到上面" class="headerlink" title="3、打开上面我们注册的网址，复制 clientID 和 秘clientSecret 到上面"></a>3、打开上面我们注册的网址，复制 <code>clientID</code> 和 <code>秘clientSecret</code> 到上面</h2><hr>
+<p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20180306-154420@2x.png" alt="WX20180306-154420@2x"></p>
+<h2 id="4、评论插件预览，评论查看的位置-在GitHub的issue中"><a href="#4、评论插件预览，评论查看的位置-在GitHub的issue中" class="headerlink" title="4、评论插件预览，评论查看的位置 在GitHub的issue中"></a>4、评论插件预览，评论查看的位置 在GitHub的<code>issue</code>中</h2><hr>
+<p><img src="https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages/WX20180306-155426@2x.png" alt="WX20180306-155426@2x"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#GitHub">
+    <span class="tag-code">GitHub</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/03/05/2018-03-05-Markdown快速插入图片技巧/">
+        <span class="nav-arrow">← </span>
+        
+          Markdown快速插入图片技巧
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/03/06/JVM/2018-04-11_6_1Java的client模式和server模式_/">
+        
+          Java的client模式和server模式
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1、Gitalk-需要一个-Github-Application，"><span class="toc-nav-text">1、Gitalk 需要一个 Github Application，</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#点击这里申请。"><span class="toc-nav-text">点击这里申请。</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2、将下面的代码复制到每个页面"><span class="toc-nav-text">2、将下面的代码复制到每个页面</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3、打开上面我们注册的网址，复制-clientID-和-秘clientSecret-到上面"><span class="toc-nav-text">3、打开上面我们注册的网址，复制 clientID 和 秘clientSecret 到上面</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4、评论插件预览，评论查看的位置-在GitHub的issue中"><span class="toc-nav-text">4、评论插件预览，评论查看的位置 在GitHub的issue中</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2018/03/06/2018-03-06-GitHub评论Gitalk插件/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "tianyaojiang";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "GitHub评论Gitalk插件",
+        owner: "tianyaojiang",
+        repo: "tianyaojiang.github.io",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://yoursite.com/2018/03/06/2018-03-06-GitHub评论Gitalk插件/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
