@@ -6,7 +6,7 @@
 title: 会飞的鱼
 subtitle:
 description:
-keywords:
+keywords: 博客,Java,java,jvm,中间件,java架构,java开发（#博客关键字）
 author: tianyaojiang
 language:
 timezone:
@@ -82,3 +82,6 @@ deploy:
   type: git
   repository: https://github.com/tianyaojiang/tianyaojiang.github.io.git
   branch: master
+
+sitemap:
+   path: sitemap.xml  
