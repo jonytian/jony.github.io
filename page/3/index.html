@@ -222,7 +222,7 @@ order越小越先执行
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">什么时候使用CountDownLatch</a>
+        <a href="/2018/04/08/Java并发/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/">如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
       
@@ -234,15 +234,16 @@ order越小越先执行
       
       <div class="article-summary">
         
-          正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编  ...
+          wait, notify 和 notifyAll，这些在多线程中被经常用到的保留关键字，在实际开发的时候很多时候却并没有被大家重视。本文对这些关键字的使用进行了描述。
+在 Java 中可以用 wait、notify 和 notifyAll 来实现线程间的通信。。举个例子，如果你的Java程序 ...
         
       </div>
-      <a class="more" href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">Read more</a>
+      <a class="more" href="/2018/04/08/Java并发/如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例/">Read more</a>
     </article>
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/04/08/Java/2018-06-14-24_SprinBoot下载文件(网络url图片)资源代码/">SpringBoot下载文件资源代码</a>
+        <a href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Spring Boot Web 应用加速</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
       
@@ -254,12 +255,12 @@ order越小越先执行
       
       <div class="article-summary">
         
-          
-前言下载文件资源很简单，一开始学习Java web的时候，相信我们绝大多数人都学习过吧，所以这里直接上代码了。
-下载成功，主要是给response放入一个outputstream1234567891011121314151617181920@GetMapping("downUrlImage ...
+          Spring Boot Web 应用加速默认情况下，Spring Boot Web 应用会装配一些功能组件 Bean。
+在大多数 Web 应用场景下，可以选择性地关闭一下自动装配的Spring 组件 Bean，以达到提升性能的目的。
+配置项优化Spring Boot Web 应用加速 完整配 ...
         
       </div>
-      <a class="more" href="/2018/04/08/Java/2018-06-14-24_SprinBoot下载文件(网络url图片)资源代码/">Read more</a>
+      <a class="more" href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -294,24 +295,22 @@ pom.xml文件
   
     <article class="article-card">
       <h2 class="article-head">
-        <a href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Spring Boot Web 应用加速</a>
+        <a href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">什么时候使用CountDownLatch</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
       
         
-  <a href="/tags#Java">
-    <span class="tag-code">Java</span>
+  <a href="/tags#Java并发">
+    <span class="tag-code">Java并发</span>
   </a>
 
       
       <div class="article-summary">
         
-          Spring Boot Web 应用加速默认情况下，Spring Boot Web 应用会装配一些功能组件 Bean。
-在大多数 Web 应用场景下，可以选择性地关闭一下自动装配的Spring 组件 Bean，以达到提升性能的目的。
-配置项优化Spring Boot Web 应用加速 完整配 ...
+          正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编  ...
         
       </div>
-      <a class="more" href="/2018/04/08/Java/2018-05-26-Spring-Boot Web 应用加速/">Read more</a>
+      <a class="more" href="/2018/04/08/Java并发/什么时候使用CountDownLatch/">Read more</a>
     </article>
   
     <article class="article-card">
@@ -336,6 +335,26 @@ pom.xml文件
   
     <article class="article-card">
       <h2 class="article-head">
+        <a href="/2018/04/08/Java并发/负载均衡基础知识/">负载均衡</a>
+      </h2>
+      <p class="article-date">April 8, 2018</p>
+      
+        
+  <a href="/tags#Java并发">
+    <span class="tag-code">Java并发</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          一、什么是负载均衡？　互联网早期，业务流量比较小并且业务逻辑比较简单，单台服务器便可以满足基本的需求；但随着互联网的发展，业务流量越来越大并且业务逻辑也越来越复杂，单台机器的性能问题以及单点问题凸显了出来，因此需要多台机器来进行性能的水平扩展以及避免单点故障。但是要如何将不同的用户的流量分发 ...
+        
+      </div>
+      <a class="more" href="/2018/04/08/Java并发/负载均衡基础知识/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
         <a href="/2018/04/08/Java/2018-01-18-Dubbo 外部化配置/">Dubbo 外部化配置（Externalized Configuration）</a>
       </h2>
       <p class="article-date">April 8, 2018</p>
@@ -353,26 +372,6 @@ pom.xml文件
         
       </div>
       <a class="more" href="/2018/04/08/Java/2018-01-18-Dubbo 外部化配置/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2018/04/08/Java并发/负载均衡基础知识/">负载均衡</a>
-      </h2>
-      <p class="article-date">April 8, 2018</p>
-      
-        
-  <a href="/tags#Java并发">
-    <span class="tag-code">Java并发</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          一、什么是负载均衡？　互联网早期，业务流量比较小并且业务逻辑比较简单，单台服务器便可以满足基本的需求；但随着互联网的发展，业务流量越来越大并且业务逻辑也越来越复杂，单台机器的性能问题以及单点问题凸显了出来，因此需要多台机器来进行性能的水平扩展以及避免单点故障。但是要如何将不同的用户的流量分发 ...
-        
-      </div>
-      <a class="more" href="/2018/04/08/Java并发/负载均衡基础知识/">Read more</a>
     </article>
   
 
