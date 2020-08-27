@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RS（255,223）纠错算法原理 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="RS（255,223）纠错算法原理">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="RS（255,223）纠错算法原理"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">RS（255,223）纠错算法原理</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="RS（255-223）纠错算法原理与项目源码"><a href="#RS（255-223）纠错算法原理与项目源码" class="headerlink" title="RS（255,223）纠错算法原理与项目源码"></a>RS（255,223）纠错算法原理与项目源码</h1><p>##1.背景</p>
+<ul>
+<li><p>数据在网络传输、存储过程中由于信道噪声条件，硬件设备等问题数据产生了差错，这时候应该如何处理呢？特别是现在企业对海量大数据的传输，存储的重视，要求我们使用一定的技术处理这些数据差错。<br>##2.纠错编解码原理简单介绍</p>
+</li>
+<li><p>为什么纠错码具有发现错误!纠正错误的能力呢?纠错码又是按什么样的原理去编的呢?为了说明这些问题,我们首先介绍一些基本概念:由0和1组成的串称为字(Word),一些字的集合称为码(Code)。码中的字称为码字(Code Word)。不在码中的字称为废码(Invalid Code)。码中的每个二进制信号0或1称为码元(Code Letter)。             </p>
+</li>
+<li><p>我们下面举出几个关于纠错码的例子。设有长度为2的字,它们一共可有2x2=4个,力。因为当52中的一个字如10,在传递过程中其第一个码元1变为0,因而整个字成为00时,由于00也是52中的字,故我们不能发现传递中是否出错。但是,当我们选取52的一个子集如C2={00},作为编码时就会发生另一种完全不同的情况。因为此时01和10均为废码,而当H在传递过程中第一个码元由1变为0,即整个字成为01时,由于01是废码,因而我们发现传递过程中出现了错误。对00也有同样的情况。但是,这种编码有一个缺点,即它只能发现错误而不能纠正错误,因此我们还需要选择另一种能纠错的编码”现在我们考虑长度为3的字,它们一共可有2!3=8个,它们所组成的字集凡不仅能整个码字只会变为101!011或000,但是都可知其原码为001。对于码字110也有类似的情况”故对编码q,我们不仅能发现错误而且能纠正错误”当然,上述编码还有一个缺点,就是它只能发现并纠正单个错误。当错误超过两个码元时,它就既不能发现错误,更无法纠正了。<br>##3.Reed-Solomon 码（RS 码）原理</p>
+</li>
+<li><p>Reed-Solomon 码（RS 码）是 Reed和 Solomon于 1960 年发现的一类多元最大距离可分（MDS）码，其最小距离达到了 Singleton 限mind = n − k+ 1，从这个意义上讲，RS 码是最佳的。之后几十年里，RS 码的硬判决译码得到了深入的研究，其理论和技术都已经非常成熟。因而，RS码在现代数字通信、数据存储系统中得到了广泛的应用。<br>##4.Reed – Solomon编码抽象代数基础</p>
+</li>
+<li><p>4.1定义 设G是一个非空集合，称映射为G上的一个二元运算，即对于G中仍以两个元a和b，唯一确定 (a,b).记为,为了方便起见，可写成c=ab.<br>定义 设G是一个非空集合，是G上的一个二元运算，如果G满足下列条件：<br>a)（结合律）对于任意,有<br>b)（单位元）G中存在单位元，对于任意，满足<br>c)（逆元）对于任意，存在的逆元，满足<br>则称G为群，记为.<br>  如果群满足交换律，即对于任意，满足<br>则称群 为交换群或阿贝尔群.</p>
+</li>
+<li><p>4.2 环和域<br>定义 设R是一个非空集合，R上有两个二元运算和，分别成为加法和乘法，如果R满足下列条件<br>a)为加法阿贝尔群<br>b)（结合律）对于任意,有<br>c)（分配律）对于任意,有<br>  称R为环，记为，如果他对乘法满足交换律，即对任何<br>称环为交换环<br>  定义 设为交换环，表示R中所有非零元的集合，如果在乘法运算下构成交换群，则称为域。</p>
+</li>
+<li><p>4.3 有限域<br>定义 设F为一个域，如果F只含有有限个元素，称F为有限域，含有q个元素的有限域记为，有限域也成为伽罗华域(Galois field)，用GF(q)或表示q阶有限域。<br>最简单的有限域是二元域GF(2)={0,1}。<br>定义 对于GF(q)上的每个非零元素，存在最小整数k,使成立，则称为k阶元素。<br>定义 对于GF(q)上的每个非零元素，如果其阶数是q-1,则称为本原元素。<br>定义上的一个m次多项式，如果他的所有根都是中的本原元素，则称是m次本原多项式。<br>例如，对于m = 8时上的m次本原多项式为<br>对于m = 7时上的m次本原多项式为<br>  定义 设为中的元素，多项式是上使的最低次多项式，则称为最小多项式。具有相同最小多项式的元素，构成同一共轭系。</p>
+</li>
+<li><p>4.4 欧几里得算法<br>欧几里得算法给定两个正整数a,b，可以用欧几里得除法得到其最大公约数(a,b)，并求得A，B，满足(a,b)=Aa+Bb。<br>用欧几里得除法求(a,b)的步骤如下：<br>第一步：不失一般性，假设a&gt;b，且令<br>第二步：用除以得到其商数和余数，亦即<br>第三步：如果，停止运算，并记；否则，转第二步。<br>欧几里得算法又被称为辗转相除法，这里是单调下降序列。<br>用欧几里得算法可以求得A、B，沿用上述除法得到的和n，其方法如下：<br>第一步：令<br>第二步：计算<br>第三步：如果，停止运算，此时,否则转第二步<br>事实上，只是其中的一个特例。<br>##5.RS(255,223)编解码算法</p>
+</li>
+<li><p>5.1字节交织器<br><img src="http://img.blog.csdn.net/20180106152816595?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180106152928851?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</li>
+<li><p>5.2  RS(255,223,32)生成方式<br><img src="http://img.blog.csdn.net/20180106154825049?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180106155354311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>##Github项目源码</p>
+</li>
+<li><p>GitHub链接：   <a target="_blank" rel="noopener" href="https://github.com/RobinLiew/Reed-Solomon-error-correction">https://github.com/RobinLiew/Reed-Solomon-error-correction</a></p>
+</li>
+<li><p>使用例子</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">public class RSErrorCorrectionImpl implements IRSErrorCorrection &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">private RSEncoder encoder&#x3D;new RSEncoder();</span><br><span class="line"></span><br><span class="line">private RSDecoder decoder&#x3D;new RSDecoder();</span><br><span class="line"></span><br><span class="line">public static Boolean isCanBeRecovered&#x3D;true;</span><br><span class="line"></span><br><span class="line">private byte[] temp&#x3D;new byte[233];</span><br><span class="line"></span><br><span class="line">private ByteBuffer buffer&#x3D;new ByteBuffer() ;</span><br><span class="line"></span><br><span class="line">private byte[] enTemp&#x3D;new byte[255];</span><br><span class="line"></span><br><span class="line">public byte[] rs_encode(byte[] data) &#123;</span><br><span class="line">	return encoder.encode(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int rs_decode(byte[] recover, byte[] rsData) &#123;</span><br><span class="line">	byte[] result &#x3D; null;</span><br><span class="line">	result&#x3D;decoder.decode(rsData);</span><br><span class="line">	</span><br><span class="line">	if(!isCanBeRecovered)&#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	System.arraycopy(result, 0, recover, 0, result.length);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args)&#123;</span><br><span class="line">	</span><br><span class="line">	byte[] src&#x3D;new byte[223];</span><br><span class="line">	for(int i&#x3D;0;i&lt;223;i++)&#123;</span><br><span class="line">		src[i]&#x3D;(byte) new Random().nextInt(255);</span><br><span class="line">	&#125;</span><br><span class="line">	byte[] srcdouble&#x3D;new byte[446];</span><br><span class="line">	for(int i&#x3D;0;i&lt;2;i++)&#123;</span><br><span class="line">		System.arraycopy(src, 0, srcdouble, i*223, 223);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	IRSErrorCorrection error &#x3D; new RSErrorCorrectionImpl();</span><br><span class="line">	byte[] en_data&#x3D;error.rs_encode(srcdouble);</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;Deliberately mistaken the values of several data(故意弄错几个数据的值)</span><br><span class="line">	en_data[0]&#x3D;0;</span><br><span class="line">	en_data[1]&#x3D;4;</span><br><span class="line">	en_data[3]&#x3D;0;</span><br><span class="line">	&#x2F;&#x2F;byte[] recover &#x3D; new byte[src.length];</span><br><span class="line">	byte[] recover &#x3D; new byte[srcdouble.length];</span><br><span class="line">	int flag &#x3D; error.rs_decode(recover,en_data);</span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    System.out.println(&quot;completion of the test！！！&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/算法/">算法</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

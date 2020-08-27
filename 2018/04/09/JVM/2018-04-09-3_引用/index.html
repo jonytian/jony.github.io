@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java引用 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="Java引用">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java引用"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Java引用</h1>
+  
+
+      
+        <time datetime="2018-04-09T06:33:00.000Z">2018-04-09</time>
+      
+    </header>
+    <div class="entry">
+      
+        <!-- image url 
+https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
+　　首行缩进
+<font color="red">  </font>
+-->
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>垃圾回收的机制主要是看对象是否有引用指向该对象。<br>java对象的引用包括  <font color="red"> 强引用，软引用，弱引用，虚引用</font></p>
+<h3 id="1、强引用"><a href="#1、强引用" class="headerlink" title="1、强引用"></a>1、强引用</h3><p> 强引用有引用变量指向时永远不会被垃圾回收，JVM宁愿抛出OutOfMemory错误也不会回收这种对象。</p>
+<p>当运行至Object[] objArr = new Object[1000];这句时，如果内存不足，JVM会抛出OOM错误也不会回收object指向的对象。不过要注意的是，当fun1运行完之后，object和objArr都已经不存在了，所以它们指向的对象都会被JVM回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">		  <span class="keyword">new</span> Main().fun1();  </span><br><span class="line"> &#125;  </span><br><span class="line">		       </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">		Object object = <span class="keyword">new</span> Object();  </span><br><span class="line">	   Object[] objArr = <span class="keyword">new</span> Object[<span class="number">1000</span>];  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、软引用（SoftReference）"><a href="#2、软引用（SoftReference）" class="headerlink" title="2、软引用（SoftReference）"></a>2、软引用（SoftReference）</h3><p>如果一个对象具有软引用，内存空间足够，垃圾回收器就不会回收它；<br>如果内存空间不足了，就会回收这些对象的内存。只要垃圾回收器没有回收它，该对象就可以被程序使用。<br><br/><br>软引用可用来实现内存敏感的高速缓存,比如网页缓存、图片缓存等。使用软引用能防止内存泄露，增强程序的健壮性。   <br> SoftReference的特点是它的一个实例保存对一个Java对象的软引用， 该软引用的存在不妨碍垃圾收集线程对该Java对象的回收。<br>也就是说，一旦SoftReference保存了对一个Java对象的软引用后，在垃圾线程对 这个Java对象回收前，SoftReference类所提供的get()方法返回Java对象的强引用。<br>另外，一旦垃圾线程回收该Java对象之 后，get()方法将返回null。</p>
+<h3 id="3、弱引用（WeakReference）"><a href="#3、弱引用（WeakReference）" class="headerlink" title="3、弱引用（WeakReference）"></a>3、弱引用（WeakReference）</h3><p>　　<br>　　弱引用也是用来描述非必需对象的，当JVM进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。在java中，用java.lang.ref.WeakReference类来表示。</p>
+<h3 id="4、虚引用（PhantomReference）"><a href="#4、虚引用（PhantomReference）" class="headerlink" title="4、虚引用（PhantomReference）"></a>4、虚引用（PhantomReference）</h3><p>　　虚引用和前面的软引用、弱引用不同，它并不影响对象的生命周期。在java中用java.lang.ref.PhantomReference类表示。如果一个对象与虚引用关联，则跟没有引用与之关联一样，在任何时候都可能被垃圾回收器回收。<br>　　要注意的是，虚引用必须和引用队列关联使用，当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/JVM/">JVM</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/JVM/">JVM</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NPM工具的使用 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="NPM工具的使用">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="NPM工具的使用"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">NPM工具的使用</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="NPM工具的使用"><a href="#NPM工具的使用" class="headerlink" title="NPM工具的使用"></a>NPM工具的使用</h1><h3 id="NPM基本介绍"><a href="#NPM基本介绍" class="headerlink" title="NPM基本介绍"></a>NPM基本介绍</h3><ul>
+<li><p>NPM是什么？NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题。NPM的中文文档<a target="_blank" rel="noopener" href="https://www.npmjs.com.cn/getting-started/what-is-npm/%E4%B8%8A%E4%BB%8B%E7%BB%8D%E8%AF%B4%EF%BC%9A">https://www.npmjs.com.cn/getting-started/what-is-npm/上介绍说：</a><br>  它是世界上最大的软件注册表，每星期大约有 30 亿次的下载量，包含超过 600000 个 包（package） （即，代码模块）。来自各大洲的开源软件开发者使用 npm 互相分享和借鉴。包的结构使您能够轻松跟踪依赖项和版本。<br>  <img src="http://img.blog.csdn.net/20180306162142661?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>   NPM就像一个超级管家一样，管理者各类js模块代码，并把js开发者联系起来。</p>
+<ul>
+<li><p>NPM构成<br> npm 由三个独立的部分组成：</p>
+<pre><code>- 1网站  ：  网站是开发者查找包（package）、设置参数以及管理 npm 使用体验的主要途径。
+- 2注册表（registry）  ：  注册表 是一个巨大的数据库，保存了每个包（package）的信息。
+- 3命令行工具 (CLI)  ：  CLI 通过命令行或终端运行。开发者通过 CLI 与 npm 打交道。</code></pre>
+<p>网站网址：<a target="_blank" rel="noopener" href="https://www.npmjs.com/">https://www.npmjs.com</a><br><img src="http://img.blog.csdn.net/20180306163016667?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>你可以点进你感兴趣的项目，查看该项目如何使用等。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="NPM使用"><a href="#NPM使用" class="headerlink" title="NPM使用"></a>NPM使用</h3><ul>
+<li><p>因为我这里要用到Node.js，所以我下载Node.js后自带NPM。<br><img src="http://img.blog.csdn.net/20180306163538825?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>测试NPM是否安装成功 npm -v<br><img src="http://img.blog.csdn.net/20180306164102999?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>如图显示NPM的版本号，表示NPM安装成功。</p>
+</li>
+<li><p>使用 npm 命令安装模块</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">npm install [-g] &lt;Module Name&gt; </span><br><span class="line"></span><br><span class="line">没有参数-g表示本地安装，本地安装指的是：</span><br><span class="line">	将安装包放在“运行npm命令时所在的目录” ，</span><br><span class="line">	可以通过 require() 来引入本地安装的包。</span><br><span class="line">	使用时，在代码中只需要通过 require(&#39;Module Name&#39;) 的方式就好，无需指定第三方包路径。 </span><br><span class="line">带有参数-g表示全局安装，全局安装是指：</span><br><span class="line">	将安装包放在 &#x2F;usr&#x2F;local 下或者你 node 的安装目录，</span><br><span class="line">	可以直接在命令行里使用</span><br><span class="line">Module Name指的是包名，即代码模块的名字。</span><br></pre></td></tr></table></figure>
+
+<p>  我们使用 npm 命令安装cordova和ionic包,这里暂时不用管cordova和ionic包是什么，只需要这是相关的代码模块。</p>
+</li>
+</ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cordova ionic  （网速较慢，下载时间长）</span><br><span class="line">或者</span><br><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org （淘宝镜像）</span><br><span class="line"></span><br><span class="line">你可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:</span><br><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">接下来就可以使用cnpm 命令来安装模块了其他：</span><br><span class="line">cnpm install -g ionic cordova </span><br></pre></td></tr></table></figure></code></pre>
+<ul>
+<li><p>查看安装信息</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看所有全局安装的模块</span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line">查看某个模块的具体安装信息</span><br><span class="line">npm list &lt;Module Name&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>package.json文件<br>因为我的window系统，并采用全局安装，因此安装的包位于：<br><img src="http://img.blog.csdn.net/20180306171313643?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>以ionic为例查看该包的package.json文件<br><img src="http://img.blog.csdn.net/20180306172440905?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>卸载、更新、搜索模块</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall ionic</span><br><span class="line">卸载后，你可以到 &#x2F;node_modules&#x2F; 目录下查看包是否还存在，或者使用以下命令查看：</span><br><span class="line">npm ls</span><br><span class="line"></span><br><span class="line">npm update ionic</span><br><span class="line"></span><br><span class="line">npm search ionic</span><br></pre></td></tr></table></figure></li>
+<li><p>创建模块<br>创建模块请参考<a target="_blank" rel="noopener" href="http://www.runoob.com/nodejs/nodejs-npm.html">http://www.runoob.com/nodejs/nodejs-npm.html</a> 。</p>
+</li>
+</ul>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/Java/">Java</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Java/">Java</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

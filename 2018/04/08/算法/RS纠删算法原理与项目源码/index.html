@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RS纠删算法原理 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="RS纠删算法原理">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="RS纠删算法原理"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">RS纠删算法原理</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>##RS纠删算法原理</p>
+<ul>
+<li><p>A.1  纠删码是存储领域常用的数据冗余技术， 相比多副本复制而言， 纠删码能够以更小的数据冗余度获得更高数据可靠性。 Reed Solomon Coding是存储领域常用的一种纠删码，它的基本原理如下：  给定n个数据块d1, d2,…, dn，n和一个正整数m， RS根据n个数据块生成m个校验块， c1, c2,…, cm。  对于任意的n和m，  从n个原始数据块和m 个校验块中任取n块就能解码出原始数据， 即RS最多容忍m个数据块或者校验块同时丢失（纠删码只能容忍数据丢失，无法容忍数据篡改，纠删码正是得名与此）。 </p>
+</li>
+<li><p>A.2  编码原理<br>RS编码以word为编码和解码单位，  大的数据块拆分到字长为w的word（字长w取值一般为8或者16位），然后对word进行编解码。 所以数据块的编码原理与word编码原理没什么差别， 为论述方便， 后文中变量Di, Ci将代表一个word。<br>首先， 把输入数据视为向量D=(D1，D2，…, Dn）, 编码后数据视为向量（D1, D2,…, Dn, C1, C2,.., Cm)，RS编码可视为如图A.1所示矩阵运算。 下图最左边是编码矩阵， 矩阵上部是单位阵（n行n列），下边是vandermonde矩阵B(m行n列), vandermode矩阵如图A.2所示， 第i行，第j列的原数值为j^(i-1)。之所以采用vandermonde矩阵的原因是， RS数据恢复算法要求编码矩阵任意n*n子矩阵可逆。</p>
+<p>  <img src="https://img-blog.csdn.net/20180325135125137?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>  图A.1： 编码运算</p>
+<pre><code>![这里写图片描述](https://img-blog.csdn.net/20180325135138980?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)</code></pre>
+<p>  图A.2：vandermode矩阵</p>
+</li>
+<li><p>数据恢复原理<br>RS最多能容忍m个删除错误。 数据恢复原理的过程如下：<br>（1）从编码矩阵中删去丢失数据块和丢失编码块对应行。  假设D1、C2丢失，     根据图A.1所示RS编码运算等式，我们得到如下B’以及等式。  </p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180325135147442?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>（2）由于B‘是可逆的， 两边乘上B’逆矩阵。 </p>
+<p><img src="https://img-blog.csdn.net/20180325135155380?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>（3）得到如下原始数据D的计算公式 </p>
+<p><img src="https://img-blog.csdn.net/20180325135202691?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>（4）对D重新编码，得到丢失的校验码</p>
+<p>矩阵求逆采用高斯消元法，   需要进行实数加减乘除四则运算，无法作用于字长为w的二进制数据。 为了解决这个问题， RS采用伽罗华群GF（2^w)中定义的四则运算法则。 GF(2^w）域有2^w个值， 每个值都对应一个低于w次的多项式， 这样域上的四则运算就转换为多项式空间的运算。  GF(2^w)域中的加法就是XOR， 乘法比较特殊，需要维护两个大小为2^w -1的表格: log表gflog，反log表gfilog。<br>乘法公式：  a * b = gfilog(gflog(a) + fglog(b)) % (2^w -1)</p>
+<p>##Github项目源码<br>源码来自：<a target="_blank" rel="noopener" href="https://github.com/Backblaze/JavaReedSolomon">https://github.com/Backblaze/JavaReedSolomon</a><br>如果你想处理使用RS纠删算法处理字节数组，可以参照我的GitHub项目（在上一链接的基础上我进行了接口和实现的编写）</p>
+<ul>
+<li>GitHub链接：  <a target="_blank" rel="noopener" href="https://github.com/RobinLiew/JavaReedSolomon">https://github.com/RobinLiew/JavaReedSolomon</a></li>
+<li>使用例子</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">package com.backblaze.erasure.robinliew.dealbytesinterface;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * </span><br><span class="line"> * @author RobinLiew 2017.9.21</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class test &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">	IRSErasureCorrection rsProcessor&#x3D;new RSErasureCorrectionImpl();</span><br><span class="line"></span><br><span class="line">	byte[] data&#x3D;new byte[1000]; </span><br><span class="line">	for(int i&#x3D;0; i&lt;data.length; i++) &#123;  </span><br><span class="line">	    data[i] &#x3D; 1;  </span><br><span class="line">	&#125;  </span><br><span class="line">	for(int i&#x3D;0; i&lt;500; i++) &#123;  </span><br><span class="line">	    data[i] &#x3D; (byte) (16 + i);  </span><br><span class="line">	&#125;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	int sliceCount&#x3D;4;&#x2F;&#x2F;The data is 4 copies(数据为4份)</span><br><span class="line">	int fecSliceCount&#x3D;2;&#x2F;&#x2F;2 copies of erasure redundancy(纠删冗余为2份)</span><br><span class="line">	int sliceLength&#x3D;data.length&#x2F;sliceCount;</span><br><span class="line">	byte[] en_data;</span><br><span class="line">	en_data&#x3D;rsProcessor.rs_Encoder(data, sliceLength, sliceCount, fecSliceCount);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;Test use: second pieces of data are lost, and the decoding code has the corresponding test code(测试使用：让第二片数据丢失，解码代码中也有对应的测试代码)&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">	byte[] temp &#x3D; new byte[250];</span><br><span class="line">	System.arraycopy(temp, 0, en_data, 250, 250);						</span><br><span class="line">&#x2F;&#x2F;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">	boolean[] eraserFlag&#x3D;new boolean[sliceCount+fecSliceCount];</span><br><span class="line">	for(int i&#x3D;0;i&lt;eraserFlag.length;i++)&#123;</span><br><span class="line">		eraserFlag[i]&#x3D;true;</span><br><span class="line">	&#125;</span><br><span class="line">	eraserFlag[1]&#x3D;false;</span><br><span class="line"></span><br><span class="line">	int result&#x3D;rsProcessor.rs_Decoder(en_data, sliceLength, sliceCount, fecSliceCount&#x3D;2, eraserFlag);</span><br><span class="line">	System.out.println(&quot;complete test!&quot;);&#x2F;&#x2F;测试完毕！</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/算法/">算法</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

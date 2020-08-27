@@ -1,0 +1,1091 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Socket网络编程 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="Socket网络编程">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Socket网络编程"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Socket网络编程</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="更详细的代码及测试方法请参照github项目-https-github-com-RobinLiew-SocketInAction-，测试方法与说明请参照readme"><a href="#更详细的代码及测试方法请参照github项目-https-github-com-RobinLiew-SocketInAction-，测试方法与说明请参照readme" class="headerlink" title="更详细的代码及测试方法请参照github项目 https://github.com/RobinLiew/SocketInAction ，测试方法与说明请参照readme."></a>更详细的代码及测试方法请参照github项目 <a target="_blank" rel="noopener" href="https://github.com/RobinLiew/SocketInAction">https://github.com/RobinLiew/SocketInAction</a> ，测试方法与说明请参照readme.</h2><h3 id="Socket基础类"><a href="#Socket基础类" class="headerlink" title="Socket基础类"></a>Socket基础类</h3><ul>
+<li>服务端<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">package com.robinliew.basedemo;</span><br><span class="line"></span><br><span class="line">import java.io.BufferedReader;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStreamReader;</span><br><span class="line">import java.io.PrintWriter;</span><br><span class="line">import java.net.ServerSocket;</span><br><span class="line">import java.net.Socket;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 知识要点：</span><br><span class="line"> * 1.无论是服务器端ServerSocket通过accept()方法接收到的Socket，还是客户端连接服务器端的Socket，</span><br><span class="line"> * 在创建输入输出流时不允许两个同时首先创建输入流，否则会堵塞Socket通道。</span><br><span class="line"> * </span><br><span class="line"> * 2.服务器Socket和客户端Socket可以创建多个输入输出流对象，但是两端创建的个数必须保持对应，</span><br><span class="line"> * 即通过客户端Socket创建多少个输入输出流对象，对应的服务器端的ServerSocket通过accepte()方法</span><br><span class="line"> * 接收到Socket也必须创建多少个输入输出流对象，否则抛出java.io.StreamCorruptedException异常。</span><br><span class="line"> * </span><br><span class="line"> * @author RobinLiew</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class ServerDemo &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		</span><br><span class="line">		try &#123;</span><br><span class="line">			&#x2F;&#x2F;专门用来创建Socket服务器的类</span><br><span class="line">			ServerSocket server&#x3D;new ServerSocket(10000);&#x2F;&#x2F;这个服务器使用10000端口号</span><br><span class="line">			&#x2F;*</span><br><span class="line">			 * 当一个客户端程序建立一个连接端口号为10000的Socket连接时，</span><br><span class="line">			 * 服务器对象server便响应这个连接，并且用accept()方法创建</span><br><span class="line">			 * 一个Socket对象,服务器端可以利用这个对象与客户端通讯。</span><br><span class="line">			 *&#x2F;</span><br><span class="line">			Socket socketServer&#x3D;server.accept();</span><br><span class="line">			&#x2F;&#x2F;输入流和输出流的封装</span><br><span class="line">			BufferedReader in&#x3D;new BufferedReader(new InputStreamReader(socketServer.getInputStream()));</span><br><span class="line">			PrintWriter out&#x3D;new PrintWriter(socketServer.getOutputStream(),true);</span><br><span class="line">			&#x2F;&#x2F;得到客户端的输入</span><br><span class="line">			String inFromClient&#x3D;in.readLine();</span><br><span class="line">			&#x2F;&#x2F;向客户端发送数据</span><br><span class="line">			out.println();</span><br><span class="line">			&#x2F;&#x2F;关闭两个数据流</span><br><span class="line">			out.close();</span><br><span class="line">			in.close();</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			&#x2F;&#x2F; TODO Auto-generated catch block</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>客户端</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">package com.robinliew.basedemo;</span><br><span class="line"></span><br><span class="line">import java.io.BufferedReader;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStreamReader;</span><br><span class="line">import java.io.PrintWriter;</span><br><span class="line">import java.net.Socket;</span><br><span class="line">import java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * </span><br><span class="line"> * 代码中这两个方法read()和readLine()都会读取对端发送过来的数据，如果无数据可读，就会阻塞直到有数据可读。或者到达流的末尾，这个时候分别返回-1和null。</span><br><span class="line"> *	这个特性使得编程非常方便也很高效。</span><br><span class="line"> *	但是这样也有一个问题，就是如何让程序从这两个方法的阻塞调用中返回。</span><br><span class="line"> *</span><br><span class="line"> *	总结一下，有这么几个方法：</span><br><span class="line"> *	1）发送完后调用Socket的shutdownOutput()方法关闭输出流，这样对端的输入流上的read操作就会返回-1。</span><br><span class="line"> *	注意不能调用socket.getInputStream().close()。这样会导致socket被关闭。</span><br><span class="line"> *	当然如果不需要继续在socket上进行读操作，也可以直接关闭socket。</span><br><span class="line"> *	但是这个方法不能用于通信双方需要多次交互的情况。</span><br><span class="line"> *</span><br><span class="line"> *	2）发送数据时，约定数据的首部固定字节数为数据长度。这样读取到这个长度的数据后，就不继续调用read方法。</span><br><span class="line"> *</span><br><span class="line"> *	3）为了防止read操作造成程序永久挂起，还可以给socket设置超时。</span><br><span class="line"> *	如果read()方法在设置时间内没有读取到数据，就会抛出一个java.net.SocketTimeoutException异常。</span><br><span class="line"> *	例如下面的方法设定超时3秒。</span><br><span class="line"> *	socket.setSoTimeout(3000);</span><br><span class="line"> * </span><br><span class="line"> * @author RobinLiew</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class ClientDemo &#123;</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		</span><br><span class="line">		try &#123;</span><br><span class="line">			&#x2F;*</span><br><span class="line">			 * 客户端需要用服务器所在机器的ip以及服务器的端口作为参数创建一个Socket对象</span><br><span class="line">			 *&#x2F;</span><br><span class="line">			Socket socket &#x3D; new Socket(&quot;10.10.40.59&quot;,10000);</span><br><span class="line">			BufferedReader in &#x3D; new BufferedReader(new InputStreamReader(socket.getInputStream()));  </span><br><span class="line">			PrintWriter out &#x3D; new PrintWriter(socket.getOutputStream(),true); </span><br><span class="line">			&#x2F;&#x2F;得到服务端的输入</span><br><span class="line">			String inFromServer&#x3D;in.readLine();</span><br><span class="line">			&#x2F;&#x2F;向服务端发送数据</span><br><span class="line">			out.println();</span><br><span class="line">			&#x2F;&#x2F;关闭两个数据流</span><br><span class="line">			out.close();</span><br><span class="line">			in.close();</span><br><span class="line">		&#125; catch (UnknownHostException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;  </span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Socket设置字符流的编码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package com.robinliew.basedemo2;</span><br><span class="line"></span><br><span class="line">import java.io.DataInputStream;   </span><br><span class="line">import java.io.DataOutputStream;   </span><br><span class="line">import java.io.IOException;   </span><br><span class="line">import java.net.ServerSocket;   </span><br><span class="line">import java.net.Socket; </span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 注意：</span><br><span class="line"> * 1.Socket的发送与接收是需要同步进行的，即客户端发送一条信息，服务器必需先接收这条信息，   </span><br><span class="line">* 而后才可以向客户端发送信息，否则将会有运行时出错。   </span><br><span class="line">* </span><br><span class="line">* 2.注意这里我们前面的例子处理字符流默认使用Unicode编码，这里通过</span><br><span class="line">* writeUTF在写入数据流的时候会加上两个字节以表示字节的长度，且使用UTF-8编码。</span><br><span class="line"> * @author RobinLiew</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class ServerDemoUTF &#123;</span><br><span class="line">	public static void main(String[] args) &#123;   </span><br><span class="line">		ServerSocket ss &#x3D; null;   </span><br><span class="line">		try &#123;   </span><br><span class="line">			ss &#x3D; new ServerSocket(10002);   </span><br><span class="line">			&#x2F;&#x2F;服务器接收到客户端的数据后，创建与此客户端对话的Socket   </span><br><span class="line">			Socket socket &#x3D; ss.accept();   </span><br><span class="line">			&#x2F;&#x2F;用于向客户端发送数据的输出流   </span><br><span class="line">			DataOutputStream dos &#x3D; new DataOutputStream(socket.getOutputStream());   </span><br><span class="line">			&#x2F;&#x2F;用于接收客户端发来的数据的输入流   </span><br><span class="line">			DataInputStream dis &#x3D; new DataInputStream(socket.getInputStream());   </span><br><span class="line">			System.out.println(&quot;服务器接收到客户端的连接请求：&quot; + dis.readUTF());   </span><br><span class="line">			&#x2F;&#x2F;服务器向客户端发送连接成功确认信息   </span><br><span class="line">			dos.writeUTF(&quot;接受连接请求，连接成功!&quot;);   </span><br><span class="line">			&#x2F;&#x2F;不需要继续使用此连接时，关闭连接   </span><br><span class="line">			socket.close();   </span><br><span class="line">			ss.close();   </span><br><span class="line">		&#125; catch (IOException e) &#123;   </span><br><span class="line">			e.printStackTrace();   </span><br><span class="line">		&#125;   </span><br><span class="line">	&#125;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Socket URL通讯</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">package com.robinliew.basedemo2;</span><br><span class="line"></span><br><span class="line">import java.io.BufferedReader;  </span><br><span class="line">import java.io.BufferedWriter;  </span><br><span class="line">import java.io.File;  </span><br><span class="line">import java.io.FileWriter;  </span><br><span class="line">import java.io.InputStreamReader;  </span><br><span class="line">import java.net.URL;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * basedemo中的例子中客户端的知道服务端的IP地址与端口号后可以与其进行通信，但如果我们只知道网络URL地址，不知道IP呢？</span><br><span class="line"> * </span><br><span class="line"> * 在JAVA中，Java.net包里面的类是进行网络编程的，其中java.net.URL类和java.net.URLConection类使编程者方便地</span><br><span class="line"> * 利用URL在Internet上进行网络通信。</span><br><span class="line"> * </span><br><span class="line"> * @author RobinLiew</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class URLReader &#123;  </span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F;构建一URL对象</span><br><span class="line">		URL tirc &#x3D; new URL(&quot;https:&#x2F;&#x2F;robinliew.github.io&#x2F;&quot;);  </span><br><span class="line">		&#x2F;&#x2F;用于存放服务器返回的数据</span><br><span class="line">		File writeFile &#x3D; new File(&quot;d:\\information.html&quot;);  </span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F; 使用openStream得到一输入流并由此构造一个BufferedReader对象 </span><br><span class="line">		BufferedReader in &#x3D; new BufferedReader(new InputStreamReader(tirc.openStream()));  </span><br><span class="line">		BufferedWriter bos &#x3D; new BufferedWriter(new FileWriter(writeFile));  </span><br><span class="line">		 </span><br><span class="line">		String inputLine;  </span><br><span class="line">		 </span><br><span class="line">		while ((inputLine &#x3D; in.readLine()) !&#x3D; null)&#123;  </span><br><span class="line">			bos.write(inputLine);  </span><br><span class="line">			System.out.println(inputLine);  </span><br><span class="line">		&#125;  </span><br><span class="line">		bos.flush();  </span><br><span class="line">		in.close();  </span><br><span class="line">		bos.close();  </span><br><span class="line">	&#125;  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">- Socket服务端与客户端交互</span><br><span class="line">服务端</span><br></pre></td></tr></table></figure>
+<p>package com.robinliew.basethreaddemo;</p>
+<p>import java.io.BufferedReader;<br>import java.io.IOException;<br>import java.io.InputStreamReader;<br>import java.io.PrintWriter;<br>import java.net.ServerSocket;<br>import java.net.Socket;</p>
+<p>/**</p>
+<ul>
+<li><p>ServerDemo的例子是单线程的，只能服务一个客户，现将其改为多线程</p>
+</li>
+<li><p>@author RobinLiew</p>
+</li>
+<li></li>
+<li><p>/<br>public class ServerThread extends Thread{</p>
+<p>  public ServerThread(Socket socketServer, int i) {</p>
+<pre><code>  System.out.println(&quot;这是第：&quot;+i+&quot;个Socket！&quot;);</code></pre>
+<p>  }</p>
+<p>  public void run() {</p>
+<pre><code>  try&#123;
+
+      ServerSocket server = new ServerSocket(10000);  
+      int i=0;
+      //循环检测是否有客户连接到服务器上，如果有，则创建一个线程来服务这个客户
+      for(;;)&#123;
+          Socket socketServer = server.accept();
+          new ServerThread(socketServer,i);
+          i++;
+
+          //输入流和输出流的封装
+          final BufferedReader in=new BufferedReader(new InputStreamReader(socketServer.getInputStream()));
+          final PrintWriter out=new PrintWriter(socketServer.getOutputStream(),true);
+
+          out.println(&quot;这是服务端向客户端的第：&quot;+i+&quot;次响应！&quot;);
+
+          //为了可以随时得到客户端传过来消息，创建该线程
+          new Thread()&#123;
+              public void run() &#123;
+                  while(true)&#123;
+                      checkInput(in);
+                      try &#123;
+                          sleep(1000);//每1000毫秒检测一次
+                      &#125; catch (InterruptedException e) &#123;
+                          e.printStackTrace();
+                      &#125;
+                  &#125;
+              &#125;
+          &#125;.start();
+
+          out.close();
+          in.close();
+      &#125;
+
+  &#125;catch (IOException e)&#123;
+      e.printStackTrace(); 
+  &#125;   </code></pre>
+<p>  }</p>
+<p>  private void checkInput(BufferedReader in) {</p>
+<pre><code>  String line;  
+  try&#123;
+      if((line=in.readLine())!=null)&#123;
+          //检测输入流中是否有新的数据  
+          //将数据流中的消息显示出来 
+      &#125;
+  &#125;catch(Exception e)&#123;
+
+  &#125; </code></pre>
+<p>  }</p>
+</li>
+</ul>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">客户端</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>package com.robinliew.basethreaddemo;</p>
+<p>import java.io.BufferedReader;<br>import java.io.IOException;<br>import java.io.InputStreamReader;<br>import java.io.PrintWriter;<br>import java.net.Socket;<br>import java.net.UnknownHostException;</p>
+<p>/**</p>
+<ul>
+<li><p>为了和ServerThread配合使用</p>
+</li>
+<li><p>@author RobinLiew</p>
+</li>
+<li></li>
+<li><p>/<br>public class ClientThread extends Thread {</p>
+<p>  public void run() {</p>
+<pre><code>  try &#123;
+      //模拟10个客户端向服务端发送数据
+      for(int i=0;i&lt;10;i++)&#123;
+          Socket socket = new Socket(&quot;10.10.40.59&quot;,10000);
+          final BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));  
+          PrintWriter out = new PrintWriter(socket.getOutputStream(),true); 
+
+          out.println(&quot;这是第：&quot;+i+&quot;个客户向服务端发送数据！&quot;);
+
+          //为了可以随时得到服务端返回的消息，创建该线程
+          new Thread()&#123;
+              public void run() &#123;
+                  while(true)&#123;
+                      //检查服务端返回的信息
+                      checkInput(in);
+                      try &#123;
+                          sleep(1000);//每1000毫秒检测一次
+                      &#125; catch (InterruptedException e) &#123;
+                          e.printStackTrace();
+                      &#125;
+                  &#125;
+              &#125;
+          &#125;.start();
+
+          out.close();
+          in.close();
+      &#125;
+  &#125; catch (UnknownHostException e) &#123;
+      e.printStackTrace();
+  &#125; catch (IOException e) &#123;
+      e.printStackTrace();
+  &#125;</code></pre>
+<p>  }</p>
+<p>  private void checkInput(BufferedReader in) {</p>
+<pre><code>  String line;  
+  try&#123;
+      if((line=in.readLine())!=null)&#123;
+          //检测输入流中是否有新的数据  
+          //将数据流中的消息显示出来 
+      &#125;
+  &#125;catch(Exception e)&#123;
+
+  &#125; </code></pre>
+<p>  }<br>}</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Socket多线程一般设计原则</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>package com.robinliew.basethreaddemo;</p>
+<p>import java.io.<em>;<br>import java.net.</em>;<br>import java.util.<em>;<br>import java.lang.</em>; </p>
+<p>/**</p>
+<ul>
+<li><p>Java Socket线程的设计原理：</p>
+</li>
+<li><p>1.服务器端接受客户端的连接请求，同时启动一个线程处理这个连接，线程不停的读取客户端输入，然后把输入加入队列中，等候处理。</p>
+</li>
+<li><p>2.在线程启动的同时将线程加入队列中，以便在需要的时候定位和取出。</p>
+</li>
+<li></li>
+<li><p>下面是一个简易聊天室的例子</p>
+</li>
+<li><p>@author RobinLiew</p>
+</li>
+<li></li>
+<li><p>/<br>public class Server extends ServerSocket   {<br>  private static ArrayList User_List = new ArrayList();<br>  private static ArrayList Threader = new ArrayList();<br>  private static LinkedList Message_Array = new LinkedList();<br>  private static int Thread_Counter = 0;<br>  private static boolean isClear = true;<br>  protected static final int SERVER_PORT = 10000;<br>  protected FileOutputStream LOG_FILE = new FileOutputStream(“d:/connect.log”, true);<br>  public Server() throws FileNotFoundException, IOException   {   </p>
+<pre><code>  super(SERVER_PORT);   
+  new Broadcast();   
+  //append connection log   
+  Calendar now = Calendar.getInstance();   
+  String str = &quot;[&quot; + now.getTime().toString() + &quot;] Accepted a connection&quot;;   
+  byte[] tmp = str.getBytes();   
+  LOG_FILE.write(tmp);   
+  try &#123;   
+      while (true) &#123;   
+          Socket socket = accept();   
+          new CreateServerThread(socket);   
+      &#125;   
+  &#125;finally &#123;   
+      close();   
+  &#125;   </code></pre>
+<p>  }<br>  public static void main(String[] args) throws IOException {   </p>
+<pre><code>  new Server();   </code></pre>
+<p>  }<br>  //Broadcast处理存放消息的队列<br>  class Broadcast extends Thread {   </p>
+<pre><code>  public Broadcast() &#123;   
+      start();   
+  &#125;   
+  public void run() &#123;   
+      while (true) &#123;   
+          if (!isClear)&#123;   
+              String tmp = (String)Message_Array.getFirst();   
+              for (int i = 0; i &lt; Threader.size(); i++) &#123;   
+                  CreateServerThread client = (CreateServerThread)Threader.get(i);   
+                  client.sendMessage(tmp);   
+              &#125;  
+              Message_Array.removeFirst();   
+              isClear = Message_Array.size() &gt; 0 ? false : true;   
+          &#125;   
+      &#125;   
+  &#125;   </code></pre>
+<p>  }<br>  //— CreateServerThread<br>  class CreateServerThread extends Thread {   </p>
+<pre><code>  private Socket client;   
+  private BufferedReader in;   
+  private PrintWriter out;   
+  private String Username;   
+  public CreateServerThread(Socket s) throws IOException &#123;   
+      client = s;   
+      in = new BufferedReader(new InputStreamReader(client.getInputStream()));   
+      out = new PrintWriter(client.getOutputStream(), true);   
+      out.println(&quot;--- Welcome to this chatroom ---&quot;);   
+      out.println(&quot;Input your nickname:&quot;);   
+      start();   
+  &#125;   
+  public void sendMessage(String msg) &#123;   
+      out.println(msg);   
+  &#125;   
+  public void run() &#123;   
+      try &#123;   
+          int flag = 0;   
+          Thread_Counter++;   
+          String line = in.readLine();   
+          while (!line.equals(&quot;bye&quot;)) &#123;   
+              if (line.equals(&quot;l&quot;)) &#123;   
+                  out.println(listOnlineUsers());   
+                  line = in.readLine();   
+                  continue;   
+              &#125;   
+              if (flag++ == 0) &#123;   
+                  Username = line;   
+                  User_List.add(Username);   
+                  out.println(listOnlineUsers());   
+                  Threader.add(this);   
+                  pushMessage(&quot;[&lt; &quot; + Username + &quot; come on in &gt;]&quot;);   
+              &#125; else &#123;   
+                  pushMessage(&quot;&lt;&quot; + Username + &quot;&gt;&quot; + line);   
+              &#125;   
+              line = in.readLine();   
+          &#125;   
+          out.println(&quot;--- See you, bye! ---&quot;);   
+          client.close();   
+      &#125;catch (IOException e) &#123;
+
+      &#125;finally &#123;   
+          try &#123;  
+              client.close();   
+          &#125; catch (IOException e) &#123;
+
+          &#125;   
+          Thread_Counter--;   
+          Threader.remove(this);   
+          User_List.remove(Username);   
+          pushMessage(&quot;[&lt; &quot; + Username + &quot; left&gt;]&quot;);   
+      &#125;   
+  &#125;   
+  private String listOnlineUsers() &#123;   
+      String s =&quot;-+- Online list -+-1512&quot;;   
+      for (int i = 0; i &lt; User_List.size(); i++) &#123;   
+          s += &quot;[&quot; + User_List.get(i) + &quot;]&quot;;   
+      &#125;   
+      s += &quot;-+---------------------+-&quot;;   
+      return s;   
+  &#125;   
+  private void pushMessage(String msg)   &#123;   
+      Message_Array.addLast(msg);   
+      isClear = false;   
+  &#125;   </code></pre>
+<p>  }<br>}  </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Socket传输的序列化对象介绍</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>package com.robinliew.transferdemo;</p>
+<p>import java.io.ByteArrayInputStream;<br>import java.io.ByteArrayOutputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileOutputStream;<br>import java.io.IOException;<br>import java.io.InputStream;<br>import java.io.ObjectInputStream;<br>import java.io.ObjectOutputStream;<br>import java.io.OutputStream;<br>import java.util.Date; </p>
+<p>/**</p>
+<ul>
+<li>序列化是一种对象持久化的手段。普遍应用在网络传输、RMI等场景中.</li>
+<li></li>
+<li>序列化与反序列化：</li>
+<li></li>
+<li>1.只要一个类实现了java.io.Serializable接口，那么它就可以被序列化。</li>
+<li></li>
+<li>2.通过ObjectOutputStream和ObjectInputStream对对象进行序列化及反序列化。</li>
+<li></li>
+<li>3.虚拟机是否允许反序列化，不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 private static final long serialVersionUID）</li>
+<li></li>
+<li>4.序列化并不保存静态变量。</li>
+<li></li>
+<li>5.要想将父类对象也序列化，就需要让父类也实现Serializable 接口。</li>
+<li></li>
+<li>6.Transient 关键字的作用是控制变量的序列化，在变量声明前加上该关键字，可以阻止该变量被序列化到文件中，</li>
+<li>在被反序列化后，transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。</li>
+<li></li>
+<li>7.服务器端给客户端发送序列化对象数据，对象中有一些数据是敏感的，比如密码字符串等，希望对该密码字段在序列化时，进行加密，</li>
+<li>而客户端如果拥有解密的密钥，只有在客户端进行反序列化时，才可以对密码进行读取，这样可以一定程度保证序列化对象的数据安全。</li>
+<li></li>
+<li></li>
+<li>这个例子是用文件持久化展示，Socket传输中亦是如此。</li>
+<li>@author RobinLiew</li>
+<li></li>
+<li>/<br>public class Persistence {<br>  public static void main(String[] args) {  <pre><code>  Persistence.savePerson();  
+  Persistence.getPerson();  </code></pre>
+  }<br>  public static void getPerson() {  <pre><code>  try &#123;  
+      InputStream in = new FileInputStream(&quot;d:\\person.dat&quot;);  
+      ObjectInputStream dataInput = new ObjectInputStream(in);  
+      Person p = (Person) dataInput.readObject();  
+      System.out.println(p.getName());  
+      System.out.println(p.getTall());  
+      System.out.println(p.getBirthday());  
+      System.out.println(p.getAddress().getCity());  
+      System.out.println(p.getAddress().getStreet());  
+  &#125; catch (Exception e) &#123;  
+  // TODO Auto-generated catch block  
+      e.printStackTrace();  
+  &#125;  </code></pre>
+  }<br>  public static void savePerson() {  <pre><code>  Person p = new Person();  
+  p.setName(&quot;Robin Liew&quot;);  
+  p.setTall(176);  
+  p.setBirthday(new Date());  
+  p.setAddress(new Address(&quot;xian&quot;, &quot;tumen&quot;));  
+  OutputStream out = new ByteArrayOutputStream();  
+  try &#123;  
+      OutputStream fileOut = new FileOutputStream(new File(  
+      &quot;d:\\person.dat&quot;));  
+      ObjectOutputStream dataOut = new ObjectOutputStream(fileOut);  
+      dataOut.writeObject(p);  
+      dataOut.close();  
+      fileOut.close();  
+  &#125; catch (IOException e) &#123;  
+  // TODO Auto-generated catch block  
+      e.printStackTrace();  
+  &#125;  </code></pre>
+  }<br>}  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Socket网络交互的例子</span><br><span class="line">- 单线程</span><br><span class="line">	- 服务端</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>package com.robinliew.inaction.singlethread;
+
+import java.io.BufferedReader;  
+import java.io.IOException;  
+import java.io.InputStreamReader;  
+import java.io.PrintWriter;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+
+/**
+ * Server类，这个类用来监听10000端口，并从这个端口接收消息然后输出，当收到“bye”时退出。
+ * @author RobinLiew
+ *
+ */
+public class MyServer &#123;  
+    public static void main(String[] args) throws IOException &#123;  
+        ServerSocket server = new ServerSocket(10000);  
+        Socket socket = server.accept();  
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));  
+        PrintWriter out = new PrintWriter(socket.getOutputStream());  
+
+        while (true) &#123;  
+            String msg = in.readLine();  
+            System.out.println(msg);  
+            out.println(&quot;Server received &quot; + msg);  
+            out.flush();  
+            if (msg.equals(&quot;bye&quot;)) &#123;  
+                break;  
+            &#125;  
+        &#125;  
+        socket.close();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 客户端</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.singlethread;
+
+import java.io.BufferedReader;  
+import java.io.InputStreamReader;  
+import java.io.PrintWriter;  
+import java.net.Socket;  
+
+/**
+ * 一个Client类，这个类连接上面启动的Server类，然后接收任何用户输入，当遇到回车时发送字符串到Server上，当输入“bye”是退出。
+ * @author RobinLiew
+ *
+ */
+public class MyClient &#123;  
+    public static void main(String[] args) throws Exception &#123;  
+        //注意创建Socket除了使用IP+port的形式，还可以用 服务器主机名+port的形式
+        Socket socket = new Socket(&quot;localhost&quot;, 10000);  
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));  
+        PrintWriter out = new PrintWriter(socket.getOutputStream());  
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
+
+        while (true) &#123;  
+            String msg = reader.readLine();  
+            out.println(msg);  
+            out.flush();  
+            if (msg.equals(&quot;bye&quot;)) &#123;  
+                break;  
+            &#125;  
+            System.out.println(in.readLine());  
+        &#125;  
+        socket.close();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 多线程</span><br><span class="line">	- 服务端</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.multithread;
+
+import java.io.BufferedReader;  
+import java.io.IOException;  
+import java.io.InputStreamReader;  
+import java.io.PrintWriter;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+
+/**
+ * singlethread包中的例子有一个问题就是Server只能接受一个Client请求，当第一个Client连接后就占据了这个位置，后续Client不能再继续连接，所以需要做些改动，
+ * 当Server没接受到一个Client连接请求之后，都把处理流程放到一个独立的线程里去运行，然后等待下一个Client连接请求，这样就不会阻塞Server端接收请求了。
+ * 每个独立运行的程序在使用完Socket对象之后要将其关闭。
+ * 
+ * @author RobinLiew
+ *
+ */
+public class MyServer &#123;  
+    public static void main(String[] args) throws IOException &#123;  
+        ServerSocket server = new ServerSocket(10000);  
+
+        while (true) &#123;  
+            Socket socket = server.accept();  
+            invoke(socket);  
+        &#125;  
+    &#125;  
+
+    private static void invoke(final Socket client) throws IOException &#123;  
+        new Thread(new Runnable() &#123;  
+            public void run() &#123;  
+                BufferedReader in = null;  
+                PrintWriter out = null;  
+                try &#123;  
+                    in = new BufferedReader(new InputStreamReader(client.getInputStream()));  
+                    out = new PrintWriter(client.getOutputStream());  
+
+                    while (true) &#123;  
+                        String msg = in.readLine();  
+                        System.out.println(msg);  
+                        out.println(&quot;Server received &quot; + msg);  
+                        out.flush();  
+                        if (msg.equals(&quot;bye&quot;)) &#123;  
+                            break;  
+                        &#125;  
+                    &#125;  
+                &#125; catch(IOException ex) &#123;  
+                    ex.printStackTrace();  
+                &#125; finally &#123;  
+                    try &#123;  
+                        in.close();  
+                    &#125; catch (Exception e) &#123;&#125;  
+                    try &#123;  
+                        out.close();  
+                    &#125; catch (Exception e) &#123;&#125;  
+                    try &#123;  
+                        client.close();  
+                    &#125; catch (Exception e) &#123;&#125;  
+                &#125;  
+            &#125;  
+        &#125;).start();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 客户端</span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.singlethread;
+
+import java.io.BufferedReader;  
+import java.io.InputStreamReader;  
+import java.io.PrintWriter;  
+import java.net.Socket;  
+
+/**
+ * 一个Client类，这个类连接上面启动的Server类，然后接收任何用户输入，当遇到回车时发送字符串到Server上，当输入“bye”是退出。
+ * @author RobinLiew
+ *
+ */
+public class MyClient &#123;  
+    public static void main(String[] args) throws Exception &#123;  
+        //注意创建Socket除了使用IP+port的形式，还可以用 服务器主机名+port的形式
+        Socket socket = new Socket(&quot;localhost&quot;, 10000);  
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));  
+        PrintWriter out = new PrintWriter(socket.getOutputStream());  
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
+
+        while (true) &#123;  
+            String msg = reader.readLine();  
+            out.println(msg);  
+            out.flush();  
+            if (msg.equals(&quot;bye&quot;)) &#123;  
+                break;  
+            &#125;  
+            System.out.println(in.readLine());  
+        &#125;  
+        socket.close();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Socket传输对象</span><br><span class="line">- 传输序列化对象</span><br><span class="line">	- 服务端</span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferobject;
+
+import java.io.*;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+
+/**
+ * 使用Java Socket来传输对象
+ * @author RobinLiew
+ *
+ */
+public class MyServer &#123;  
+
+    private final static Logger logger = Logger.getLogger(MyServer.class.getName());  
+
+    public static void main(String[] args) throws IOException &#123;  
+        ServerSocket server = new ServerSocket(10000);  
+
+        while (true) &#123;  
+            Socket socket = server.accept();  
+            invoke(socket);  
+        &#125;  
+    &#125;  
+
+    private static void invoke(final Socket socket) throws IOException &#123;  
+        new Thread(new Runnable() &#123;  
+            public void run() &#123;  
+                ObjectInputStream is = null;  
+                ObjectOutputStream os = null;  
+                try &#123;  
+                    is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
+                    os = new ObjectOutputStream(socket.getOutputStream());  
+
+                    Object obj = is.readObject();  
+                    User user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+
+                    user.setName(user.getName() + &quot;_new&quot;);  
+                    user.setPassword(user.getPassword() + &quot;_new&quot;);  
+
+                    os.writeObject(user);  
+                    os.flush();  
+                &#125; catch (IOException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; catch(ClassNotFoundException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; finally &#123;  
+                    try &#123;  
+                        is.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        os.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        socket.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                &#125;  
+            &#125;  
+        &#125;).start();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 客户端</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferobject;
+
+import java.io.BufferedInputStream;  
+import java.io.IOException;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.net.Socket;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+
+/**
+ * 使用Java Socket来传输对象
+ * @author RobinLiew
+ *
+ */
+public class MyClient &#123;  
+
+    private final static Logger logger = Logger.getLogger(MyClient.class.getName());  
+
+    public static void main(String[] args) throws Exception &#123;  
+        for (int i = 0; i &lt; 100; i++) &#123;  
+            Socket socket = null;  
+            ObjectOutputStream os = null;  
+            ObjectInputStream is = null;  
+
+            try &#123;  
+                socket = new Socket(&quot;localhost&quot;, 10000);  
+
+                os = new ObjectOutputStream(socket.getOutputStream());  
+                User user = new User(&quot;user_&quot; + i, &quot;password_&quot; + i);  
+                os.writeObject(user);  
+                os.flush();  
+
+                is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
+                Object obj = is.readObject();  
+                if (obj != null) &#123;  
+                    user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+                &#125;  
+            &#125; catch(IOException ex) &#123;  
+                logger.log(Level.SEVERE, null, ex);  
+            &#125; finally &#123;  
+                try &#123;  
+                    is.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+                try &#123;  
+                    os.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+                try &#123;  
+                    socket.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+            &#125;  
+        &#125;  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 传输压缩对象</span><br><span class="line">	- 服务端</span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferGZIPobject;
+
+import java.io.IOException;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+import java.util.zip.GZIPInputStream;  
+import java.util.zip.GZIPOutputStream;  
+
+/**
+ * transfer包中用Java Socket来传输对象，但是在有些情况下比如网络环境不好或者对象比较大的情况下需要把数据对象进行压缩然后在传输，
+ * 此时就需要压缩这些对象流，此时就可以GZIPInputStream和GZIPOutputStream来处理一下socket的InputStream和OutputStream。
+ * @author RobinLiew
+ *
+ */
+public class MyServer &#123;  
+
+    private final static Logger logger = Logger.getLogger(MyServer.class.getName());  
+
+    public static void main(String[] args) throws IOException &#123;  
+        ServerSocket server = new ServerSocket(10000);  
+
+        while (true) &#123;  
+            Socket socket = server.accept();  
+            socket.setSoTimeout(10 * 1000);  
+            invoke(socket);  
+        &#125;  
+    &#125;  
+
+    private static void invoke(final Socket socket) throws IOException &#123;  
+        new Thread(new Runnable() &#123;  
+            public void run() &#123;  
+                GZIPInputStream gzipis = null;  
+                ObjectInputStream ois = null;  
+                GZIPOutputStream gzipos = null;  
+                ObjectOutputStream oos = null;  
+
+                try &#123;  
+                    gzipis = new GZIPInputStream(socket.getInputStream());  
+                    ois = new ObjectInputStream(gzipis);  
+                    gzipos = new GZIPOutputStream(socket.getOutputStream());  
+                    oos = new ObjectOutputStream(gzipos);  
+
+                    Object obj = ois.readObject();  
+                    User user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+
+                    user.setName(user.getName() + &quot;_new&quot;);  
+                    user.setPassword(user.getPassword() + &quot;_new&quot;);  
+
+                    oos.writeObject(user);  
+                    oos.flush();  
+                    gzipos.finish();  
+                &#125; catch (IOException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; catch(ClassNotFoundException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; finally &#123;  
+                    try &#123;  
+                        ois.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        oos.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        socket.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                &#125;  
+            &#125;  
+        &#125;).start();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 客户端</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferGZIPobject;
+
+import java.io.IOException;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.net.InetSocketAddress;  
+import java.net.Socket;  
+import java.net.SocketAddress;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+import java.util.zip.GZIPInputStream;  
+import java.util.zip.GZIPOutputStream;  
+
+/**
+ * Client也和Server端类似，同样要不socket的XXXStream包装成GZIPXXXStream，然后再包装成ObjectXXXStream
+ * @author RobinLiew
+ *
+ */
+public class MyClient &#123;  
+
+    private final static Logger logger = Logger.getLogger(MyClient.class.getName());  
+
+    public static void main(String[] args) throws Exception &#123;  
+        for (int i = 0; i &lt; 10; i++) &#123;  
+            Socket socket = null;  
+            GZIPOutputStream gzipos = null;  
+            ObjectOutputStream oos = null;  
+            GZIPInputStream gzipis = null;  
+            ObjectInputStream ois = null;  
+
+            try &#123;  
+                socket = new Socket();  
+                SocketAddress socketAddress = new InetSocketAddress(&quot;localhost&quot;, 10000);   
+                socket.connect(socketAddress, 10 * 1000);  
+                socket.setSoTimeout(10 * 1000);  
+
+                gzipos = new GZIPOutputStream(socket.getOutputStream());  
+                oos = new ObjectOutputStream(gzipos);  
+                User user = new User(&quot;user_&quot; + i, &quot;password_&quot; + i);  
+                oos.writeObject(user);  
+                oos.flush();  
+                gzipos.finish();  
+
+                gzipis = new GZIPInputStream(socket.getInputStream());  
+                ois = new ObjectInputStream(gzipis);  
+                Object obj = ois.readObject();  
+                if (obj != null) &#123;  
+                    user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+                &#125;  
+            &#125; catch(IOException ex) &#123;  
+                logger.log(Level.SEVERE, null, ex);  
+            &#125;  
+            try &#123;  
+                oos.close();  
+            &#125; catch (IOException e) &#123;  
+            &#125;  
+            try &#123;  
+                ois.close();  
+            &#125; catch (IOException e) &#123;  
+            &#125;  
+            try &#123;  
+                socket.close();  
+            &#125; catch (IOException e) &#123;  
+            &#125;  
+        &#125;  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 传输加密对象</span><br><span class="line">	- 服务端</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferSSLobject;
+
+import java.io.BufferedInputStream;  
+import java.io.IOException;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.net.ServerSocket;  
+import java.net.Socket;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+
+import javax.net.ServerSocketFactory;  
+import javax.net.ssl.SSLServerSocketFactory;  
+
+/**
+ * 这里需要用到ServerSocketFactory类来创建SSLServerSocket类实例，然后在通过SSLServerSocket来获取SSLSocket实例，
+ * 这里考虑到面向对象中的面向接口编程的理念，所以代码中并没有出现SSLServerSocket和SSLSocket，而是用了他们的父类ServerSocket和Socket。
+ * 在获取到ServerSocket和Socket实例以后，剩下的代码就和不使用加密方式一样了。
+ * @author RobinLiew
+ *
+ */
+public class MyServer &#123;  
+
+    private final static Logger logger = Logger.getLogger(MyServer.class.getName());  
+
+    public static void main(String[] args) &#123;  
+        try &#123;  
+            ServerSocketFactory factory = SSLServerSocketFactory.getDefault();  
+            ServerSocket server = factory.createServerSocket(10000);  
+
+            while (true) &#123;  
+                Socket socket = server.accept();  
+                invoke(socket);  
+            &#125;  
+        &#125; catch (Exception ex) &#123;  
+            ex.printStackTrace();  
+        &#125;  
+    &#125;  
+
+    private static void invoke(final Socket socket) throws IOException &#123;  
+        new Thread(new Runnable() &#123;  
+            public void run() &#123;  
+                ObjectInputStream is = null;  
+                ObjectOutputStream os = null;  
+                try &#123;  
+                    is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
+                    os = new ObjectOutputStream(socket.getOutputStream());  
+
+                    Object obj = is.readObject();  
+                    User user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+
+                    user.setName(user.getName() + &quot;_new&quot;);  
+                    user.setPassword(user.getPassword() + &quot;_new&quot;);  
+
+                    os.writeObject(user);  
+                    os.flush();  
+                &#125; catch (IOException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; catch(ClassNotFoundException ex) &#123;  
+                    logger.log(Level.SEVERE, null, ex);  
+                &#125; finally &#123;  
+                    try &#123;  
+                        is.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        os.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                    try &#123;  
+                        socket.close();  
+                    &#125; catch(Exception ex) &#123;&#125;  
+                &#125;  
+            &#125;  
+        &#125;).start();  
+    &#125;  
+&#125; 
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 客户端</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+package com.robinliew.inaction.transferSSLobject;
+
+import java.io.BufferedInputStream;  
+import java.io.IOException;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.net.Socket;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
+
+import javax.net.SocketFactory;  
+import javax.net.ssl.SSLSocketFactory;  
+
+public class MyClient &#123;  
+
+private final static Logger logger = Logger.getLogger(MyClient.class.getName());  
+
+    public static void main(String[] args) throws Exception &#123;  
+        for (int i = 0; i &lt; 100; i++) &#123;  
+            Socket socket = null;  
+            ObjectOutputStream os = null;  
+            ObjectInputStream is = null;  
+
+            try &#123;  
+                SocketFactory factory = SSLSocketFactory.getDefault();  
+                socket = factory.createSocket(&quot;localhost&quot;, 10000);  
+
+                os = new ObjectOutputStream(socket.getOutputStream());  
+                User user = new User(&quot;user_&quot; + i, &quot;password_&quot; + i);  
+                os.writeObject(user);  
+                os.flush();  
+
+                is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
+                Object obj = is.readObject();  
+                if (obj != null) &#123;  
+                    user = (User)obj;  
+                    System.out.println(&quot;user: &quot; + user.getName() + &quot;/&quot; + user.getPassword());  
+                &#125;  
+            &#125; catch(IOException ex) &#123;  
+                logger.log(Level.SEVERE, null, ex);  
+            &#125; finally &#123;  
+                try &#123;  
+                    is.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+                try &#123;  
+                    os.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+                try &#123;  
+                    socket.close();  
+                &#125; catch(Exception ex) &#123;&#125;  
+            &#125;  
+        &#125;  
+    &#125;  
+&#125; 
+
+```</code></pre>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/网络编程/">网络编程</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/网络编程/">网络编程</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

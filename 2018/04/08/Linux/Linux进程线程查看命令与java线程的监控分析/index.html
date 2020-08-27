@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux进程线程查看命令与java线程的监控分析 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="Linux进程线程查看命令与java线程的监控分析">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux进程线程查看命令与java线程的监控分析"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Linux进程线程查看命令与java线程的监控分析</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h2 id="Linux进程查看命令"><a href="#Linux进程查看命令" class="headerlink" title="Linux进程查看命令"></a>Linux进程查看命令</h2><h3 id="PS命令"><a href="#PS命令" class="headerlink" title="PS命令"></a>PS命令</h3><ul>
+<li><p>1.不带参数的ps使用</p>
+<p>  <img src="https://img-blog.csdn.net/20180326193105204?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>2.显示所有的当前进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps –ax  -a 代表 all。同时加上x参数会显示没有控制终端的进程。</span><br><span class="line">ps -ax | less 可以结合less命令和管道来使用以方便查看。</span><br></pre></td></tr></table></figure></li>
+<li><p>3.通过cpu和内存使用来过滤进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ps -aux | less</span><br><span class="line">默认的结果集是未排好序的。可以通过 –sort命令来排序。</span><br><span class="line">根据 CPU 使用来升序排序</span><br><span class="line">ps -aux --sort -pcpu | less</span><br><span class="line">根据 内存使用 来升序排序</span><br><span class="line">ps -aux --sort -pmem | less</span><br><span class="line">我们也可以将它们合并到一个命令，并通过管道显示前10个结果：</span><br><span class="line">ps -aux --sort -pcpu,+pmem | head -n 10</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>4.通过进程名和PID过滤</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -f -C [进程名]</span><br><span class="line">ps -f -C mysqld</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="https://img-blog.csdn.net/20180326193641782?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>5.树形显示进程</p>
+<p>  <img src="https://img-blog.csdn.net/20180326193834102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>6.查看所有关于java的进程</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a>top命令</h3><ul>
+<li>1.top命令经常用来监控Linux的系统状况，比如cpu、内存的使用。</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180326194526863?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<ul>
+<li><p>2.第一行：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一块：当前系统时间</span><br><span class="line">第二块：系统已经运行了3天23小时26分</span><br><span class="line">第三块：当前有1个用户登录系统</span><br><span class="line">第四块：load average后面的三个数分别是1分钟、5分钟、15分钟的负载情况。load average数据是每隔5秒钟检查一次活跃的进程数，然后按特定算法计算		出的数值。如果这个数除以逻辑CPU的数量，结果高于5的时候就表明系统在超负荷运转了。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.第二行：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一块：系统现在有431个进程</span><br><span class="line">第二块：有一个进程处于运行状态</span><br><span class="line">第三块：428个进程处于休眠状态</span><br><span class="line">第四块：0个进程处于stopped状态</span><br><span class="line">第五块：2个进程处于zombie状态</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.第三行：cpu状态</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0.4 us — 用户空间占用CPU的百分比。</span><br><span class="line">0.5 sy — 内核空间占用CPU的百分比。</span><br><span class="line">0.0 ni — 改变过优先级的进程占用CPU的百分比</span><br><span class="line">99.0 id — 空闲CPU百分比</span><br><span class="line">0.0 wa — IO等待占用CPU的百分比</span><br><span class="line">0.0 hi — 硬中断（Hardware IRQ）占用CPU的百分比</span><br><span class="line">0.0 si — 软中断（Software Interrupts）占用CPU的百分比</span><br><span class="line">用户空间就是用户进程所在的内存区域，相对的，系统空间就是操作系统占据的内存区域。用户进程和系统进程的所有数据都在内存中。</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>5.第四行：内存状态（单位k）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">16237008 total — 物理内存总量（16.2GB）</span><br><span class="line">10904524 used — 使用中的内存总量（10.9GB）</span><br><span class="line">1984320  free — 空闲内存总量（2.0G）</span><br><span class="line">3348164  buffers — 缓存的内存量 （3.3G）</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>6.第五行：swap交换分区</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5119996 total — 交换区总量（5GB）</span><br><span class="line">0       used — 使用的交换区总量（0）</span><br><span class="line">5119996 free — 空闲交换区总量（5GB）</span><br><span class="line">4800960 cached — 缓冲的交换区总量（4.8GB）</span><br></pre></td></tr></table></figure>
+
+<p>  可用内存数的近似的计算公式：第四行的free + 第四行的buffers + 第五行的cached。<br>我们最关心的内存监控是第五行swap（类似于虚拟内存）交换分区的used，如果这个数值在不断的变化，说明内核在不断进行内存和swap的数据交换，这是可以判定服务器的内存不够用了。</p>
+</li>
+<li><p>7.第六行：各进程（任务）的状态监控</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PID — 进程id</span><br><span class="line">USER — 进程所有者</span><br><span class="line">PR — 进程优先级</span><br><span class="line">NI — nice值。负值表示高优先级，正值表示低优先级</span><br><span class="line">VIRT — 进程使用的虚拟内存总量，单位kb。VIRT&#x3D;SWAP+RES</span><br><span class="line">RES — 进程使用的、未被换出的物理内存大小，单位kb。RES&#x3D;CODE+DATA</span><br><span class="line">SHR — 共享内存大小，单位kb</span><br><span class="line">S — 进程状态。D&#x3D;不可中断的睡眠状态 R&#x3D;运行 S&#x3D;睡眠 T&#x3D;跟踪&#x2F;停止 Z&#x3D;僵尸进程</span><br><span class="line">%CPU — 上次更新到现在的CPU时间占用百分比</span><br><span class="line">%MEM — 进程使用的物理内存百分比</span><br><span class="line">TIME+ — 进程使用的CPU时间总计，单位1&#x2F;100秒</span><br><span class="line">COMMAND — 进程名称（命令名&#x2F;命令行）</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="线程查看命令"><a href="#线程查看命令" class="headerlink" title="线程查看命令"></a>线程查看命令</h2><h3 id="top-–H（列出所有的线程）"><a href="#top-–H（列出所有的线程）" class="headerlink" title="top –H（列出所有的线程）"></a>top –H（列出所有的线程）</h3><p><img src="https://img-blog.csdn.net/20180326195231168?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="让top输出某个特定进程-pid-并检查该进程内运行的线程状况"><a href="#让top输出某个特定进程-pid-并检查该进程内运行的线程状况" class="headerlink" title="让top输出某个特定进程[pid]并检查该进程内运行的线程状况"></a>让top输出某个特定进程[pid]并检查该进程内运行的线程状况</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">让top输出某个特定进程[pid]并检查该进程内运行的线程状况：</span><br><span class="line">top -H -p [pid]</span><br><span class="line"></span><br></pre></td></tr></table></figure></code></pre>
+<p><img src="https://img-blog.csdn.net/20180326195321929?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h3 id="查看由进程号为-pid-的进程创建的所有线程"><a href="#查看由进程号为-pid-的进程创建的所有线程" class="headerlink" title="查看由进程号为[pid]的进程创建的所有线程"></a>查看由进程号为[pid]的进程创建的所有线程</h3><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -T -p [pid]</span><br></pre></td></tr></table></figure></code></pre>
+<p><img src="https://img-blog.csdn.net/20180326194406332?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h2 id="Java线程监控分析（一般流程）"><a href="#Java线程监控分析（一般流程）" class="headerlink" title="Java线程监控分析（一般流程）"></a>Java线程监控分析（一般流程）</h2><h3 id="1-先用top命令找出占用资源比较多的java进程id"><a href="#1-先用top命令找出占用资源比较多的java进程id" class="headerlink" title="1.先用top命令找出占用资源比较多的java进程id"></a>1.先用top命令找出占用资源比较多的java进程id</h3><p><img src="https://img-blog.csdn.net/20180326212712948?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>我们以第一个进程为例，对该进程的所有线程进行监控</p>
+<h3 id="2-查看相关进程的所有线程"><a href="#2-查看相关进程的所有线程" class="headerlink" title="2.查看相关进程的所有线程"></a>2.查看相关进程的所有线程</h3><p><img src="https://img-blog.csdn.net/20180326213435746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>接下来我们以第一个线程为例，对其进行监控分析</p>
+<h3 id="3-然后借助JVM的-jconsole-exe-工具对相应线程进行具体分析"><a href="#3-然后借助JVM的-jconsole-exe-工具对相应线程进行具体分析" class="headerlink" title="3.然后借助JVM的 jconsole.exe  工具对相应线程进行具体分析"></a>3.然后借助JVM的 jconsole.exe  工具对相应线程进行具体分析</h3><p><img src="https://img-blog.csdn.net/20180326214337895?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdWJpbjE5OTFsaXViaW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>jconsole具体使用细节可以参考 <a target="_blank" rel="noopener" href="https://blog.csdn.net/ithomer/article/details/9923311">https://blog.csdn.net/ithomer/article/details/9923311</a> ，这里就不做过多的介绍了。</p>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux/">Linux</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Linux/">Linux</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

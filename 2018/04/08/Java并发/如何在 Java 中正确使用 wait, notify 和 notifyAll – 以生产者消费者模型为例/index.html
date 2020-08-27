@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">如何在 Java 中正确使用 wait, notify 和 notifyAll – 以生产者消费者模型为例</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>wait, notify 和 notifyAll，这些在多线程中被经常用到的保留关键字，在实际开发的时候很多时候却并没有被大家重视。本文对这些关键字的使用进行了描述。</p>
+<p>在 Java 中可以用 wait、notify 和 notifyAll 来实现线程间的通信。。举个例子，如果你的Java程序中有两个线程——即生产者和消费者，那么生产者可以通知消费者，让消费者开始消耗数据，因为队列缓冲区中有内容待消费（不为空）。相应的，消费者可以通知生产者可以开始生成更多的数据，因为当它消耗掉某些数据后缓冲区不再为满。</p>
+<p>我们可以利用wait()来让一个线程在某些条件下暂停运行。例如，在生产者消费者模型中，生产者线程在缓冲区为满的时候，消费者在缓冲区为空的时候，都应该暂停运行。如果某些线程在等待某些条件触发，那当那些条件为真时，你可以用 notify 和 notifyAll 来通知那些等待中的线程重新开始运行。不同之处在于，notify 仅仅通知一个线程，并且我们不知道哪个线程会收到通知，然而 notifyAll 会通知所有等待中的线程。换言之，如果只有一个线程在等待一个信号灯，notify和notifyAll都会通知到这个线程。但如果多个线程在等待这个信号灯，那么notify只会通知到其中一个，而其它线程并不会收到任何通知，而notifyAll会唤醒所有等待中的线程。</p>
+<p>在这篇文章中你将会学到如何使用 wait、notify 和 notifyAll 来实现线程间的通信，从而解决生产者消费者问题。如果你想要更深入地学习Java中的多线程同步问题，我强烈推荐阅读Brian Goetz所著的《Java Concurrency in Practice | Java 并发实践》，不读这本书你的 Java 多线程征程就不完整哦！这是我最向Java开发者推荐的书之一。<br>如何使用Wait</p>
+<p>尽管关于wait和notify的概念很基础，它们也都是Object类的函数，但用它们来写代码却并不简单。如果你在面试中让应聘者来手写代码，用wait和notify解决生产者消费者问题，我几乎可以肯定他们中的大多数都会无所适从或者犯下一些错误，例如在错误的地方使用 synchronized 关键词，没有对正确的对象使用wait，或者没有遵循规范的代码方法。说实话，这个问题对于不常使用它们的程序员来说确实令人感觉比较头疼。</p>
+<p>第一个问题就是，我们怎么在代码里使用wait()呢？因为wait()并不是Thread类下的函数，我们并不能使用Thread.call()。事实上很多Java程序员都喜欢这么写，因为它们习惯了使用Thread.sleep()，所以他们会试图使用wait() 来达成相同的目的，但很快他们就会发现这并不能顺利解决问题。正确的方法是对在多线程间共享的那个Object来使用wait。在生产者消费者问题中，这个共享的Object就是那个缓冲区队列。</p>
+<p>第二个问题是，既然我们应该在synchronized的函数或是对象里调用wait，那哪个对象应该被synchronized呢？答案是，那个你希望上锁的对象就应该被synchronized，即那个在多个线程间被共享的对象。在生产者消费者问题中，应该被synchronized的就是那个缓冲区队列。（我觉得这里是英文原文有问题……本来那个句末就不应该是问号不然不太通……）</p>
+<p><img src="http://jbcdn2.b0.upaiyun.com/2015/07/5fda7f863416140cb97a8c8977dfd5db.png" alt="这里写图片描述"></p>
+<p>永远在循环（loop）里调用 wait 和 notify，不是在 If 语句</p>
+<p>现在你知道wait应该永远在被synchronized的背景下和那个被多线程共享的对象上调用，下一个一定要记住的问题就是，你应该永远在while循环，而不是if语句中调用wait。因为线程是在某些条件下等待的——在我们的例子里，即“如果缓冲区队列是满的话，那么生产者线程应该等待”，你可能直觉就会写一个if语句。但if语句存在一些微妙的小问题，导致即使条件没被满足，你的线程你也有可能被错误地唤醒。所以如果你不在线程被唤醒后再次使用while循环检查唤醒条件是否被满足，你的程序就有可能会出错——例如在缓冲区为满的时候生产者继续生成数据，或者缓冲区为空的时候消费者开始小号数据。所以记住，永远在while循环而不是if语句中使用wait！我会推荐阅读《Effective Java》，这是关于如何正确使用wait和notify的最好的参考资料。</p>
+<p>基于以上认知，下面这个是使用wait和notify函数的规范代码模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; The standard idiom for calling the wait method in Java </span><br><span class="line">synchronized (sharedObject) &#123; </span><br><span class="line">    while (condition) &#123; </span><br><span class="line">    sharedObject.wait(); </span><br><span class="line">        &#x2F;&#x2F; (Releases lock, and reacquires on wakeup) </span><br><span class="line">    &#125; </span><br><span class="line">    &#x2F;&#x2F; do action based upon condition e.g. take or put into queue </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就像我之前说的一样，在while循环里使用wait的目的，是在线程被唤醒的前后都持续检查条件是否被满足。如果条件并未改变，wait被调用之前notify的唤醒通知就来了，那么这个线程并不能保证被唤醒，有可能会导致死锁问题。<br>Java wait(), notify(), notifyAll() 范例</p>
+<p>下面我们提供一个使用wait和notify的范例程序。在这个程序里，我们使用了上文所述的一些代码规范。我们有两个线程，分别名为PRODUCER（生产者）和CONSUMER（消费者），他们分别继承了了Producer和Consumer类，而Producer和Consumer都继承了Thread类。Producer和Consumer想要实现的代码逻辑都在run()函数内。Main线程开始了生产者和消费者线程，并声明了一个LinkedList作为缓冲区队列（在Java中，LinkedList实现了队列的接口）。生产者在无限循环中持续往LinkedList里插入随机整数直到LinkedList满。我们在while(queue.size == maxSize)循环语句中检查这个条件。请注意到我们在做这个检查条件之前已经在队列对象上使用了synchronized关键词，因而其它线程不能在我们检查条件时改变这个队列。如果队列满了，那么PRODUCER线程会在CONSUMER线程消耗掉队列里的任意一个整数，并用notify来通知PRODUCER线程之前持续等待。在我们的例子中，wait和notify都是使用在同一个共享对象上的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">import java.util.LinkedList; </span><br><span class="line">import java.util.Queue; </span><br><span class="line">import java.util.Random; </span><br><span class="line">&#x2F;** </span><br><span class="line">* Simple Java program to demonstrate How to use wait, notify and notifyAll() </span><br><span class="line">* method in Java by solving producer consumer problem.</span><br><span class="line">* </span><br><span class="line">* @author Javin Paul </span><br><span class="line">*&#x2F;</span><br><span class="line">public class ProducerConsumerInJava &#123; </span><br><span class="line">    public static void main(String args[]) &#123; </span><br><span class="line">        System.out.println(&quot;How to use wait and notify method in Java&quot;); </span><br><span class="line">        System.out.println(&quot;Solving Producer Consumper Problem&quot;); </span><br><span class="line">        Queue&lt;Integer&gt; buffer &#x3D; new LinkedList&lt;&gt;(); </span><br><span class="line">        int maxSize &#x3D; 10; </span><br><span class="line">        Thread producer &#x3D; new Producer(buffer, maxSize, &quot;PRODUCER&quot;); </span><br><span class="line">        Thread consumer &#x3D; new Consumer(buffer, maxSize, &quot;CONSUMER&quot;); </span><br><span class="line">        producer.start(); consumer.start(); &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    &#x2F;** </span><br><span class="line">    * Producer Thread will keep producing values for Consumer </span><br><span class="line">    * to consumer. It will use wait() method when Queue is full </span><br><span class="line">    * and use notify() method to send notification to Consumer </span><br><span class="line">    * Thread. </span><br><span class="line">    * </span><br><span class="line">    * @author WINDOWS 8 </span><br><span class="line">    * </span><br><span class="line">    *&#x2F;</span><br><span class="line">    class Producer extends Thread </span><br><span class="line">    &#123; private Queue&lt;Integer&gt; queue; </span><br><span class="line">        private int maxSize; </span><br><span class="line">        public Producer(Queue&lt;Integer&gt; queue, int maxSize, String name)&#123; </span><br><span class="line">            super(name); this.queue &#x3D; queue; this.maxSize &#x3D; maxSize; </span><br><span class="line">        &#125; </span><br><span class="line">        @Override public void run() </span><br><span class="line">        &#123; </span><br><span class="line">            while (true) </span><br><span class="line">                &#123; </span><br><span class="line">                    synchronized (queue) &#123; </span><br><span class="line">                        while (queue.size() &#x3D;&#x3D; maxSize) &#123; </span><br><span class="line">                            try &#123; </span><br><span class="line">                                System.out .println(&quot;Queue is full, &quot; + &quot;Producer thread waiting for &quot; + &quot;consumer to take something from queue&quot;); </span><br><span class="line">                                queue.wait(); </span><br><span class="line">                            &#125; catch (Exception ex) &#123; </span><br><span class="line">                                ex.printStackTrace(); &#125; </span><br><span class="line">                            &#125; </span><br><span class="line">                            Random random &#x3D; new Random(); </span><br><span class="line">                            int i &#x3D; random.nextInt(); </span><br><span class="line">                            System.out.println(&quot;Producing value : &quot; + i); queue.add(i); queue.notifyAll(); </span><br><span class="line">                        &#125; </span><br><span class="line">                    &#125; </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">    &#x2F;** </span><br><span class="line">    * Consumer Thread will consumer values form shared queue. </span><br><span class="line">    * It will also use wait() method to wait if queue is </span><br><span class="line">    * empty. It will also use notify method to send </span><br><span class="line">    * notification to producer thread after consuming values </span><br><span class="line">    * from queue. </span><br><span class="line">    * </span><br><span class="line">    * @author WINDOWS 8 </span><br><span class="line">    * </span><br><span class="line">    *&#x2F;</span><br><span class="line">    class Consumer extends Thread &#123; </span><br><span class="line">        private Queue&lt;Integer&gt; queue; </span><br><span class="line">        private int maxSize; </span><br><span class="line">        public Consumer(Queue&lt;Integer&gt; queue, int maxSize, String name)&#123; </span><br><span class="line">            super(name); </span><br><span class="line">            this.queue &#x3D; queue; </span><br><span class="line">            this.maxSize &#x3D; maxSize; </span><br><span class="line">        &#125; </span><br><span class="line">        @Override public void run() &#123; </span><br><span class="line">            while (true) &#123; </span><br><span class="line">                synchronized (queue) &#123; </span><br><span class="line">                    while (queue.isEmpty()) &#123; </span><br><span class="line">                        System.out.println(&quot;Queue is empty,&quot; + &quot;Consumer thread is waiting&quot; + &quot; for producer thread to put something in queue&quot;); </span><br><span class="line">                        try &#123; </span><br><span class="line">                            queue.wait(); </span><br><span class="line">                        &#125; catch (Exception ex) &#123; </span><br><span class="line">                            ex.printStackTrace(); </span><br><span class="line">                        &#125; </span><br><span class="line">                    &#125; </span><br><span class="line">                    System.out.println(&quot;Consuming value : &quot; + queue.remove()); queue.notifyAll(); </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://jbcdn2.b0.upaiyun.com/2015/07/19b8448d72b097bda0616b703b0d7db3.png" alt="这里写图片描述"></p>
+<p>为了更好地理解这个程序，我建议你在debug模式里跑这个程序。一旦你在debug模式下启动程序，它会停止在PRODUCER或者CONSUMER线程上，取决于哪个线程占据了CPU。因为两个线程都有wait()的条件，它们一定会停止，然后你就可以跑这个程序然后看发生什么了（很有可能它就会输出我们以上展示的内容）。你也可以使用Eclipse里的Step into和Step over按钮来更好地理解多线程间发生的事情。<br>本文重点：</p>
+<ol>
+<li><p>你可以使用wait和notify函数来实现线程间通信。你可以用它们来实现多线程（&gt;3）之间的通信。</p>
+</li>
+<li><p>永远在synchronized的函数或对象里使用wait、notify和notifyAll，不然Java虚拟机会生成 IllegalMonitorStateException。</p>
+</li>
+<li><p>永远在while循环里而不是if语句下使用wait。这样，循环会在线程睡眠前后都检查wait的条件，并在条件实际上并未改变的情况下处理唤醒通知。</p>
+</li>
+<li><p>永远在多线程间共享的对象（在生产者消费者模型里即缓冲区队列）上使用wait。</p>
+</li>
+<li><p>基于前文提及的理由，更倾向用 notifyAll()，而不是 notify()。</p>
+</li>
+</ol>
+<p><img src="http://jbcdn2.b0.upaiyun.com/2015/07/fb4daecd5650cb2c82b9eb7cd9d54e3f.png" alt="这里写图片描述"></p>
+<p>这是关于Java里如何使用wait, notify和notifyAll的所有重点啦。你应该只在你知道自己要做什么的情况下使用这些函数，不然Java里还有很多其它的用来解决同步问题的方案。例如，如果你想使用生产者消费者模型的话，你也可以使用BlockingQueue，它会帮你处理所有的线程安全问题和流程控制。如果你想要某一个线程等待另一个线程做出反馈再继续运行，你也可以使用CycliBarrier或者CountDownLatch。如果你只是想保护某一个资源的话，你也可以使用Semaphore。</p>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/Java并发/">Java并发</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Java并发/">Java并发</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

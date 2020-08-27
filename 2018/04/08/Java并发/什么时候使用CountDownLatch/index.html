@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>什么时候使用CountDownLatch › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="什么时候使用CountDownLatch">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="什么时候使用CountDownLatch"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">什么时候使用CountDownLatch</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <p>正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编 程中跟CountDownLatch相关的以下几点：<br>目录</p>
+<pre><code>CountDownLatch是什么？
+CountDownLatch如何工作？
+在实时系统中的应用场景
+应用范例
+常见的面试题</code></pre>
+<p>CountDownLatch是什么</p>
+<p>CountDownLatch是在java1.5被引入的，跟它一起被引入的并发工具类还有CyclicBarrier、Semaphore、ConcurrentHashMap和BlockingQueue，它们都存在于java.util.concurrent包下。CountDownLatch这个类能够使一个线程等待其他线程完成各自的工作后再执行。例如，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。</p>
+<p>CountDownLatch是通过一个计数器来实现的，计数器的初始值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就会减1。当计数器值到达0时，它表示所有的线程已经完成了任务，然后在闭锁上等待的线程就可以恢复执行任务。<br><img src="http://img.blog.csdn.net/20171212184610746?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1YmluMTk5MWxpdWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>CountDownLatch的伪代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;Main thread start</span><br><span class="line">&#x2F;&#x2F;Create CountDownLatch for N threads</span><br><span class="line">&#x2F;&#x2F;Create and start N threads</span><br><span class="line">&#x2F;&#x2F;Main thread wait on latch</span><br><span class="line">&#x2F;&#x2F;N threads completes there tasks are returns</span><br><span class="line">&#x2F;&#x2F;Main thread resume execution</span><br></pre></td></tr></table></figure>
+
+<p>CountDownLatch如何工作</p>
+<p>CountDownLatch.java类中定义的构造函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;Constructs a CountDownLatch initialized with the given count.</span><br><span class="line">public void CountDownLatch(int count) &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造器中的计数值（count）实际上就是闭锁需要等待的线程数量。这个值只能被设置一次，而且CountDownLatch没有提供任何机制去重新设置这个计数值。</p>
+<p>与CountDownLatch的第一次交互是主线程等待其他线程。主线程必须在启动其他线程后立即调用CountDownLatch.await()方法。这样主线程的操作就会在这个方法上阻塞，直到其他线程完成各自的任务。</p>
+<p>其他N 个线程必须引用闭锁对象，因为他们需要通知CountDownLatch对象，他们已经完成了各自的任务。这种通知机制是通过 CountDownLatch.countDown()方法来完成的；每调用一次这个方法，在构造函数中初始化的count值就减1。所以当N个线程都调 用了这个方法，count的值等于0，然后主线程就能通过await()方法，恢复执行自己的任务。<br>在实时系统中的使用场景</p>
+<p>让我们尝试罗列出在java实时系统中CountDownLatch都有哪些使用场景。我所罗列的都是我所能想到的。如果你有别的可能的使用方法，请在留言里列出来，这样会帮助到大家。</p>
+<pre><code>实现最大的并行性：有时我们想同时启动多个线程，实现最大程度的并行性。例如，我们想测试一个单例类。如果我们创建一个初始计数为1的CountDownLatch，并让所有线程都在这个锁上等待，那么我们可以很轻松地完成测试。我们只需调用 一次countDown()方法就可以让所有的等待线程同时恢复执行。
+开始执行前等待n个线程完成各自任务：例如应用程序启动类要确保在处理用户请求前，所有N个外部系统已经启动和运行了。
+死锁检测：一个非常方便的使用场景是，你可以使用n个线程访问共享资源，在每次测试阶段的线程数目是不同的，并尝试产生死锁。</code></pre>
+<p>CountDownLatch使用例子</p>
+<p>在这个例子中，我模拟了一个应用程序启动类，它开始时启动了n个线程类，这些线程将检查外部系统并通知闭锁，并且启动类一直在闭锁上等待着。一旦验证和检查了所有外部服务，那么启动类恢复执行。</p>
+<p>BaseHealthChecker.java：这个类是一个Runnable，负责所有特定的外部服务健康的检测。它删除了重复的代码和闭锁的中心控制代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public abstract class BaseHealthChecker implements Runnable &#123;</span><br><span class="line"> </span><br><span class="line">    private CountDownLatch _latch;</span><br><span class="line">    private String _serviceName;</span><br><span class="line">    private boolean _serviceUp;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;Get latch object in constructor so that after completing the task, thread can countDown() the latch</span><br><span class="line">    public BaseHealthChecker(String serviceName, CountDownLatch latch)</span><br><span class="line">    &#123;</span><br><span class="line">        super();</span><br><span class="line">        this._latch &#x3D; latch;</span><br><span class="line">        this._serviceName &#x3D; serviceName;</span><br><span class="line">        this._serviceUp &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            verifyService();</span><br><span class="line">            _serviceUp &#x3D; true;</span><br><span class="line">        &#125; catch (Throwable t) &#123;</span><br><span class="line">            t.printStackTrace(System.err);</span><br><span class="line">            _serviceUp &#x3D; false;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            if(_latch !&#x3D; null) &#123;</span><br><span class="line">                _latch.countDown();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public String getServiceName() &#123;</span><br><span class="line">        return _serviceName;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public boolean isServiceUp() &#123;</span><br><span class="line">        return _serviceUp;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;This methos needs to be implemented by all specific service checker</span><br><span class="line">    public abstract void verifyService();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>NetworkHealthChecker.java：这个类继承了BaseHealthChecker，实现了verifyService()方法。DatabaseHealthChecker.java和CacheHealthChecker.java除了服务名和休眠时间外，与NetworkHealthChecker.java是一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class NetworkHealthChecker extends BaseHealthChecker</span><br><span class="line">&#123;</span><br><span class="line">    public NetworkHealthChecker (CountDownLatch latch)  &#123;</span><br><span class="line">        super(&quot;Network Service&quot;, latch);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void verifyService()</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;Checking &quot; + this.getServiceName());</span><br><span class="line">        try</span><br><span class="line">        &#123;</span><br><span class="line">            Thread.sleep(7000);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (InterruptedException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(this.getServiceName() + &quot; is UP&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ApplicationStartupUtil.java：这个类是一个主启动类，它负责初始化闭锁，然后等待，直到所有服务都被检测完。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public class ApplicationStartupUtil</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F;List of service checkers</span><br><span class="line">    private static List&lt;BaseHealthChecker&gt; _services;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F;This latch will be used to wait on</span><br><span class="line">    private static CountDownLatch _latch;</span><br><span class="line"> </span><br><span class="line">    private ApplicationStartupUtil()</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private final static ApplicationStartupUtil INSTANCE &#x3D; new ApplicationStartupUtil();</span><br><span class="line"> </span><br><span class="line">    public static ApplicationStartupUtil getInstance()</span><br><span class="line">    &#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public static boolean checkExternalServices() throws Exception</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;Initialize the latch with number of service checkers</span><br><span class="line">        _latch &#x3D; new CountDownLatch(3);</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;All add checker in lists</span><br><span class="line">        _services &#x3D; new ArrayList&lt;BaseHealthChecker&gt;();</span><br><span class="line">        _services.add(new NetworkHealthChecker(_latch));</span><br><span class="line">        _services.add(new CacheHealthChecker(_latch));</span><br><span class="line">        _services.add(new DatabaseHealthChecker(_latch));</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;Start service checkers using executor framework</span><br><span class="line">        Executor executor &#x3D; Executors.newFixedThreadPool(_services.size());</span><br><span class="line"> </span><br><span class="line">        for(final BaseHealthChecker v : _services)</span><br><span class="line">        &#123;</span><br><span class="line">            executor.execute(v);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;Now wait till all services are checked</span><br><span class="line">        _latch.await();</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F;Services are file and now proceed startup</span><br><span class="line">        for(final BaseHealthChecker v : _services)</span><br><span class="line">        &#123;</span><br><span class="line">            if( ! v.isServiceUp())</span><br><span class="line">            &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>现在你可以写测试代码去检测一下闭锁的功能了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        boolean result &#x3D; false;</span><br><span class="line">        try &#123;</span><br><span class="line">            result &#x3D; ApplicationStartupUtil.checkExternalServices();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;External services validation completed !! Result was :: &quot;+ result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Output in console:</span><br><span class="line"> </span><br><span class="line">Checking Network Service</span><br><span class="line">Checking Cache Service</span><br><span class="line">Checking Database Service</span><br><span class="line">Database Service is UP</span><br><span class="line">Cache Service is UP</span><br><span class="line">Network Service is UP</span><br><span class="line">External services validation completed !! Result was :: true</span><br></pre></td></tr></table></figure>
+
+<p>常见面试题</p>
+<p>可以为你的下次面试准备以下一些CountDownLatch相关的问题：</p>
+<pre><code>解释一下CountDownLatch概念?
+CountDownLatch 和CyclicBarrier的不同之处?
+给出一些CountDownLatch使用的例子?
+ CountDownLatch 类中主要的方法?</code></pre>
+<p>原文链接： howtodoinjava 翻译： ImportNew.com - 张涛<br>译文链接： <a target="_blank" rel="noopener" href="http://www.importnew.com/15731.html">http://www.importnew.com/15731.html</a></p>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/Java并发/">Java并发</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Java并发/">Java并发</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

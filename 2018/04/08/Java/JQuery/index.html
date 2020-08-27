@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JQuery › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="JQuery">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JQuery"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">JQuery</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <h1 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h1><p>最近的项目用到jQuery,但之前我对前端的东西不是很熟，故参照W3CSchool的教程进行总结和笔记记录，加深印象。</p>
+<hr>
+<p>##1. jQuery是一个轻量级的javaScript函数库</p>
+<ul>
+<li><p>jQuery包含以下特性</p>
+<ul>
+<li>HTML元素的选取</li>
+<li>HTML元素的操作</li>
+<li>CSS操作</li>
+<li>HTML事件函数</li>
+<li>JavaScript特效和动画</li>
+<li>HTML DOM遍历和修改</li>
+<li>AJAX</li>
+<li>Utilities</li>
+</ul>
+</li>
+<li><p>jQuery库位于单个JavaScript文件中，其中包含所有jQuery函数。引入jQuery库：</p>
+<pre><code>      /*&lt;head&gt;
+          &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+      &lt;/head&gt;*/</code></pre>
+<p>实际开发中可以这样引入</p>
+<pre><code>  &lt;%
+      String path = request.getContextPath();
+   %&gt;
+   &lt;script type=&quot;text/javascript&quot; src=&quot;&lt;%=path%&gt;/edview/js/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+   //&lt;%=path%&gt;后面是jQuery.js实际的存放位置</code></pre>
+<p>如果不愿意在自己的计算机上存放 jQuery 库，那么可以从 Google or Microsoft 加载 CDN jQuery 核心文件。请参考问W3CSchool教程。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-文档就绪函数"><a href="#2-文档就绪函数" class="headerlink" title="2.文档就绪函数"></a>2.文档就绪函数</h2><pre><code>$(document).ready(function()&#123;
+
+    --- jQuery functions go here ----
+
+&#125;);</code></pre>
+<hr>
+<p>实例中所有的jQuery函数都应该在文档就绪函数中，这是为了防止文档在完全加载（就绪）之前运行 jQuery 代码。</p>
+<hr>
+<h2 id="3-jQuery选择器"><a href="#3-jQuery选择器" class="headerlink" title="3.jQuery选择器"></a>3.jQuery选择器</h2><ul>
+<li><p>元素选择器（使用css选择器来选取HTML元素）</p>
+<ul>
+<li><p>$(“p”) 选取 <p> 元素。</p>
+</li>
+<li><p>$(“p.intro”) 选取所有 class=”intro” 的 <p> 元素。</p>
+</li>
+<li><p>$(“p#demo”) 选取 id=”demo” 的第一个 <p> 元素</p>
+</li>
+</ul>
+</li>
+<li><p>jQuery 属性选择器（使用 XPath 表达式来选择带有给定属性的元素）</p>
+<ul>
+<li><p>$(“[href]”) 选取所有带有 href 属性的元素。</p>
+</li>
+<li><p>$(“[href=’#’]”) 选取所有带有 href 值等于 “#” 的元素。</p>
+</li>
+<li><p>$(“[href!=’#’]”) 选取所有带有 href 值不等于 “#” 的元素。</p>
+</li>
+<li><p>$(“[href$=’.jpg’]”) 选取所有 href 值以 “.jpg” 结尾的元素。</p>
+</li>
+</ul>
+</li>
+<li><p>jQuery CSS 选择器</p>
+<ul>
+<li>$(“p”).css(“background-color”,”red”);</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-jQuery事件"><a href="#4-jQuery事件" class="headerlink" title="4.jQuery事件"></a>4.jQuery事件</h2><ul>
+<li><p>事件处理函数是当 HTML 中发生事件时自动被调用的函数。由“事件”（event）“触发”（triggered）是经常被用到的术语。</p>
+</li>
+<li><p>jQuery的书写原则</p>
+<ul>
+<li>把所有 jQuery 代码置于事件处理函数中 </li>
+<li>把所有事件处理函数置于文档就绪事件处理器中 </li>
+<li>把 jQuery 代码置于单独的 .js 文件中 </li>
+<li>如果存在名称冲突，则重命名 jQuery 库 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-jQuery效果函数"><a href="#5-jQuery效果函数" class="headerlink" title="5. jQuery效果函数"></a>5. jQuery效果函数</h2><pre><code>隐藏、显示、切换、以及动画效果。常见的：</code></pre>
+<ul>
+<li>show();</li>
+<li>hide();</li>
+<li>toggle();</li>
+</ul>
+<hr>
+<h2 id="6-jQuery-Callback回调函数"><a href="#6-jQuery-Callback回调函数" class="headerlink" title="6. jQuery Callback回调函数"></a>6. jQuery Callback回调函数</h2><ul>
+<li><p>A callback is a function that is passed as an argument to another function and is executed after its parent function has completed.回调函数就是一个函数被当做参数传入另一个函数中，当另一个函数执行完成后，该函数被执行。例：</p>
+<pre><code>  $(&quot;p&quot;).hide(1000,function()&#123;
+      alert(&quot;The paragraph is now hidden&quot;);
+  &#125;);</code></pre>
+</li>
+<li><p>回调函数的理解</p>
+<pre><code>  var fn = new Function(&quot;arg1&quot;, &quot;arg2&quot;, &quot;return arg1 * arg2;&quot;);
+  fn(3, 4);   //12
+  上面这段代码中函数的参数是字符串，最后一段字符串实际上是一段js代码，因此上一段代码中，参数function()实际上相当于一段可执行的字符串，最后会被执行。</code></pre>
+</li>
+<li><p>应用。在涉及到动画等函数处理时，回调函数很有用。例：</p>
+<pre><code>  /*&lt;p&gt;The paragraph&lt;/p&gt;*/
+
+      $(document).ready(function()&#123;
+            $(&quot;button&quot;).click(function()&#123;
+                $(&quot;p&quot;).hide(4000);
+               alert(&quot;The paragraph is now hidden&quot;);
+            &#125;);
+      &#125;);</code></pre>
+<p>点击button后，弹出标签被隐藏的信息，但实际上p标签在4秒后隐藏，可能还未隐藏，这是就发生了逻辑上的错误，因此需要把alert(“The paragraph is now hidden”)写到callback函数中，如下</p>
+<pre><code>      $(document).ready(function()&#123;
+            $(&quot;button&quot;).click(function()&#123;
+                $(&quot;p&quot;).hide(1000,function()&#123;
+                      alert(&quot;The paragraph is now hidden&quot;);
+                  &#125;);
+            &#125;);
+      &#125;);</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="7-jQuery操作HTML"><a href="#7-jQuery操作HTML" class="headerlink" title="7.jQuery操作HTML"></a>7.jQuery操作HTML</h2><ul>
+<li><p>改变HTML内容</p>
+<pre><code>  $(selector).html(content);  //html()函数改变所匹配的HTML元素的内容（innerHTML）</code></pre>
+</li>
+<li><p>添加HTML内容</p>
+<pre><code> $(selector).append(content); //append()函数向所匹配的HTML元素内部追加内容</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="8-jQuery-CSS函数"><a href="#8-jQuery-CSS函数" class="headerlink" title="8.jQuery CSS函数"></a>8.jQuery CSS函数</h2><ul>
+<li><p>$(selector).css(name,value)   //为所有匹配元素的给定CSS属性设置值</p>
+</li>
+<li><p>$(selector).css({properties})   //为所有匹配元素的一系列CSS属性设置值</p>
+</li>
+<li><p>$(selector).css(name)  //返回指定CSS属性的值</p>
+<pre><code>  $(&quot;p&quot;).css(&quot;background-color&quot;,&quot;yellow&quot;);
+  $(&quot;p&quot;).css(&#123;&quot;background-color&quot;:&quot;yellow&quot;,&quot;font-size&quot;:&quot;200%&quot;&#125;);
+  $(this).css(&quot;background-color&quot;);</code></pre>
+</li>
+<li><p>jQuery 拥有两种供尺寸操作的重要函数：</p>
+<pre><code>  $(selector).height(value) 
+  $(selector).width(value) </code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="9-jQuery-AJAX函数"><a href="#9-jQuery-AJAX函数" class="headerlink" title="9.jQuery AJAX函数"></a>9.jQuery AJAX函数</h2><ul>
+<li><p>jQuery提供了供AJAX开发的丰富函数库</p>
+</li>
+<li><p>jQuery 的 load 函数是一种简单的（但很强大的）AJAX 函数</p>
+<pre><code>  $(selector).load(url,data,callback)</code></pre>
+</li>
+<li><p>$.ajax(options) 是低层级 AJAX 函数的语法，提供了比高层级函数更多的功能，但是同时也更难使用。</p>
+<pre><code>  option 参数设置的是 name|value 对，定义 url 数据、密码、数据类型、过滤器、字符集、超时以及错误函数
+
+          var params = &#123;//三个参数为
+                  &#39;task_Name&#39;: task_Name,
+                  &#39;business_Type&#39;:business_Type,
+                  &#39;send_Schedule&#39;:send_Schedule,
+                  &#125;;
+
+          $.ajax(&#123;
+              url:  path + &#39;/task/queryAllTaskList&#39;,
+              type : &#39;post&#39;, /*请求方式*/
+              dataType : &#39;json&#39;, /*被返回的数据的类型 (html,xml,json,jasonp,script,text)*/
+              data : params,/*键值对的参数*/
+              success : function(data) &#123;//data是请求后
+
+                  showTerminalTalble(data.taskList);
+                  if(null == data.errMsg || data.errMsg == &quot;&quot;) &#123;
+                      if(updatePageNum)&#123;
+                          paginationUtil.showPageCountSelect(data.totalNum);
+                      &#125;
+                      if(clickbtn)&#123;
+                          paginationUtil.setPageNum(1);
+                      &#125;    
+                   &#125; else &#123;
+                      $(&quot;#taskTable&quot;).html(&quot;&quot;);
+                      $.jBoxUtil.noticeError(&#123;content: data.errMsg&#125;);
+                  &#125;
+
+              &#125;,
+              error : function(data) &#123;
+                  //var b=1;
+              &#125;
+          &#125;);     
+      &#125;</code></pre>
+</li>
+</ul>
+<hr>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/Java/">Java</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Java/">Java</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+

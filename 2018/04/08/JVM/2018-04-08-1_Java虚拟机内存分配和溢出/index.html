@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java虚拟机内存分配和溢出 › 子非鱼</title>
+  <meta name="author" content="jony">
+  
+  <meta name="description" content="Java虚拟机内存分配和溢出">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java虚拟机内存分配和溢出"/>
+  <meta property="og:site_name" content="子非鱼"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="子非鱼" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <header id="header"><div class="meta inner">
+  <h1><a href="/">子非鱼</a></h1>
+  <h2><a href="/"></a></h2>
+  <nav id="main-nav">
+    <ul>
+      
+      <li><a href="/about">About</a></li>
+      
+      <li><a href="/archives">Archives</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Java虚拟机内存分配和溢出</h1>
+  
+
+      
+        <time datetime="2018-04-08T07:33:00.000Z">2018-04-08</time>
+      
+    </header>
+    <div class="entry">
+      
+        <!-- image url 
+https://raw.githubusercontent.com/HealerJean/HealerJean.github.io/master/blogImages
+　　首行缩进
+<font color="red">  </font>
+-->
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于虚拟机自动内存管理机制的帮助下，不需要为每一个new出来的对象，去写delete/free代码。不容易出现内存泄漏和内存溢出的问题，</p>
+<p><font color="red"><strong>但是如果一旦出现问题，那将是非常可怕的</strong> </font>，如果不了解虚拟机是怎么使用内存的，那么排查错误将会成为一项非常艰难的工资。</p>
+<h2 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h2><p>经常有人讲java内存区分为堆内存和栈内存，这种分发比较粗糙，只能说明大多数程序员最密切的就是这两块</p>
+<h2 id="1、Java虚拟机内存分配"><a href="#1、Java虚拟机内存分配" class="headerlink" title="1、Java虚拟机内存分配"></a>1、Java虚拟机内存分配</h2><h3 id="1-1、程序计数器（线程私有）"><a href="#1-1、程序计数器（线程私有）" class="headerlink" title="1.1、程序计数器（线程私有）"></a>1.1、程序计数器（线程私有）</h3><p>较小的内存空间，可以当做当前线程所执行字节码的行号指示器，每个线程都有自己的行号指示器，互补干扰，因此这部分内存区域也叫作私有区域</p>
+<h3 id="1-2、Java虚拟机栈（线程私有）"><a href="#1-2、Java虚拟机栈（线程私有）" class="headerlink" title="1.2、Java虚拟机栈（线程私有）"></a>1.2、Java虚拟机栈（线程私有）</h3><p>这里其实就是程序员通俗意义上的栈区，<font color="red">存放基本的数据类型和，对象的引用。（函数多的参数值，局部变量）<br> </font><br> <br/><br> <font color="red">每次在方法执行的同时，都会创建一个栈帧，用来存储局部变量表，操作数栈（可以理解成数字），动态链接、方法出入口等信息。每一个方法执行的时候，就对应着一个栈帧在虚拟机栈中入栈和出栈的过程 </font></p>
+<h4 id="1-1、这个区域出现的异常情况有两种"><a href="#1-1、这个区域出现的异常情况有两种" class="headerlink" title="1.1、这个区域出现的异常情况有两种"></a>1.1、这个区域出现的异常情况有两种</h4><p>1、如果虚拟机请求栈深度大于虚拟机所允许的深度，将抛出 StackOverflowError异常</p>
+<p>2、如果虚拟机栈可以动态扩展（当前大部分虚拟机都可以）如果扩展时无法申请到足够的内存，将飘出OutOfMemoryError</p>
+<h3 id="1-3、本地方法栈"><a href="#1-3、本地方法栈" class="headerlink" title="1.3、本地方法栈"></a>1.3、本地方法栈</h3><p>本地方法栈和虚拟机栈区别是，虚拟机栈为执行的java方法服务，而本地方法栈为Native方法服务。它也会抛出StackOverflowError和OutOfMemoryError异常</p>
+<h3 id="1-4、Java堆（线程共享）"><a href="#1-4、Java堆（线程共享）" class="headerlink" title="1.4、Java堆（线程共享）"></a>1.4、Java堆（线程共享）</h3><p>Java堆是被所有线程共享的区域，在虚拟机启动时候创建，<font color="red">  此区域的唯一目标就是存放对象实例和数组，</font><br><font color="red"> Java堆是垃圾收集器管理的主要区域 </font></p>
+<h3 id="1-5、方法区（线程共享）"><a href="#1-5、方法区（线程共享）" class="headerlink" title="1.5、方法区（线程共享）"></a>1.5、方法区（线程共享）</h3><p>方法去也是各个线程共享的内存区域，它用于<font color="red">存储以被虚拟机加载的类信息，常亮，静态常量,以及访问修饰符，字段描述，方法描述等</font>，即时编译后的代码等数据。，也叫永久代</p>
+<h4 id="1-5-1、运行时常量池"><a href="#1-5-1、运行时常量池" class="headerlink" title="1.5.1、运行时常量池"></a>1.5.1、运行时常量池</h4><p>用于存放编译器生成的各种字面量和符号引用</p>
+<h3 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h3><p>1、所有的内存</p>
+<p><img src="markdownImage/WX20180409-110305@2x.png" alt="WX20180409-110305@2x"></p>
+<h2 id="2、实战-OutOfMemoryError异常"><a href="#2、实战-OutOfMemoryError异常" class="headerlink" title="2、实战 OutOfMemoryError异常"></a>2、实战 OutOfMemoryError异常</h2><h3 id="2-1、java堆溢出"><a href="#2-1、java堆溢出" class="headerlink" title="2.1、java堆溢出"></a>2.1、java堆溢出</h3><h4 id="2-1-1、测试代码"><a href="#2-1-1、测试代码" class="headerlink" title="2.1.1、测试代码"></a>2.1.1、测试代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaHeap</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;OOMObject&gt; oomObjects = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            oomObjects.add(<span class="keyword">new</span> OOMObject());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>过一段时间之后报下面错误</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at java.util.Arrays.copyOf(Arrays.java:<span class="number">3210</span>)</span><br><span class="line">	at java.util.Arrays.copyOf(Arrays.java:<span class="number">3181</span>)</span><br><span class="line">	at java.util.ArrayList.grow(ArrayList.java:<span class="number">265</span>)</span><br><span class="line">	at java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:<span class="number">239</span>)</span><br><span class="line">	at java.util.ArrayList.ensureCapacityInternal(ArrayList.java:<span class="number">231</span>)</span><br><span class="line">	at java.util.ArrayList.add(ArrayList.java:<span class="number">462</span>)</span><br><span class="line">	at com.hlj.jvm.memory.JavaHeap.main(JavaHeap.java:<span class="number">19</span>)</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-2、异常分析和解决"><a href="#2-1-2、异常分析和解决" class="headerlink" title="2.1.2、异常分析和解决"></a>2.1.2、异常分析和解决</h4><p>可以看到上面的提示<code>Java heap space</code> java堆内存</p>
+
+      
+    </div>
+      
+      <footer>
+        
+  
+  <div class="categories">
+    <a href="/categories/JVM/">JVM</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/JVM/">JVM</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+      </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jony.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2018/07/19/JVM/2018-09-10-JVM调优/">JVM调优</a>
+      </li>
+    
+      <li>
+        <a href="/2018/07/02/JVM/2018-07-02-项目中遇到的java堆溢出解决/">项目中遇到的java堆溢出解决</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-8_虚拟机类加载机制/">虚拟机类加载机制</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-7_Class文件结构/">Class文件结构</a>
+      </li>
+    
+      <li>
+        <a href="/2018/04/11/JVM/2018-04-11-6_JVM参数/">JVM参数</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/AngularJS/">AngularJS</a><small>1</small></li>
+  
+    <li><a href="/categories/JVM/">JVM</a><small>12</small></li>
+  
+    <li><a href="/categories/Java/">Java</a><small>12</small></li>
+  
+    <li><a href="/categories/Java并发/">Java并发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>3</small></li>
+  
+    <li><a href="/categories/Maven/">Maven</a><small>1</small></li>
+  
+    <li><a href="/categories/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/categories/网络编程/">网络编程</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/JVM/" style="font-size: 20px;">JVM</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Java%E5%B9%B6%E5%8F%91/" style="font-size: 16.67px;">Java并发</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.33px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 13.33px;">网络编程</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2020 jony
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+</body>
+</html>
+
